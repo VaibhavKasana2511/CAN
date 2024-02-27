@@ -1,0 +1,113 @@
+import {StyleSheet} from 'react-native';
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+  },
+  imgContainer: {
+    height: 310,
+    backgroundColor: '#0A4975',
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  resetContainer: {
+    marginTop: -55,
+    margin: 20,
+    padding: 20,
+    paddingHorizontal: 25,
+    height: 249,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    shadowColor: '#00000040',
+    elevation: 20,
+    shadowRadius: 3,
+  },
+  resetHeading: {
+    fontSize: 30,
+    fontFamily: 'Nunito-SemiBold',
+    color: '#000000',
+  },
+  inputHeading: {
+    color: '#000000A8',
+    fontFamily: 'Nunito-Regular',
+    fontSize: 18,
+    marginTop: 15,
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: '#0A49755E',
+    borderRadius: 8,
+    paddingLeft: 15,
+    marginTop: 5,
+  },
+  cancelContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  resetButton: {
+    backgroundColor: '#FFBD59',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+    paddingVertical: 10,
+    marginTop: 20,
+    width: '45%',
+  },
+  resetText: {
+    color: '#000000',
+    fontSize: 16,
+    fontFamily: 'Nunito-SemiBold',
+  },
+  cancelButton: {
+    backgroundColor: '#00000040',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+    paddingVertical: 10,
+    marginTop: 20,
+    width: '45%',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalSubContainer: {
+    backgroundColor: '#FFFFFF',
+    width: '90%',
+    justifyContent: 'space-evenly',
+    height: 249,
+    // alignItems: 'center',
+    padding: 20,
+    borderRadius: 20,
+    elevation: 20,
+  },
+  modalText: {
+    fontFamily: 'Nunito-Medium',
+    fontSize: 19,
+    color: '#000000A8',
+    textAlign: 'justify',
+    marginTop: 10,
+    width: '87%',
+  },
+  modalContinueButton: {
+    backgroundColor: '#FFBD59',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+    paddingVertical: 10,
+    marginTop: 15,
+    width: '100%',
+    fontFamily: 'Nunito-SemiBold',
+  },
+  continueText: {
+    color: '#000000',
+    fontSize: 16,
+    fontFamily: 'Nunito-SemiBold',
+  },
+});
+
+export default styles;
