@@ -11,19 +11,9 @@ const styles = StyleSheet.create({
     // backgroundColor: 'blue',
     // padding: 20,
   },
-  imgContainer: {
-    // flex: 0.4,
-    height: 343,
-    backgroundColor: '#0A4975',
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  img: {},
 
   loginContainer: {
-    marginTop: -55,
+    marginTop: '-12%',
     margin: 20,
     padding: 20,
     // flex: 0.4,

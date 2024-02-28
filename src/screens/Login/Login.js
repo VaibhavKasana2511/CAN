@@ -9,17 +9,14 @@ import {
 } from 'react-native';
 import React from 'react';
 import styles from './Styles';
+// import AuthHeader from '../../Components/authHeader/AuthHeader';
+import AuthHeader from '../../Components/authHeader/AuthHeader';
+import CustomButtom from '../../Components/common/customButton/CustomButtom';
 
 const Login = () => {
   return (
     <KeyboardAvoidingView style={styles.mainContainer}>
-      <View style={styles.imgContainer}>
-        <Image
-          style={styles.img}
-          source={require('../../assets/images/can-logo.png')}
-          resizeMode="contain"
-        />
-      </View>
+      <AuthHeader height={320} />
       <View style={styles.loginContainer}>
         <Text style={styles.titleLogin}>Login</Text>
         <View>
@@ -46,9 +43,7 @@ const Login = () => {
             <Text style={styles.forgotPassword}>Become an Investor</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.loginButton}>
-          <Text style={styles.loginText}>Login</Text>
-        </TouchableOpacity>
+        <CustomButtom title="Login" />
       </View>
     </KeyboardAvoidingView>
   );

@@ -3,17 +3,8 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
   },
-  imgContainer: {
-    // flex: 0.4,
-    height: 246,
-    backgroundColor: '#0A4975',
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   registerContainer: {
-    marginTop: -55,
+    marginTop: '-12%',
     margin: 20,
     padding: 20,
     paddingHorizontal: 25,
@@ -23,6 +14,7 @@ const styles = StyleSheet.create({
     shadowColor: '#00000040',
     elevation: 20,
     shadowRadius: 3,
+    justifyContent: 'space-between',
   },
   registerTitle: {
     fontSize: 30,
@@ -34,7 +26,6 @@ const styles = StyleSheet.create({
     color: '#000000A8',
     fontFamily: 'Nunito-Regular',
     fontSize: 18,
-    marginTop: 15,
   },
   textInput: {
     borderWidth: 1,
@@ -55,16 +46,6 @@ const styles = StyleSheet.create({
     margin: 15,
     marginRight: 15,
   },
-
-  registerButton: {
-    backgroundColor: '#FFBD59',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 8,
-    // height: 40,
-    paddingVertical: 10,
-    marginTop: 20,
-  },
   registerText: {
     color: '#000000',
     fontSize: 16,
@@ -75,37 +56,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     fontSize: 14,
     alignSelf: 'center',
-    marginTop: 20,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalSubContainer: {
-    backgroundColor: '#FFFFFF',
-    width: '90%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    borderRadius: 10,
-    elevation: 20,
-  },
-  modalText: {
-    fontFamily: 'Nunito-Medium',
-    fontSize: 19,
-    color: '#000000A8',
-    textAlign: 'center',
-  },
-  modalContinueButton: {
-    backgroundColor: '#FFBD59',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 8,
-    paddingVertical: 10,
-    marginTop: 15,
-    width: '100%',
   },
   continueText: {
     color: '#000000',

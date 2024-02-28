@@ -11,6 +11,9 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import styles from './regStyles';
+import AuthHeader from '../../Components/authHeader/AuthHeader';
+import CustomButtom from '../../Components/common/customButton/CustomButtom';
+import CustomPopUp from '../../Components/common/customPopUp/customPopUp';
 
 const Register = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -27,13 +30,7 @@ const Register = () => {
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={styles.mainContainer}>
-      <View style={styles.imgContainer}>
-        <Image
-          style={styles.img}
-          source={require('../../assets/images/can-logo.png')}
-        />
-      </View>
-
+      <AuthHeader height={246} />
       <View style={styles.registerContainer}>
         <Text style={styles.registerTitle}>Become an Investor</Text>
         <View>
@@ -71,33 +68,18 @@ const Register = () => {
           <Text style={styles.inputHeading}>City</Text>
           <TextInput style={styles.textInput} placeholder="Enter City" />
         </View>
-        <TouchableOpacity onPress={openModal} style={styles.registerButton}>
-          <Text style={styles.registerText}>Register</Text>
-        </TouchableOpacity>
+        <CustomButtom onPress={openModal} title="Register" />
         <TouchableOpacity>
           <Text style={styles.haveAccount}>Already have an account?</Text>
         </TouchableOpacity>
       </View>
-      <Modal
-        transparent={true}
-        animationType="fade"
+      <CustomPopUp
         visible={isVisible}
-        onRequestClose={() => {}}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalSubContainer}>
-            <Text style={styles.modalText}>
-              Thanks for sharing your interest to become an investor with CAN.
+        onPress={closeModal}
+        text="Thanks for sharing your interest to become an investor with CAN.
               We’ll reach out to you within next 24-72 hours to assess whether
-              you meet our criteria to become an investor.
-            </Text>
-            <TouchableOpacity
-              onPress={closeModal}
-              style={styles.modalContinueButton}>
-              <Text style={styles.continueText}>Continue</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+              you meet our criteria to become an investor."
+      />
     </ScrollView>
   );
 };

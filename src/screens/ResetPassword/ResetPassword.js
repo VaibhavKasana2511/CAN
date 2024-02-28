@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import styles from './Styles';
+import CustomPopUp from '../../Components/common/customPopUp/customPopUp';
 
 const ResetPassword = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -20,6 +21,7 @@ const ResetPassword = () => {
   const closeModal = () => {
     setIsVisible(false);
   };
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.imgContainer}>
@@ -43,26 +45,11 @@ const ResetPassword = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <Modal
-        transparent={true}
-        animationType="fade"
+      <CustomPopUp
         visible={isVisible}
-        onRequestClose={() => {}}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalSubContainer}>
-            <Text style={styles.resetHeading}>Reset Password</Text>
-            <Text style={styles.modalText}>
-              If that email address is in our database, we will send you an
-              email to reset your password.
-            </Text>
-            <TouchableOpacity
-              onPress={closeModal}
-              style={styles.modalContinueButton}>
-              <Text style={styles.continueText}>Continue</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+        title="Reset Password"
+        text="If that email address is in our database, we wil send you an email to reset your password."
+      />
     </View>
   );
 };

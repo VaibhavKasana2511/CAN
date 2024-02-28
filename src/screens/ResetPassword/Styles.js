@@ -24,11 +24,6 @@ const styles = StyleSheet.create({
     elevation: 20,
     shadowRadius: 3,
   },
-  resetHeading: {
-    fontSize: 30,
-    fontFamily: 'Nunito-SemiBold',
-    color: '#000000',
-  },
   inputHeading: {
     color: '#000000A8',
     fontFamily: 'Nunito-Regular',

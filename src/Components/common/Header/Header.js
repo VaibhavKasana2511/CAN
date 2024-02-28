@@ -7,16 +7,16 @@ const Header = () => {
     <View style={styles.mainContainer}>
       <TouchableOpacity>
         <Image
-          source={require('../../assets/images/tabicon.png')}
+          source={require('../../../assets/images/drawericon.png')}
           resizeMode="cover"
-          style={{height: 15, width: 30, marginLeft: 20, marginTop: 25}}
+          style={styles.drawerIcon}
         />
       </TouchableOpacity>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={styles.logoContainer}>
         <Image
-          source={require('../../assets/images/can-logo.png')}
+          source={require('../../../assets/images/can-logo.png')}
           resizeMode="cover"
-          style={{height: 60, width: 130, marginRight: 30}}
+          style={styles.canLogo}
         />
       </View>
     </View>
