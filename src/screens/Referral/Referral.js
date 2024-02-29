@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, TextInput} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Image, FlatList} from 'react-native';
 import React from 'react';
 import {styles} from './Styles';
 import Header from '../../Components/common/Header/Header';
@@ -20,7 +20,36 @@ const data = [
 ];
 
 const Referral = () => {
-  const renderReferrals = () => <View></View>;
+  const renderReferrals = ({item}) => (
+    <View style={styles.listContainer}>
+      <View style={styles.listSection}>
+        <Text style={styles.listName}>{item.name}</Text>
+        <View style={{flexDirection: 'row'}}>
+          <Image
+            style={styles.Icon}
+            source={require('../../assets/images/dateIcon.png')}
+          />
+          <Text style={styles.listMail}>{item.date}</Text>
+        </View>
+      </View>
+      <View style={styles.listSection}>
+        <View style={{flexDirection: 'row', marginTop: 5}}>
+          <Image
+            style={styles.mailIcon}
+            source={require('../../assets/images/mailIcon.png')}
+          />
+          <Text style={styles.listMail}>{item.email}</Text>
+        </View>
+        <View style={{flexDirection: 'row', marginTop: 5}}>
+          <Image
+            style={styles.phoneIcon}
+            source={require('../../assets/images/phoneIcon.png')}
+          />
+          <Text style={styles.listMail}>{item.phone}</Text>
+        </View>
+      </View>
+    </View>
+  );
 
   return (
     <View style={styles.mainContainer}>
@@ -45,6 +74,7 @@ const Referral = () => {
           <CustomButtom title="Submit" />
         </View>
         <Text style={styles.headingText}>My Referrals</Text>
+        <FlatList renderItem={renderReferrals} data={data} />
       </View>
     </View>
   );

@@ -1,62 +1,56 @@
 import {StyleSheet} from 'react-native';
-import {
-  horizontalScale,
-  verticalScale,
-  moderateScale,
-} from '../../utils/Metrics';
+
+// import {horizontalScale, verticalScale, moderateScale} from '@utils/Metrics';
+import {horizontalScale, verticalScale, moderateScale} from '@utils/Metrics';
 
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    // backgroundColor: 'blue',
-    // padding: 20,
   },
 
   loginContainer: {
     marginTop: '-12%',
-    margin: 20,
-    padding: 20,
-    // flex: 0.4,
-    height: 361,
+    margin: moderateScale(20),
+    padding: moderateScale(25),
+    paddingHorizontal: moderateScale(25),
+    height: verticalScale(380),
     backgroundColor: '#FFFFFF',
-    borderRadius: 20,
+    borderRadius: moderateScale(20),
     justifyContent: 'space-between',
     shadowColor: '#00000040',
-    // shadowOffset: {width: -2, height: 4},
-    // shadowOpacity: 0.2,
-    elevation: 20,
-    shadowRadius: 3,
+    elevation: moderateScale(20),
+    shadowRadius: moderateScale(3),
   },
+
   titleLogin: {
-    fontSize: 30,
+    fontSize: moderateScale(30),
     color: '#000000',
     fontFamily: 'Nunito-SemiBold',
   },
   inputHeading: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 18,
+    fontSize: moderateScale(18),
     color: '#000000A8',
+    marginTop: verticalScale(5),
   },
   textInput: {
-    borderWidth: 1,
+    borderWidth: moderateScale(1),
     borderColor: '#0A49755E',
-    borderRadius: 8,
-    paddingLeft: 10,
-    marginTop: 5,
+    borderRadius: moderateScale(8),
+    paddingLeft: horizontalScale(10),
+    marginTop: verticalScale(5),
   },
   passwordContainer: {
-    borderWidth: 1,
+    borderWidth: moderateScale(1),
     borderColor: '#0A49755E',
-    borderRadius: 8,
+    borderRadius: moderateScale(8),
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 5,
+    marginTop: verticalScale(5),
   },
   eyeLogo: {
-    margin: 15,
-    marginRight: 15,
-    // height: 19.5,
-    // width: 17.5,
+    margin: moderateScale(15),
+    marginRight: verticalScale(15),
   },
   resetContainer: {
     flexDirection: 'row',
@@ -64,7 +58,7 @@ const styles = StyleSheet.create({
   },
 
   forgotPassword: {
-    fontSize: 14,
+    fontSize: moderateScale(14),
     color: '#0A4975',
     fontFamily: 'Nunito-Regular',
   },
@@ -73,15 +67,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFBD59',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 8,
-    // height: 40,
-    paddingVertical: 10,
-    marginTop: 5,
-  },
-  loginText: {
-    color: '#000000',
-    fontSize: 16,
-    fontFamily: 'Nunito-SemiBold',
+    borderRadius: moderateScale(8),
+    paddingVertical: verticalScale(10),
+    marginTop: verticalScale(5),
   },
 });
 

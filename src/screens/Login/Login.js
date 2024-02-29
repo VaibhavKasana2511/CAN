@@ -7,11 +7,11 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {Component} from 'react';
 import styles from './Styles';
-// import AuthHeader from '../../Components/authHeader/AuthHeader';
-import AuthHeader from '../../Components/authHeader/AuthHeader';
-import CustomButtom from '../../Components/common/customButton/CustomButtom';
+import {AuthHeader, CustomButtom} from '@components';
+import {horizontalScale, verticalScale, moderateScale} from '@utils/Metrics';
+import {IMAGES} from '@assets/images';
 
 const Login = () => {
   return (
@@ -26,12 +26,12 @@ const Login = () => {
         <View>
           <Text style={styles.inputHeading}>Password</Text>
           <View style={styles.passwordContainer}>
-            <TextInput style={{paddingLeft: 10}} placeholder="Enter Password" />
+            <TextInput
+              style={{paddingLeft: verticalScale(10)}}
+              placeholder="Enter Password"
+            />
             <TouchableOpacity>
-              <Image
-                style={styles.eyeLogo}
-                source={require('../../assets/images/eyehidden.png')}
-              />
+              <Image style={styles.eyeLogo} source={IMAGES.eyehidden} />
             </TouchableOpacity>
           </View>
         </View>

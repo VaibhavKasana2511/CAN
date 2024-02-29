@@ -11,12 +11,13 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import styles from './regStyles';
-import AuthHeader from '../../Components/authHeader/AuthHeader';
-import CustomButtom from '../../Components/common/customButton/CustomButtom';
-import CustomPopUp from '../../Components/common/customPopUp/customPopUp';
+import {AuthHeader, CustomButtom, CustomPopUp} from '@components';
+import {horizontalScale} from '@utils/Metrics';
+import {IMAGES} from '@assets/images';
 
 const Register = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [title, setTitle] = useState(false);
 
   const openModal = () => {
     setIsVisible(true);
@@ -44,12 +45,12 @@ const Register = () => {
         <View>
           <Text style={styles.inputHeading}>Password</Text>
           <View style={styles.passwordContainer}>
-            <TextInput style={{paddingLeft: 15}} placeholder="Enter Password" />
+            <TextInput
+              style={{paddingLeft: horizontalScale(15)}}
+              placeholder="Enter Password"
+            />
             <TouchableOpacity>
-              <Image
-                style={styles.eyeLogo}
-                source={require('../../assets/images/eyehidden.png')}
-              />
+              <Image style={styles.eyeLogo} source={IMAGES.eyehidden} />
             </TouchableOpacity>
           </View>
         </View>
@@ -74,8 +75,10 @@ const Register = () => {
         </TouchableOpacity>
       </View>
       <CustomPopUp
+        noTitle={title}
         visible={isVisible}
         onPress={closeModal}
+        buttonText="Continue"
         text="Thanks for sharing your interest to become an investor with CAN.
               We’ll reach out to you within next 24-72 hours to assess whether
               you meet our criteria to become an investor."

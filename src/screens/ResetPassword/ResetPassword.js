@@ -9,10 +9,13 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import styles from './Styles';
-import CustomPopUp from '../../Components/common/customPopUp/customPopUp';
+// import CustomPopUp from '../../Components/common/customPopUp/customPopUp';
+import {IMAGES} from '@assets/images';
+import {CustomButtom, CustomPopUp} from '@components';
 
 const ResetPassword = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [dbButton, setdbButton] = useState(true);
 
   const openModal = () => {
     setIsVisible(true);
@@ -25,10 +28,7 @@ const ResetPassword = () => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.imgContainer}>
-        <Image
-          style={styles.img}
-          source={require('../../assets/images/can-logo.png')}
-        />
+        <Image style={styles.img} source={IMAGES.canLogo} />
       </View>
       <View style={styles.resetContainer}>
         <Text style={styles.resetHeading}>Reset Password</Text>
@@ -36,19 +36,15 @@ const ResetPassword = () => {
           <Text style={styles.inputHeading}>Email</Text>
           <TextInput style={styles.textInput} placeholder="Enter Email" />
         </View>
-        <View style={styles.cancelContainer}>
-          <TouchableOpacity onPress={openModal} style={styles.resetButton}>
-            <Text style={styles.resetText}>Reset</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.cancelButton}>
-            <Text style={styles.resetText}>Cancel</Text>
-          </TouchableOpacity>
-        </View>
+        <CustomButtom title="Reset" twoButton={dbButton} onPress={openModal} />
       </View>
       <CustomPopUp
+        noTitle={dbButton}
         visible={isVisible}
         title="Reset Password"
         text="If that email address is in our database, we wil send you an email to reset your password."
+        buttonText="Continue"
+        onPress={closeModal}
       />
     </View>
   );

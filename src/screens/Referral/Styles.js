@@ -30,4 +30,44 @@ export const styles = StyleSheet.create({
   updateButton: {
     marginTop: '7%',
   },
+  listSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  listName: {
+    fontFamily: 'Nunito-SemiBold',
+    fontSize: 18,
+    color: '#0A4975',
+    // marginTop: 5,
+  },
+  listMail: {
+    fontFamily: 'Nunito-Regular',
+    fontSize: 16,
+    color: '#00000080',
+  },
+  Icon: {
+    marginTop: 3,
+    marginRight: 7,
+    resizeMode: 'contain',
+  },
+  phoneIcon: {
+    marginTop: 3,
+    height: 14,
+    width: 14,
+    marginRight: 7,
+    resizeMode: 'contain',
+  },
+  mailIcon: {
+    marginTop: 6,
+    marginRight: 7,
+    resizeMode: 'contain',
+  },
+  listContainer: {
+    backgroundColor: '#FFFFFF',
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 10,
+    elevation: 20,
+    shadowColor: '#00000040',
+  },
 });

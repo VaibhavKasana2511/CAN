@@ -1,10 +1,20 @@
 import {StyleSheet, Text, View, Modal, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import CustomButtom from '../customButton/CustomButtom';
+import {moderateScale, verticalScale} from '../../../utils/Metrics';
 
-const CustomPopUp = ({title, visible, onPress, text}) => {
-  const [resetScreen, setResetScreen] = useState();
-  return (
+const CustomPopUp = ({
+  title,
+  visible,
+  onPress,
+  text,
+  buttonText,
+  dButton,
+  noTitle,
+}) => {
+  const [resetScreen, setResetScreen] = useState(dButton);
+  const [isAuthenticated, setisAuthenticated] = useState(noTitle);
+  return isAuthenticated ? (
     <Modal
       transparent={true}
       animationType="fade"
@@ -14,7 +24,28 @@ const CustomPopUp = ({title, visible, onPress, text}) => {
         <View style={styles.modalSubContainer}>
           <Text style={styles.resetHeading}>{title}</Text>
           <Text style={styles.modalText}>{text}</Text>
-          <CustomButtom title="Continue" onPress={onPress} />
+          <CustomButtom
+            title={buttonText}
+            onPress={onPress}
+            twoButton={resetScreen}
+          />
+        </View>
+      </View>
+    </Modal>
+  ) : (
+    <Modal
+      transparent={true}
+      animationType="fade"
+      visible={visible}
+      onRequestClose={() => {}}>
+      <View style={styles.modalContainer}>
+        <View style={styles.modalSubContainer}>
+          <Text style={styles.modalText}>{text}</Text>
+          <CustomButtom
+            title={buttonText}
+            onPress={onPress}
+            twoButton={resetScreen}
+          />
         </View>
       </View>
     </Modal>
@@ -33,29 +64,29 @@ const styles = StyleSheet.create({
   modalSubContainer: {
     backgroundColor: '#FFFFFF',
     width: '90%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    borderRadius: 10,
-    elevation: 20,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    padding: moderateScale(30),
+    borderRadius: moderateScale(10),
+    elevation: moderateScale(20),
   },
   modalText: {
     fontFamily: 'Nunito-Medium',
-    fontSize: 19,
+    fontSize: moderateScale(19),
     color: '#000000A8',
-    textAlign: 'center',
+    paddingTop: verticalScale(10),
   },
   modalContinueButton: {
     backgroundColor: '#FFBD59',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 8,
-    paddingVertical: 10,
-    marginTop: 15,
+    borderRadius: moderateScale(8),
+    paddingVertical: verticalScale(10),
+    marginTop: verticalScale(15),
     width: '100%',
   },
   resetHeading: {
-    fontSize: 30,
+    fontSize: moderateScale(30),
     fontFamily: 'Nunito-SemiBold',
     color: '#000000',
   },
