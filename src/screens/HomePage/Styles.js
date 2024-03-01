@@ -1,30 +1,30 @@
 import {StyleSheet} from 'react-native';
+import {horizontalScale, verticalScale, moderateScale} from '@utils/Metrics';
 
 export const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    // justifyContent: 'space-between',
+    backgroundColor: '#FFFFFF',
   },
   headingText: {
     fontFamily: 'Nunito-SemiBold',
     color: '#000000',
-    fontSize: 22,
+    fontSize: moderateScale(22),
+    marginBottom: verticalScale(10),
   },
   contentContainer: {
-    padding: 15,
+    padding: moderateScale(20),
   },
   listContainer: {
     backgroundColor: '#FFFFFF',
-    // backgroundColor: 'blue',
-    // flex: 0.5,
-    marginVertical: 10,
-    shadowColor: '#00000040',
-    elevation: 20,
-    width: '100%',
-    height: 156,
-    borderRadius: 10,
+    marginVertical: verticalScale(10),
+    // shadowColor: '#00000040',
+    elevation: moderateScale(5),
+    width: '98%',
+    height: verticalScale(156),
+    borderRadius: moderateScale(10),
     justifyContent: 'space-around',
-    padding: 10,
+    padding: moderateScale(15),
   },
   section1: {
     flexDirection: 'row',
@@ -32,71 +32,72 @@ export const styles = StyleSheet.create({
 
   listName: {
     fontFamily: 'Nunito-SemiBold',
-    fontSize: 20,
+    fontSize: moderateScale(20),
     color: '#0A4975',
   },
   listText: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 16,
+    fontSize: moderateScale(16),
     color: '#000000A8',
   },
 
   section2: {
-    // marginTop: 5,
+    marginTop: verticalScale(10),
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
 
   section2Heading: {
-    fontSize: 14,
+    fontSize: moderateScale(14),
     fontFamily: 'Nunito-SemiBold',
     color: '#000000',
+    marginTop: verticalScale(5),
   },
   section2Text: {
-    fontSize: 14,
+    fontSize: moderateScale(14),
     fontFamily: 'Nunito-Regular',
     color: '#000000',
   },
   calendarMain: {
     backgroundColor: '#FFFFFF',
     flexDirection: 'row',
-    // marginVertical: 10,
-    padding: 10,
-    borderBottomWidth: 1,
+    padding: moderateScale(10),
+    borderBottomWidth: moderateScale(1),
     borderColor: '#00000021',
   },
   calendarContainer: {
-    height: 69,
-    width: 69,
+    height: moderateScale(69),
+    width: moderateScale(69),
     borderColor: '#0A4975',
-    borderWidth: 1,
-    borderRadius: 10,
+    borderWidth: moderateScale(1),
+    borderRadius: moderateScale(10),
     justifyContent: 'center',
     alignItems: 'center',
   },
   calendarDate: {
-    fontSize: 20,
+    fontSize: moderateScale(20),
     fontFamily: 'Nunito-Bold',
     color: '#0A4975',
   },
   calendarMonth: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     fontFamily: 'Nunito-Medium',
     color: '#0A4975',
   },
 
   calendarContent: {
-    marginLeft: 10,
+    marginLeft: horizontalScale(10),
   },
   eventHeading: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     fontFamily: 'Nunito-Medium',
     color: '#000000',
     textDecorationLine: 'underline',
   },
   agendaText: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     color: '#000000A8',
     fontFamily: 'Nunito-Regular',
+    marginTop: verticalScale(5),
   },
 });

@@ -1,17 +1,19 @@
 import {StyleSheet} from 'react-native';
+import {horizontalScale, verticalScale, moderateScale} from '@utils/Metrics';
+
 export const styles = StyleSheet.create({
   mainContainer: {
-    height: 60,
+    height: moderateScale(60),
     backgroundColor: '#0A4975',
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    borderBottomLeftRadius: horizontalScale(30),
+    borderBottomRightRadius: horizontalScale(30),
     flexDirection: 'row',
   },
   drawerIcon: {
-    height: 15,
-    width: 30,
-    marginLeft: 20,
-    marginTop: 25,
+    height: verticalScale(17),
+    width: horizontalScale(30),
+    marginLeft: horizontalScale(20),
+    marginTop: verticalScale(20),
   },
   logoContainer: {
     flex: 1,
@@ -19,8 +21,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   canLogo: {
-    height: 60,
-    width: 130,
-    marginRight: 30,
+    height: verticalScale(60),
+    width: horizontalScale(125),
+    marginRight: horizontalScale(50),
   },
 });

@@ -13,7 +13,7 @@ import CustomButtom from './src/Components/common/customButton/CustomButtom';
 import Portfolio from './src/screens/Portfolio/Portfolio';
 
 const App = () => {
-  return <ResetPassword />;
+  return <HomePage />;
 };
 
 export default App;

@@ -1,12 +1,14 @@
 import {View, Text, FlatList, Image} from 'react-native';
 import React from 'react';
 import {styles} from './Styles';
-import Header from '../../Components/common/Header/Header';
+import {Header} from '@components';
+import {IMAGES} from '@assets/images';
+import {verticalScale} from '../../utils/Metrics';
 
 const HomePage = () => {
   const data = [
     {
-      name: 'Jerry Imfotech',
+      name: 'Jerry Infotech',
       Text: 'On demand food delivery startup',
       MRR: 'INR 1.50 Lakhs',
       Round_Size: 'INR 50 Lakhs',
@@ -45,8 +47,8 @@ const HomePage = () => {
   const renderItem = ({item}) => (
     <View style={styles.listContainer}>
       <View style={styles.section1}>
-        <Image source={require('../../assets/images/contentImage.png')} />
-        <View style={{marginLeft: 10}}>
+        <Image source={IMAGES.contentImage} />
+        <View style={{marginLeft: verticalScale(10)}}>
           <Text style={styles.listName}>{item.name}</Text>
           <Text style={styles.listText}>{item.Text}</Text>
         </View>
@@ -79,20 +81,19 @@ const HomePage = () => {
       <View style={styles.calendarContent}>
         <Text style={styles.eventHeading}>{item.Meeting}</Text>
         <Text style={styles.agendaText}>{item.agenda}</Text>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginTop: verticalScale(5),
+          }}>
           <View style={{flexDirection: 'row'}}>
-            <Image
-              style={{}}
-              source={require('../../assets/images/clock.png')}
-            />
+            <Image style={{}} source={IMAGES.clock} />
             <Text>{item.time}</Text>
           </View>
           <View
             style={{flexDirection: 'row', flex: 1, justifyContent: 'center'}}>
-            <Image
-              style={{}}
-              source={require('../../assets/images/landmark.png')}
-            />
+            <Image style={{}} source={IMAGES.landmarkIcon} />
             <Text>{item.time}</Text>
           </View>
         </View>
