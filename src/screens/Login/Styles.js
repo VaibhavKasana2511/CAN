@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   resetContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: verticalScale(7),
   },
 
   forgotPassword: {

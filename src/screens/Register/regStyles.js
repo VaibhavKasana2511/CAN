@@ -4,13 +4,14 @@ import {horizontalScale, verticalScale, moderateScale} from '@utils/Metrics';
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
   },
   registerContainer: {
     marginTop: '-12%',
     margin: moderateScale(20),
     padding: moderateScale(20),
     paddingHorizontal: horizontalScale(25),
-    height: verticalScale(750),
+    height: verticalScale(800),
     backgroundColor: '#FFFFFF',
     borderRadius: moderateScale(20),
     shadowColor: '#00000040',
@@ -27,6 +28,7 @@ const styles = StyleSheet.create({
     color: '#000000A8',
     fontFamily: 'Nunito-Regular',
     fontSize: moderateScale(18),
+    marginTop: verticalScale(10),
   },
   textInput: {
     borderWidth: moderateScale(1),
@@ -56,6 +58,7 @@ const styles = StyleSheet.create({
     color: '#0A4975',
     fontFamily: 'Nunito-Regular',
     fontSize: moderateScale(14),
+    marginTop: verticalScale(10),
     alignSelf: 'center',
   },
   continueText: {

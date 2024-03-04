@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   imgContainer: {
-    height: verticalScale(310),
+    height: verticalScale(386),
     backgroundColor: '#0A4975',
     borderBottomLeftRadius: horizontalScale(30),
     borderBottomRightRadius: horizontalScale(30),

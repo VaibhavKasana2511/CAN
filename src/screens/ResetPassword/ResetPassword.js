@@ -12,6 +12,7 @@ import styles from './Styles';
 // import CustomPopUp from '../../Components/common/customPopUp/customPopUp';
 import {IMAGES} from '@assets/images';
 import {CustomButtom, CustomPopUp} from '@components';
+import {verticalScale} from '../../utils/Metrics';
 
 const ResetPassword = () => {
   const [isVisible, setIsVisible] = useState(false);

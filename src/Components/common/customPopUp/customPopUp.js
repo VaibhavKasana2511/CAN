@@ -63,10 +63,10 @@ const styles = StyleSheet.create({
   },
   modalSubContainer: {
     backgroundColor: '#FFFFFF',
-    width: '90%',
+    width: '91%',
     // justifyContent: 'center',
     // alignItems: 'center',
-    padding: moderateScale(30),
+    padding: moderateScale(31),
     borderRadius: moderateScale(10),
     elevation: moderateScale(20),
   },

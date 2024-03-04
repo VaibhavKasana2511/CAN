@@ -84,7 +84,7 @@ const HomePage = () => {
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'space-between', 
             marginTop: verticalScale(5),
           }}>
           <View style={{flexDirection: 'row'}}>
