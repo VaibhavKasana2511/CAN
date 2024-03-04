@@ -2,7 +2,7 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import {verticalScale} from '../../../utils/Metrics';
 
-const CustomButtom = ({title, onPress, twoButton}) => {
+const CustomButtom = ({title, onPress, twoButton, onPressCancel}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(twoButton);
 
   return isAuthenticated ? (
@@ -10,7 +10,7 @@ const CustomButtom = ({title, onPress, twoButton}) => {
       <TouchableOpacity onPress={onPress} style={styles.resetButton}>
         <Text style={styles.resetText}>{title}</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.cancelButton}>
+      <TouchableOpacity onPress={onPressCancel} style={styles.cancelButton}>
         <Text style={styles.resetText}>Cancel</Text>
       </TouchableOpacity>
     </View>

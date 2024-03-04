@@ -13,7 +13,11 @@ import {AuthHeader, CustomButtom} from '@components';
 import {horizontalScale, verticalScale, moderateScale} from '@utils/Metrics';
 import {IMAGES} from '@assets/images';
 
-const Login = () => {
+const Login = ({navigation}) => {
+  const handleResetPassword = () => {
+    navigation.navigate('ResetPassword');
+  };
+
   return (
     <KeyboardAvoidingView style={styles.mainContainer}>
       <AuthHeader height={320} />
@@ -36,7 +40,7 @@ const Login = () => {
           </View>
         </View>
         <View style={styles.resetContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleResetPassword}>
             <Text style={styles.forgotPassword}>Forgot Password?</Text>
           </TouchableOpacity>
           <TouchableOpacity>

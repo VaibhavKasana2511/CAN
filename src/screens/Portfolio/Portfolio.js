@@ -1,9 +1,11 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {View, Text, FlatList, Image} from 'react-native';
 import React from 'react';
-import {styles} from './Styles';
-import Header from '../../Components/common/Header/Header';
+import styles from './styles';
+import {Header} from '@components';
+import {IMAGES} from '@assets/images';
+import {verticalScale, horizontalScale, moderateScale} from '@utils/Metrics';
 
-const Portfolio = () => {
+export default function Portfolio() {
   const data = [
     {
       name: 'Jerry Infotech',
@@ -33,14 +35,52 @@ const Portfolio = () => {
       investment: '12/10/22',
     },
   ];
-  return (
-    <View style={styles.mainContainer}>
-      <Header />
-      <View style={styles.portfolioContainer}>
-        <Text style={styles.headingText}>My Portfolio</Text>
+
+  const renderItem = ({item}) => (
+    <View style={styles.itemData}>
+      <View style={{flexDirection: 'row'}}>
+        <Image source={IMAGES.contentImage} />
+        <View>
+          <Text style={styles.name}>{item.name}</Text>
+          <Text style={styles.text}>{item.text}</Text>
+        </View>
+      </View>
+      <View style={styles.amountSection}>
+        <Text style={styles.details}>
+          <Text style={styles.txt}>Amount: </Text> {item.amount}
+        </Text>
+        <Text style={styles.details}>
+          <Text style={styles.txt}># of shares: </Text> {item.shares}
+        </Text>
+      </View>
+      <View style={styles.valuationSection}>
+        <Text style={styles.details}>
+          <Text style={styles.txt}>At Valuation: </Text> {item.valuation}
+        </Text>
+        <Text style={styles.details}>
+          <Text style={styles.txt}>Round Size: </Text> {item.roundSize}
+        </Text>
+      </View>
+      <View style={{marginTop: verticalScale(2)}}>
+        <Text style={styles.details}>
+          <Text style={styles.txt}>Date of Investment: </Text>
+          {item.investment}
+        </Text>
       </View>
     </View>
   );
-};
 
-export default Portfolio;
+  return (
+    <View style={styles.mainContainer}>
+      <Header />
+      <View style={styles.subContainer}>
+        <Text style={styles.heading}>My Portfolio</Text>
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </View>
+    </View>
+  );
+}

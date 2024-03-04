@@ -13,24 +13,12 @@ export default styles = StyleSheet.create({
 
   heading: {
     fontSize: moderateScale(22),
-    marginBottom: horizontalScale(10),
     color: '#000000',
+    marginBottom: verticalScale(10),
     fontFamily: 'Nunito-SemiBold',
   },
 
-  valuationSection: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: verticalScale(2),
-  },
-
-  amountSection: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: verticalScale(10),
-  },
-
-  itemData: {
+  dataContainer: {
     padding: moderateScale(15),
     elevation: moderateScale(5),
     borderRadius: moderateScale(10),
@@ -41,29 +29,16 @@ export default styles = StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.25)',
   },
 
-  name: {
+  title: {
     fontSize: moderateScale(20),
-    marginLeft: verticalScale(10),
     color: '#0A4975',
     fontFamily: 'Nunito-SemiBold',
   },
 
   text: {
     fontSize: moderateScale(16),
-    marginLeft: verticalScale(10),
+    paddingTop: verticalScale(10),
     color: '#000000A8',
     fontFamily: 'Nunito-Regular',
-  },
-
-  details: {
-    fontSize: moderateScale(14),
-    color: '#000000C4',
-    fontFamily: 'Nunito-Regular',
-  },
-
-  txt: {
-    fontSize: moderateScale(14),
-    color: '#000000',
-    fontFamily: 'Nunito-SemiBold',
   },
 });

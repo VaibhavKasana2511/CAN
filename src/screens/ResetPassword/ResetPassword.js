@@ -14,7 +14,7 @@ import {IMAGES} from '@assets/images';
 import {CustomButtom, CustomPopUp} from '@components';
 import {verticalScale} from '../../utils/Metrics';
 
-const ResetPassword = () => {
+const ResetPassword = ({navigation}) => {
   const [isVisible, setIsVisible] = useState(false);
   const [dbButton, setdbButton] = useState(true);
 
@@ -37,7 +37,12 @@ const ResetPassword = () => {
           <Text style={styles.inputHeading}>Email</Text>
           <TextInput style={styles.textInput} placeholder="Enter Email" />
         </View>
-        <CustomButtom title="Reset" twoButton={dbButton} onPress={openModal} />
+        <CustomButtom
+          title="Reset"
+          twoButton={dbButton}
+          onPress={openModal}
+          onPressCancel={() => navigation.goBack()}
+        />
       </View>
       <CustomPopUp
         noTitle={dbButton}

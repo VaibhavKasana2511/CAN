@@ -10,4 +10,5 @@ export const IMAGES = {
   landmarkIcon: require('./landmark.png'),
   mailIcon: require('./mailIcon.png'),
   phoneIcon: require('./phoneIcon.png'),
+  sendButton: require('./sendButton.png'),
 };
