@@ -24,6 +24,7 @@ const ResetPassword = ({navigation}) => {
 
   const closeModal = () => {
     setIsVisible(false);
+    navigation.navigate('Login');
   };
 
   return (
@@ -48,7 +49,7 @@ const ResetPassword = ({navigation}) => {
         noTitle={dbButton}
         visible={isVisible}
         title="Reset Password"
-        text="If that email address is in our database, we wil send you an email to reset your password."
+        text="If that email address is in our database, we will send you an email to reset your password."
         buttonText="Continue"
         onPress={closeModal}
       />

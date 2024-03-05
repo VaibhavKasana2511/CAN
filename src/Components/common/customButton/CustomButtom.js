@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
-import {verticalScale} from '../../../utils/Metrics';
+import {verticalScale, horizontalScale, moderateScale} from '@utils/Metrics';
 
 const CustomButtom = ({title, onPress, twoButton, onPressCancel}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(twoButton);

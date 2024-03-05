@@ -20,6 +20,8 @@ module.exports = {
           '@utils': './src/utils',
           '@components': './src/Components',
           '@assets': './src/assets',
+          '@screens': './src/screens',
+          '@naviagtion': './src/navigation',
         },
       },
     ],

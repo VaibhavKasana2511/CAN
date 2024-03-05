@@ -10,12 +10,12 @@ import {
   Modal,
 } from 'react-native';
 import React, {useState} from 'react';
-import styles from './regStyles';
+import styles from './Styles';
 import {AuthHeader, CustomButtom, CustomPopUp} from '@components';
 import {horizontalScale} from '@utils/Metrics';
 import {IMAGES} from '@assets/images';
 
-const Register = () => {
+const Register = ({navigation}) => {
   const [isVisible, setIsVisible] = useState(false);
   const [title, setTitle] = useState(false);
 
@@ -25,6 +25,7 @@ const Register = () => {
 
   const closeModal = () => {
     setIsVisible(false);
+    navigation.navigate('Login');
   };
 
   return (
@@ -70,7 +71,7 @@ const Register = () => {
           <TextInput style={styles.textInput} placeholder="Enter City" />
         </View>
         <CustomButtom onPress={openModal} title="Register" />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.haveAccount}>Already have an account?</Text>
         </TouchableOpacity>
       </View>

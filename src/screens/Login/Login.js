@@ -18,6 +18,10 @@ const Login = ({navigation}) => {
     navigation.navigate('ResetPassword');
   };
 
+  const handleRegister = () => {
+    navigation.navigate('Register');
+  };
+
   return (
     <KeyboardAvoidingView style={styles.mainContainer}>
       <AuthHeader height={320} />
@@ -43,11 +47,14 @@ const Login = ({navigation}) => {
           <TouchableOpacity onPress={handleResetPassword}>
             <Text style={styles.forgotPassword}>Forgot Password?</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleRegister}>
             <Text style={styles.forgotPassword}>Become an Investor</Text>
           </TouchableOpacity>
         </View>
-        <CustomButtom title="Login" />
+        <CustomButtom
+          onPress={() => navigation.navigate('Home')}
+          title="Login"
+        />
       </View>
     </KeyboardAvoidingView>
   );
