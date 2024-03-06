@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     margin: moderateScale(20),
     padding: moderateScale(25),
     paddingHorizontal: moderateScale(25),
-    height: verticalScale(380),
+    height: verticalScale(400),
     backgroundColor: '#FFFFFF',
     borderRadius: moderateScale(20),
     justifyContent: 'space-between',
