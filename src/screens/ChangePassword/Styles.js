@@ -1,30 +1,31 @@
 import {StyleSheet, Text, View} from 'react-native';
+import {moderateScale, verticalScale, horizontalScale} from '@utils/Metrics';
 
 export const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-  subContainer: {padding: 15},
+  subContainer: {padding: moderateScale(15)},
   headingText: {
     fontFamily: 'Nunito-SemiBold',
     color: '#000000',
-    fontSize: 22,
+    fontSize: moderateScale(22),
   },
   inputHeading: {
     color: '#000000A8',
     fontFamily: 'Nunito-Regular',
-    fontSize: 18,
+    fontSize: moderateScale(18),
   },
   textInput: {
-    borderWidth: 1,
+    borderWidth: moderateScale(1),
     borderColor: '#0A49755E',
-    borderRadius: 8,
-    paddingLeft: 15,
-    marginTop: 5,
+    borderRadius: moderateScale(8),
+    paddingLeft: horizontalScale(15),
+    marginTop: verticalScale(5),
   },
   allTextInput: {
-    marginTop: 10,
+    marginTop: verticalScale(10),
   },
   updateButton: {
     marginTop: '7%',

@@ -35,6 +35,14 @@ export default styles = StyleSheet.create({
     fontFamily: 'Nunito-SemiBold',
   },
 
+  addAns: {
+    fontSize: moderateScale(16),
+    paddingTop: verticalScale(10),
+    color: '#0A4975',
+    fontFamily: 'Nunito-Regular',
+    textDecorationLine: 'underline',
+  },
+
   ans: {
     fontSize: moderateScale(16),
     paddingTop: verticalScale(10),

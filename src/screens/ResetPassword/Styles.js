@@ -4,6 +4,7 @@ import {horizontalScale, verticalScale, moderateScale} from '@utils/Metrics';
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
   },
   imgContainer: {
     height: verticalScale(386),
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
     height: verticalScale(275),
     backgroundColor: '#FFFFFF',
     borderRadius: moderateScale(20),
-    shadowColor: '#00000040',
+    shadowColor: '#000000',
     elevation: moderateScale(20),
     shadowRadius: moderateScale(3),
   },

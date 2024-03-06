@@ -84,17 +84,17 @@ const HomePage = () => {
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'space-between', 
+            justifyContent: 'space-between',
             marginTop: verticalScale(5),
           }}>
           <View style={{flexDirection: 'row'}}>
-            <Image style={{}} source={IMAGES.clock} />
-            <Text>{item.time}</Text>
+            <Image style={{marginTop: 2}} source={IMAGES.clock} />
+            <Text style={{marginBottom: 2, marginLeft: 5}}>{item.time}</Text>
           </View>
           <View
             style={{flexDirection: 'row', flex: 1, justifyContent: 'center'}}>
-            <Image style={{}} source={IMAGES.landmarkIcon} />
-            <Text>{item.time}</Text>
+            <Image style={{marginTop: 2}} source={IMAGES.landmarkIcon} />
+            <Text style={{marginBottom: 2, marginLeft: 5}}>{item.time}</Text>
           </View>
         </View>
       </View>

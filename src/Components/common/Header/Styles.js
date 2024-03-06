@@ -25,4 +25,16 @@ export const styles = StyleSheet.create({
     width: horizontalScale(125),
     marginRight: horizontalScale(50),
   },
+  headerTxt: {
+    fontSize: 20,
+    color: '#ffffff',
+    fontFamily: 'Nunito-Medium',
+  },
+  txtContainer: {
+    flex: 1,
+    marginLeft: horizontalScale(20),
+    // marginTop: verticalScale(12),
+    justifyContent: 'center',
+    // alignItems: 'center',
+  },
 });

@@ -1,21 +1,29 @@
 import {Text, View, Image, TextInput, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import styles from './styles';
-import {CustomButtom, Header} from '@components';
+import {CustomButtom, Header, CustomPopUp} from '@components';
 
 const AnsQues = ({navigation}) => {
   const [dbButton, setdbButton] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+  const [title, setTitle] = useState(false);
 
-  const handleCancel = () => {
-    console.log('first');
+  const openModal = () => {
+    setIsVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsVisible(false);
+    navigation.navigate('Details');
   };
 
   const handlePost = () => {
     console.log('firstQuestion');
   };
+
   return (
     <View style={styles.mainContainer}>
-      <Header />
+      <Header drawer={false} back={true} />
 
       <View style={styles.subContainer}>
         <Text style={styles.headingText}>Category: Valuations & MRR</Text>
@@ -37,9 +45,16 @@ const AnsQues = ({navigation}) => {
             Please be polite while answering the question. Refer to community
             guidelines for more info.
           </Text>
-          <CustomButtom title="Post" twoButton={dbButton} />
+          <CustomButtom title="Post" twoButton={dbButton} onPress={openModal} />
         </View>
       </View>
+      <CustomPopUp
+        noTitle={title}
+        visible={isVisible}
+        onPress={closeModal}
+        buttonText="Continue"
+        text="Thanks for joining the conversation with your answer. It adds value to the discussion.We'll review your answer shortly."
+      />
     </View>
   );
 };

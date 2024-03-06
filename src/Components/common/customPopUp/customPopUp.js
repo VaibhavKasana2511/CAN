@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View, Modal, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import CustomButtom from '../customButton/CustomButtom';
-import {moderateScale, verticalScale} from '../../../utils/Metrics';
+import {moderateScale, verticalScale} from '@utils/Metrics';
 
 const CustomPopUp = ({
   title,
@@ -11,6 +11,7 @@ const CustomPopUp = ({
   buttonText,
   dButton,
   noTitle,
+  onPressCancel,
 }) => {
   const [resetScreen, setResetScreen] = useState(dButton);
   const [isAuthenticated, setisAuthenticated] = useState(noTitle);
@@ -64,8 +65,6 @@ const styles = StyleSheet.create({
   modalSubContainer: {
     backgroundColor: '#FFFFFF',
     width: '91%',
-    // justifyContent: 'center',
-    // alignItems: 'center',
     padding: moderateScale(31),
     borderRadius: moderateScale(10),
     elevation: moderateScale(20),

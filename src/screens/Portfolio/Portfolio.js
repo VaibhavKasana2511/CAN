@@ -1,6 +1,6 @@
 import {View, Text, FlatList, Image} from 'react-native';
 import React from 'react';
-import styles from './styles';
+import styles from './Styles';
 import {Header} from '@components';
 import {IMAGES} from '@assets/images';
 import {verticalScale, horizontalScale, moderateScale} from '@utils/Metrics';

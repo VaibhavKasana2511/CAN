@@ -32,6 +32,14 @@ export default styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
   },
 
+  dropDown: {
+    height: moderateScale(55),
+    borderWidth: moderateScale(0.5),
+    borderRadius: moderateScale(8),
+    paddingLeft: moderateScale(10),
+    borderColor: '#000000A8',
+  },
+
   txtInput: {
     width: '100%',
     borderRadius: moderateScale(8),

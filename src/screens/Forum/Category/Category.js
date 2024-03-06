@@ -28,8 +28,7 @@ const Category = ({navigation}) => {
   ];
 
   const infoData = () => {
-    console.log('first');
-    // navigation.navigate('Details');
+    navigation.navigate('Details');
   };
 
   const renderForumData = ({item}) => (

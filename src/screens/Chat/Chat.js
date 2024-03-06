@@ -50,7 +50,7 @@ const Chat = () => {
 
   return (
     <View style={styles.mainContainer}>
-      <Header renderText="CAN Admin" renderImage={false} />
+      <Header text="CAN Admin" image={false} />
 
       <View style={styles.subContainer}>
         <FlatList

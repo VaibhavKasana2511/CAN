@@ -6,6 +6,7 @@ import {horizontalScale, verticalScale, moderateScale} from '@utils/Metrics';
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
   },
 
   loginContainer: {
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: moderateScale(20),
     justifyContent: 'space-between',
-    shadowColor: '#00000040',
+    shadowColor: '#000000',
     elevation: moderateScale(20),
     shadowRadius: moderateScale(3),
   },

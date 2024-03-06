@@ -13,8 +13,8 @@ import {IMAGES} from '@assets/images';
 import {verticalScale, horizontalScale, moderateScale} from '@utils/Metrics';
 
 const drawerItems = [
-  {name: 'MyProfile', icon: IMAGES.profile, label: 'Profile'},
-  {name: 'Referrals', icon: IMAGES.referral, label: 'Referral'},
+  {name: 'Profile', icon: IMAGES.profile, label: 'Profile'},
+  {name: 'Referral', icon: IMAGES.referral, label: 'Referral'},
   {
     name: 'ChangePassword',
     icon: IMAGES.changepassword,
@@ -41,7 +41,7 @@ const CustomDrawerContent = ({navigation}) => {
           </View>
           <TouchableHighlight
             onPress={handleCloseDrawer}
-            underlayColor="green"
+            underlayColor={false}
             style={{
               marginTop: verticalScale(10),
               right: horizontalScale(12),

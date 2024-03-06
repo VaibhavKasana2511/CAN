@@ -1,4 +1,6 @@
 import {StyleSheet} from 'react-native';
+import {moderateScale, verticalScale, horizontalScale} from '@utils/Metrics';
+
 export const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
@@ -6,47 +8,66 @@ export const styles = StyleSheet.create({
   },
   subContainer: {
     // backgroundColor: 'red',
-    padding: 15,
+    padding: moderateScale(15),
     justifyContent: 'space-between',
   },
   headingText: {
     fontFamily: 'Nunito-SemiBold',
     color: '#000000',
-    fontSize: 22,
+    fontSize: moderateScale(22),
   },
   accountImage: {
-    width: 90,
-    height: 90,
+    width: moderateScale(90),
+    height: moderateScale(90),
     backgroundColor: '#D9D9D9',
-    borderRadius: 100,
+    borderRadius: moderateScale(100),
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: verticalScale(10),
   },
   inputHeading: {
     color: '#000000A8',
     fontFamily: 'Nunito-Regular',
-    fontSize: 18,
+    fontSize: moderateScale(18),
   },
   textInput: {
-    borderWidth: 1,
+    borderWidth: moderateScale(1),
     borderColor: '#0A49755E',
-    borderRadius: 8,
-    paddingLeft: 15,
-    marginTop: 5,
+    borderRadius: moderateScale(8),
+    paddingLeft: horizontalScale(15),
+    marginTop: verticalScale(5),
   },
   passwordContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderWidth: 1,
+    borderWidth: moderateScale(1),
     borderColor: '#0A49755E',
-    borderRadius: 8,
-    marginTop: 5,
+    borderRadius: moderateScale(8),
+    marginTop: verticalScale(5),
   },
   allTextInput: {
-    marginTop: 10,
+    marginTop: verticalScale(10),
   },
   updateButton: {
     marginTop: '7%',
+  },
+  dateContainer: {
+    borderWidth: moderateScale(1),
+    borderColor: '#0A49755E',
+    borderRadius: moderateScale(8),
+    flexDirection: 'row',
+    height: verticalScale(50),
+    marginTop: verticalScale(5),
+  },
+  inputDate: {
+    paddingLeft: horizontalScale(10),
+    color: '#000000A8',
+    fontSize: moderateScale(16),
+    fontFamily: 'Nunito-Regular',
+    flex: 1,
+  },
+  dateIcon: {
+    margin: moderateScale(15),
+    marginRight: moderateScale(15),
   },
 });

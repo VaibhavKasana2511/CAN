@@ -5,12 +5,22 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {styles} from './Styles';
-import Header from '../../Components/common/Header/Header';
-import CustomButtom from '../../Components/common/customButton/CustomButtom';
+import {Header, CustomButtom, CustomPopUp} from '@components';
 
-const ChangePassword = () => {
+const ChangePassword = ({navigation}) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const openModal = () => {
+    setIsVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsVisible(false);
+    navigation.navigate('Login');
+  };
+
   return (
     <KeyboardAvoidingView style={styles.mainContainer}>
       <Header />
@@ -38,9 +48,15 @@ const ChangePassword = () => {
           />
         </View>
         <View style={styles.updateButton}>
-          <CustomButtom title="Update" />
+          <CustomButtom title="Update" onPress={openModal} />
         </View>
       </View>
+      <CustomPopUp
+        visible={isVisible}
+        onPress={closeModal}
+        buttonText="Continue"
+        text="Your password has been updated. You will now be redirected to the login screen"
+      />
     </KeyboardAvoidingView>
   );
 };

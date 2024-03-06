@@ -25,4 +25,5 @@ export const IMAGES = {
   referral: require('./DrawerImages/referral.png'),
   logout: require('./DrawerImages/logout.png'),
   cross: require('./DrawerImages/cross.png'),
+  back: require('./left.png'),
 };

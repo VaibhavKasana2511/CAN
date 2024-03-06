@@ -1,16 +1,22 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import {verticalScale, horizontalScale, moderateScale} from '@utils/Metrics';
+import {useNavigation} from '@react-navigation/native';
 
 const CustomButtom = ({title, onPress, twoButton, onPressCancel}) => {
+  const navigation = useNavigation();
   const [isAuthenticated, setIsAuthenticated] = useState(twoButton);
+
+  const handleCancel = () => {
+    navigation.goBack();
+  };
 
   return isAuthenticated ? (
     <View style={styles.cancelContainer}>
       <TouchableOpacity onPress={onPress} style={styles.resetButton}>
         <Text style={styles.resetText}>{title}</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={onPressCancel} style={styles.cancelButton}>
+      <TouchableOpacity onPress={handleCancel} style={styles.cancelButton}>
         <Text style={styles.resetText}>Cancel</Text>
       </TouchableOpacity>
     </View>

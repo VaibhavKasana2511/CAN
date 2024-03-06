@@ -11,8 +11,18 @@ import React from 'react';
 import {styles} from './Styles';
 import Header from '../../Components/common/Header/Header';
 import CustomButtom from '../../Components/common/customButton/CustomButtom';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import {IMAGES} from '@assets/images';
+import {useState} from 'react';
 
 const Profile = () => {
+  const [date, setDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const handleDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowDatePicker(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
   return (
     <View style={styles.mainContainer}>
       <Header />
@@ -32,15 +42,25 @@ const Profile = () => {
           </View>
           <View style={styles.allTextInput}>
             <Text style={styles.inputHeading}>Date of Birth</Text>
-            <View style={styles.passwordContainer}>
-              <TextInput style={{paddingLeft: 15}} placeholder="Select Date" />
-              <TouchableOpacity
-                style={{justifyContent: 'center', marginRight: 15}}>
-                <Image
-                  source={require('../../assets/images/calendarIcon.png')}
+            <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+              <View style={styles.dateContainer}>
+                <TextInput
+                  style={styles.inputDate}
+                  value={date.toLocaleDateString()}
+                  editable={false}
+                  placeholder="Enter Date"
                 />
-              </TouchableOpacity>
-            </View>
+                <Image style={styles.dateIcon} source={IMAGES.calendarIcon} />
+              </View>
+            </TouchableOpacity>
+            {showDatePicker && (
+              <DateTimePicker
+                value={date}
+                mode="date"
+                display="default"
+                onChange={handleDateChange}
+              />
+            )}
           </View>
           <View style={styles.allTextInput}>
             <Text style={styles.inputHeading}>Phone</Text>
