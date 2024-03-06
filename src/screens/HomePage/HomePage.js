@@ -3,7 +3,7 @@ import React from 'react';
 import {styles} from './Styles';
 import {Header} from '@components';
 import {IMAGES} from '@assets/images';
-import {verticalScale} from '../../utils/Metrics';
+import {verticalScale} from '@utils/Metrics';
 
 const HomePage = () => {
   const data = [

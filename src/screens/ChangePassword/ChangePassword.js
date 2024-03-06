@@ -23,7 +23,7 @@ const ChangePassword = ({navigation}) => {
 
   return (
     <KeyboardAvoidingView style={styles.mainContainer}>
-      <Header />
+      <Header drawer={false} back={true} />
       <View style={styles.subContainer}>
         <Text style={styles.headingText}>Change Password</Text>
         <View style={styles.updateButton}>

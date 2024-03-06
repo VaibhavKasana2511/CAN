@@ -1,8 +1,9 @@
 import {StyleSheet, Text, View, TextInput, Image, FlatList} from 'react-native';
 import React from 'react';
 import {styles} from './Styles';
-import Header from '../../Components/common/Header/Header';
-import CustomButtom from '../../Components/common/customButton/CustomButtom';
+import {Header, CustomButtom} from '@components';
+import {IMAGES} from '@assets/images';
+import {horizontalScale, moderateScale, verticalScale} from '@utils/Metrics';
 
 const data = [
   {
@@ -25,26 +26,17 @@ const Referral = () => {
       <View style={styles.listSection}>
         <Text style={styles.listName}>{item.name}</Text>
         <View style={{flexDirection: 'row'}}>
-          <Image
-            style={styles.Icon}
-            source={require('../../assets/images/dateIcon.png')}
-          />
+          <Image style={styles.Icon} source={IMAGES.dateIcon} />
           <Text style={styles.listMail}>{item.date}</Text>
         </View>
       </View>
       <View style={styles.listSection}>
-        <View style={{flexDirection: 'row', marginTop: 5}}>
-          <Image
-            style={styles.mailIcon}
-            source={require('../../assets/images/mailIcon.png')}
-          />
+        <View style={{flexDirection: 'row', marginTop: verticalScale(5)}}>
+          <Image style={styles.mailIcon} source={IMAGES.mailIcon} />
           <Text style={styles.listMail}>{item.email}</Text>
         </View>
-        <View style={{flexDirection: 'row', marginTop: 5}}>
-          <Image
-            style={styles.phoneIcon}
-            source={require('../../assets/images/phoneIcon.png')}
-          />
+        <View style={{flexDirection: 'row', marginTop: verticalScale(5)}}>
+          <Image style={styles.phoneIcon} source={IMAGES.phoneIcon} />
           <Text style={styles.listMail}>{item.phone}</Text>
         </View>
       </View>
@@ -53,7 +45,7 @@ const Referral = () => {
 
   return (
     <View style={styles.mainContainer}>
-      <Header />
+      <Header drawer={false} back={true} />
       <View style={styles.subContainer}>
         <Text style={styles.headingText}>
           Refer someone whom you think can be part of CAN

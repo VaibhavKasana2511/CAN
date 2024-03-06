@@ -9,8 +9,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {styles} from './Styles';
-import Header from '../../Components/common/Header/Header';
-import CustomButtom from '../../Components/common/customButton/CustomButtom';
+import {Header, CustomButtom} from '@components';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {IMAGES} from '@assets/images';
 import {useState} from 'react';
@@ -25,12 +24,12 @@ const Profile = () => {
   };
   return (
     <View style={styles.mainContainer}>
-      <Header />
+      <Header drawer={false} back={true} />
       <ScrollView>
         <View style={styles.subContainer}>
           <Text style={styles.headingText}>My Profile</Text>
           <View style={styles.accountImage}>
-            <Image source={require('../../assets/images/cameraIcon.png')} />
+            <Image source={IMAGES.cameraIcon} />
           </View>
           <View style={styles.allTextInput}>
             <Text style={styles.inputHeading}>Name</Text>
