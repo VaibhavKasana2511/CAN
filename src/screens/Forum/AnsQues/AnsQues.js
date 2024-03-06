@@ -2,8 +2,10 @@ import {Text, View, Image, TextInput, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import styles from './styles';
 import {CustomButtom, Header, CustomPopUp} from '@components';
+import {useNavigation} from '@react-navigation/native';
 
 const AnsQues = ({navigation}) => {
+  const nav = useNavigation();
   const [dbButton, setdbButton] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
   const [title, setTitle] = useState(false);
@@ -17,8 +19,9 @@ const AnsQues = ({navigation}) => {
     navigation.navigate('Details');
   };
 
-  const handlePost = () => {
-    console.log('firstQuestion');
+  const handleCancel = () => {
+    console.log('first');
+    navigation.goBack();
   };
 
   return (
@@ -45,11 +48,15 @@ const AnsQues = ({navigation}) => {
             Please be polite while answering the question. Refer to community
             guidelines for more info.
           </Text>
-          <CustomButtom title="Post" twoButton={dbButton} onPress={openModal} />
+          <CustomButtom
+            title="Post"
+            twoButton={dbButton}
+            onPressCancel={handleCancel}
+            onPress={openModal}
+          />
         </View>
       </View>
       <CustomPopUp
-        noTitle={title}
         visible={isVisible}
         onPress={closeModal}
         buttonText="Continue"

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -8,9 +8,9 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import {DrawerContentScrollView} from '@react-navigation/drawer';
-// import IMAGES from '../../assets/images/index';
 import {IMAGES} from '@assets/images';
 import {verticalScale, horizontalScale, moderateScale} from '@utils/Metrics';
+import {CustomPopUp} from '@components';
 
 const drawerItems = [
   {name: 'Profile', icon: IMAGES.profile, label: 'Profile'},
@@ -24,8 +24,30 @@ const drawerItems = [
 ];
 
 const CustomDrawerContent = ({navigation}) => {
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [button, setbutton] = useState(true);
+
   const handleCloseDrawer = () => {
     navigation.closeDrawer();
+  };
+
+  const handleLogout = () => {
+    console.log('papa');
+    setShowLogoutModal(false);
+    navigation.navigate('Login');
+  };
+
+  const handleCancel = () => {
+    setShowLogoutModal(false);
+  };
+
+  const closeDrawer = () => {
+    navigation.closeDrawer();
+  };
+
+  const handleLogoutPress = () => {
+    setShowLogoutModal(true);
+    closeDrawer();
   };
 
   return (
@@ -56,7 +78,13 @@ const CustomDrawerContent = ({navigation}) => {
             <TouchableOpacity
               key={index}
               style={styles.drawerItem}
-              onPress={() => navigation.navigate(item.name)}>
+              onPress={() => {
+                if (item.label === 'Logout') {
+                  handleLogoutPress();
+                } else {
+                  navigation.navigate(item.name);
+                }
+              }}>
               <View style={styles.imgContainer}>
                 <Image
                   source={item.icon}
@@ -73,6 +101,16 @@ const CustomDrawerContent = ({navigation}) => {
           ))}
         </View>
       </DrawerContentScrollView>
+      <CustomPopUp
+        title="Logout"
+        text="Are you sure you want to Logout?"
+        buttonText="Logout"
+        onPress={handleLogout}
+        doublebutton={true}
+        visible={showLogoutModal}
+        onPressCancel={handleCancel}
+        noTitle={true}
+      />
     </View>
   );
 };

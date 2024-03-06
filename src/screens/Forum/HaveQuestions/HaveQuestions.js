@@ -52,6 +52,7 @@ const HaveQuestions = ({navigation}) => {
           </Text>
         </View>
         <CustomButtom
+          onPressCancel={() => navigation.goBack()}
           title="Post"
           twoButton={dbButton}
           onPress={() => navigation.navigate('Details')}

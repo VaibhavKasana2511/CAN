@@ -9,11 +9,11 @@ const CustomPopUp = ({
   onPress,
   text,
   buttonText,
-  dButton,
+  doublebutton,
   noTitle,
   onPressCancel,
 }) => {
-  const [resetScreen, setResetScreen] = useState(dButton);
+  const [resetScreen, setResetScreen] = useState(doublebutton);
   const [isAuthenticated, setisAuthenticated] = useState(noTitle);
   return isAuthenticated ? (
     <Modal
@@ -28,7 +28,8 @@ const CustomPopUp = ({
           <CustomButtom
             title={buttonText}
             onPress={onPress}
-            twoButton={resetScreen}
+            twoButton={doublebutton}
+            onPressCancel={onPressCancel}
           />
         </View>
       </View>
@@ -46,6 +47,7 @@ const CustomPopUp = ({
             title={buttonText}
             onPress={onPress}
             twoButton={resetScreen}
+            onPressCancel={onPressCancel}
           />
         </View>
       </View>

@@ -26,4 +26,9 @@ export const IMAGES = {
   logout: require('./DrawerImages/logout.png'),
   cross: require('./DrawerImages/cross.png'),
   back: require('./left.png'),
+  whitehome: require('./TabNavigator/whitehome.png'),
+  whitecategory: require('./TabNavigator/whitecategory.png'),
+  whitecalendar: require('./TabNavigator/whitecalendar.png'),
+  whitechat: require('./TabNavigator/whitechat.png'),
+  whiteportfolio: require('./TabNavigator/whiteportfolio.png'),
 };

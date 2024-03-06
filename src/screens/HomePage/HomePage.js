@@ -1,4 +1,4 @@
-import {View, Text, FlatList, Image} from 'react-native';
+import {View, Text, Image, ScrollView} from 'react-native';
 import React from 'react';
 import {styles} from './Styles';
 import {Header} from '@components';
@@ -14,6 +14,7 @@ const HomePage = () => {
       Round_Size: 'INR 50 Lakhs',
       Valuation: 'INR 3.6 cr',
       Commitment: 'INR 20 Lakhs',
+      type: 'items',
     },
     {
       name: 'Chaiwala',
@@ -22,6 +23,16 @@ const HomePage = () => {
       Round_Size: 'INR 50 Lakhs',
       Valuation: 'INR 3.6 cr',
       Commitment: 'INR 20 Lakhs',
+      type: 'items',
+    },
+    {
+      name: 'Chaiwala',
+      Text: 'Authentic Indian Tea',
+      MRR: 'INR 1.50 Lakhs',
+      Round_Size: 'INR 50 Lakhs',
+      Valuation: 'INR 3.6 cr',
+      Commitment: 'INR 20 Lakhs',
+      type: 'items',
     },
   ];
 
@@ -33,6 +44,7 @@ const HomePage = () => {
       agenda: 'Lorem Ipsum is simply dummy',
       time: '4 PM',
       location: 'Office',
+      type: 'events',
     },
     {
       date: '12',
@@ -41,11 +53,21 @@ const HomePage = () => {
       agenda: 'Lorem Ipsum is simply dummy',
       time: '6 PM',
       location: 'Virtual',
+      type: 'events',
+    },
+    {
+      date: '12',
+      month: 'NOV',
+      Meeting: 'Web Summit Pitch 2022',
+      agenda: 'Lorem Ipsum is simply dummy',
+      time: '6 PM',
+      location: 'Virtual',
+      type: 'events',
     },
   ];
 
-  const renderItem = ({item}) => (
-    <View style={styles.listContainer}>
+  const renderItem = ({item, index}) => (
+    <View key={index} style={styles.listContainer}>
       <View style={styles.section1}>
         <Image source={IMAGES.contentImage} />
         <View style={{marginLeft: verticalScale(10)}}>
@@ -73,7 +95,7 @@ const HomePage = () => {
   );
 
   const renderEvents = ({item, index}) => (
-    <View style={styles.calendarMain}>
+    <View key={index} style={styles.calendarMain}>
       <View style={styles.calendarContainer}>
         <Text style={styles.calendarDate}>{item.date}</Text>
         <Text style={styles.calendarMonth}>{item.month}</Text>
@@ -94,7 +116,9 @@ const HomePage = () => {
           <View
             style={{flexDirection: 'row', flex: 1, justifyContent: 'center'}}>
             <Image style={{marginTop: 2}} source={IMAGES.landmarkIcon} />
-            <Text style={{marginBottom: 2, marginLeft: 5}}>{item.time}</Text>
+            <Text style={{marginBottom: 2, marginLeft: 5}}>
+              {item.location}
+            </Text>
           </View>
         </View>
       </View>
@@ -104,12 +128,18 @@ const HomePage = () => {
   return (
     <View style={styles.mainContainer}>
       <Header />
-      <View style={styles.contentContainer}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.contentContainer}>
         <Text style={styles.headingText}>Active Mandate</Text>
-        <FlatList renderItem={renderItem} data={data} />
+        {data.map((item, index) =>
+          item.type === 'items' ? renderItem({item, index}) : null,
+        )}
         <Text style={styles.headingText}>Calendar</Text>
-        <FlatList renderItem={renderEvents} data={date} />
-      </View>
+        {date.map((item, index) =>
+          item.type === 'events' ? renderEvents({item, index}) : null,
+        )}
+      </ScrollView>
     </View>
   );
 };

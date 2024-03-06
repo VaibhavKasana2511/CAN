@@ -16,7 +16,7 @@ const CustomButtom = ({title, onPress, twoButton, onPressCancel}) => {
       <TouchableOpacity onPress={onPress} style={styles.resetButton}>
         <Text style={styles.resetText}>{title}</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={handleCancel} style={styles.cancelButton}>
+      <TouchableOpacity onPress={onPressCancel} style={styles.cancelButton}>
         <Text style={styles.resetText}>Cancel</Text>
       </TouchableOpacity>
     </View>
