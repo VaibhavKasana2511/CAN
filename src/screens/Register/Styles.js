@@ -66,5 +66,13 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(16),
     fontFamily: 'Nunito-SemiBold',
   },
+  dropDown: {
+    borderWidth: moderateScale(1),
+    borderColor: '#0A49755E',
+    borderRadius: moderateScale(8),
+    paddingLeft: horizontalScale(15),
+    marginTop: verticalScale(5),
+    paddingVertical: verticalScale(10),
+  },
 });
 export default styles;

@@ -32,7 +32,6 @@ const CustomDrawerContent = ({navigation}) => {
   };
 
   const handleLogout = () => {
-    console.log('papa');
     setShowLogoutModal(false);
     navigation.navigate('Login');
   };
