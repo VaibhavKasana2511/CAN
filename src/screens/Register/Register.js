@@ -42,7 +42,7 @@ const Register = ({navigation}) => {
         setIsVisible(false);
       }
     } catch (error) {
-      console.error('Error during registration:', error);
+      // console.error('Error during registration:', error);
       setIsVisible(false);
     }
   };
@@ -100,7 +100,7 @@ const Register = ({navigation}) => {
                 <Text style={styles.inputHeading}>Password</Text>
                 <View style={styles.passwordContainer}>
                   <TextInput
-                    style={{paddingLeft: horizontalScale(15), width: '80%'}}
+                    style={{paddingLeft: horizontalScale(15), width: '90%'}}
                     placeholder="Enter Password"
                     onChangeText={handleChange('password')}
                     value={values.password}

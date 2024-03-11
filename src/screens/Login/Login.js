@@ -52,7 +52,10 @@ const Login = ({navigation}) => {
           <Text style={styles.inputHeading}>Password</Text>
           <View style={styles.passwordContainer}>
             <TextInput
-              style={{paddingLeft: verticalScale(10)}}
+              style={{
+                paddingLeft: horizontalScale(10),
+                width: '90%',
+              }}
               placeholder="Enter Password"
               onChangeText={text => setPassword(text)}
               value={password}

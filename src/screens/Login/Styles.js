@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(5),
   },
   eyeLogo: {
-    margin: moderateScale(15),
+    marginTop: verticalScale(16),
     marginRight: verticalScale(15),
   },
   resetContainer: {

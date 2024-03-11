@@ -12,6 +12,7 @@ import URL from './endpoints';
 //   },
 //   body: JSON.stringify({param}),
 // };
+// Assuming you have an action creator for login success
 
 export const loginUser = async (param, dispatch, navigation) => {
   console.log('LOGIN PARAM', param);
@@ -28,17 +29,19 @@ export const loginUser = async (param, dispatch, navigation) => {
 
     if (response.ok) {
       if (data.status === false) {
-        Alert.alert("Oops can't signn in", data.message);
+        Alert.alert("Oops can't sign in", data.message);
       } else {
         console.log('Success', data.message, data);
-        dispatch(loginSuccess(data));
+        dispatch(loginSuccess(data)); // Dispatch action to update Redux store
         navigation.navigate('Home');
       }
     } else {
-      console.error('Login failed:', data);
+      // Handle non-OK response statuses
+      Alert.alert('Login failed:', data.message || 'Unknown error');
     }
   } catch (error) {
-    console.error('Error during Login:', error);
+    // Handle network errors or other exceptions
+    Alert.alert('Error during Login:', error.message || 'Unknown error');
   }
 };
 
@@ -94,11 +97,11 @@ export const registerUser = async param => {
         return true; // Registration successful
       }
     } else {
-      console.error('Registration failed:', data);
+      // console.error('Registration failed:', data);
       return false; // Registration failed
     }
   } catch (error) {
-    console.error('Error during registration:', error);
+    // console.error('Error during registration:', error);
     return false; // Registration failed
   }
 };
@@ -110,9 +113,9 @@ export const fetchStateList = async dispatch => {
     if (data && data.result && Array.isArray(data.result)) {
       dispatch(fetchStates(data));
     } else {
-      console.error('Invalid state data format:', data);
+      // console.error('Invalid state data format:', data);
     }
   } catch (error) {
-    console.error('Error fetching state data:', error);
+    // console.error('Error fetching state data:', error);
   }
 };

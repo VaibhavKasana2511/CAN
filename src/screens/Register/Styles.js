@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     margin: moderateScale(20),
     padding: moderateScale(20),
     paddingHorizontal: horizontalScale(25),
-    height: verticalScale(800),
+    height: verticalScale(850),
     backgroundColor: '#FFFFFF',
     borderRadius: moderateScale(20),
     shadowColor: '#00000040',
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
-    fontSize: moderateScale(13),
+    fontSize: moderateScale(12),
   },
 });
 export default styles;

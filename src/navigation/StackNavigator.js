@@ -11,11 +11,14 @@ import {
   AnsQues,
   IntroSlider,
 } from '@screens';
+import {useSelector} from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
-  return (
+  const userState = useSelector(state => state.auth.user);
+  console.log('NAVIGATOR', userState);
+  return !userState ? (
     <Stack.Navigator
       initialRouteName="IntroSlider"
       screenOptions={{headerShown: false}}>
@@ -27,6 +30,18 @@ const StackNavigator = () => {
       <Stack.Screen name="HaveQuestions" component={HaveQuestions} />
       <Stack.Screen name="AnsQues" component={AnsQues} />
       <Stack.Screen name="Home" component={DrawerNavigator} />
+    </Stack.Navigator>
+  ) : (
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Home" component={DrawerNavigator} />
+      <Stack.Screen name="Details" component={Details} />
+      <Stack.Screen name="HaveQuestions" component={HaveQuestions} />
+      <Stack.Screen name="AnsQues" component={AnsQues} />
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="ResetPassword" component={ResetPassword} />
     </Stack.Navigator>
   );
 };

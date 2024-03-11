@@ -4,7 +4,8 @@ import RootNavigator from './src/navigation/RootNavigator';
 import {IntroSlider} from './src/screens';
 import SplashScreen from 'react-native-splash-screen';
 import {Provider} from 'react-redux';
-import store from './src/redux/store';
+import {PersistGate} from 'redux-persist/integration/react';
+import {persistor, store} from './src/redux/store/configureStore';
 
 const App = () => {
   useEffect(() => {
@@ -13,7 +14,9 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <RootNavigator />
+      <PersistGate persistor={persistor}>
+        <RootNavigator />
+      </PersistGate>
     </Provider>
   );
 };
