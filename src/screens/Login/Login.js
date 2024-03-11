@@ -1,7 +1,6 @@
 import {
   Image,
   KeyboardAvoidingView,
-  StyleSheet,
   Text,
   TextInput,
   View,
@@ -13,13 +12,11 @@ import {AuthHeader, CustomButtom} from '@components';
 import {horizontalScale, verticalScale, moderateScale} from '@utils/Metrics';
 import {IMAGES} from '@assets/images';
 import {useState} from 'react';
-import {loginUser} from '../../utils/services/ApiCalling';
+import {loginUser} from '@utils/services/ApiCalling';
 import {useDispatch, useSelector} from 'react-redux';
 
 const Login = ({navigation}) => {
   const dispatch = useDispatch();
-  const userState = useSelector(state => state.auth.user);
-  console.log('LOGINNNN', userState);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -34,8 +31,7 @@ const Login = ({navigation}) => {
   };
 
   const handleLogin = () => {
-    loginUser(param, dispatch);
-    navigation.navigate('Home');
+    loginUser(param, dispatch, navigation);
   };
 
   return (

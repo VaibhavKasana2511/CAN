@@ -2,7 +2,7 @@ import {View, Text, Alert} from 'react-native';
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import {fetchStates, loginSuccess} from '../../redux/action/authAction';
-import {createLanguageService} from 'typescript';
+import URL from './endpoints';
 
 // const dispatch = useDispatch();
 // const requestOptions = {
@@ -13,10 +13,10 @@ import {createLanguageService} from 'typescript';
 //   body: JSON.stringify({param}),
 // };
 
-export const loginUser = async (param, dispatch) => {
+export const loginUser = async (param, dispatch, navigation) => {
   console.log('LOGIN PARAM', param);
   try {
-    const response = await fetch('http://54.190.192.105:9185/angel/login', {
+    const response = await fetch(`${URL.BASE_URL}${URL.LOGIN}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,8 +27,13 @@ export const loginUser = async (param, dispatch) => {
     const data = await response.json();
 
     if (response.ok) {
-      console.log('Response:', data);
-      dispatch(loginSuccess(data));
+      if (data.status === false) {
+        Alert.alert("Oops can't signn in", data.message);
+      } else {
+        console.log('Success', data.message, data);
+        dispatch(loginSuccess(data));
+        navigation.navigate('Home');
+      }
     } else {
       console.error('Login failed:', data);
     }
@@ -37,10 +42,39 @@ export const loginUser = async (param, dispatch) => {
   }
 };
 
+// export const registerUser = async param => {
+//   console.log('PARAMSS>>>>', param);
+//   try {
+//     const response = await fetch('http://54.190.192.105:9185/angel/register', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(param),
+//     });
+//     console.log('POST request completed.');
+
+//     const data = await response.json();
+
+//     if (response.ok) {
+//       if (data.status === false) {
+//         Alert.alert('Oops something went wrong', data.message);
+//       } else {
+//         Alert.alert(data.message);
+//       }
+//     } else {
+//       console.error('Registration failed:', data);
+//       //   Alert.alert('Registration Failed');
+//     }
+//   } catch (error) {
+//     console.error('Error during registration:', error);
+//   }
+// };
+
 export const registerUser = async param => {
   console.log('PARAMSS>>>>', param);
   try {
-    const response = await fetch('http://54.190.192.105:9185/angel/register', {
+    const response = await fetch(`${URL.BASE_URL}${URL.REGISTER}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -52,22 +86,26 @@ export const registerUser = async param => {
     const data = await response.json();
 
     if (response.ok) {
-      console.log('Response:', data);
-      //   Alert.alert('User Registered Successfully');
+      if (data.status === false) {
+        Alert.alert('Oops something went wrong', data.message);
+        return false; // Registration failed
+      } else {
+        // Alert.alert(data.message);
+        return true; // Registration successful
+      }
     } else {
       console.error('Registration failed:', data);
-      //   Alert.alert('Registration Failed');
+      return false; // Registration failed
     }
   } catch (error) {
     console.error('Error during registration:', error);
+    return false; // Registration failed
   }
 };
 
 export const fetchStateList = async dispatch => {
   try {
-    const response = await fetch(
-      'http://54.190.192.105:9185/angel/get_all_state',
-    );
+    const response = await fetch(`${URL.BASE_URL}${URL.STATE_LIST}`);
     const data = await response.json();
     if (data && data.result && Array.isArray(data.result)) {
       dispatch(fetchStates(data));

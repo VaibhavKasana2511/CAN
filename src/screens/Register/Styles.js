@@ -75,5 +75,9 @@ const styles = StyleSheet.create({
     paddingVertical: verticalScale(10),
     paddingRight: horizontalScale(10),
   },
+  errorText: {
+    color: 'red',
+    fontSize: moderateScale(13),
+  },
 });
 export default styles;

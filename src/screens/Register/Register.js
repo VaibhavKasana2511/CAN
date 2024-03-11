@@ -1,23 +1,25 @@
 import {
-  KeyboardAvoidingView,
-  StyleSheet,
   Text,
   View,
   Image,
   ScrollView,
   TextInput,
   TouchableOpacity,
-  Modal,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import styles from './Styles';
-import {AuthHeader, CustomButtom, CustomPopUp} from '@components';
+import {
+  AuthHeader,
+  CustomButtom,
+  CustomPopUp,
+  registerSchema,
+} from '@components';
 import {horizontalScale} from '@utils/Metrics';
 import {IMAGES} from '@assets/images';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useDispatch, useSelector} from 'react-redux';
-import {registerUser, fetchStateList} from '../../utils/services/ApiCalling';
-import {State} from 'react-native-gesture-handler';
+import {registerUser, fetchStateList} from '@utils/services/ApiCalling';
+import {Formik} from 'formik';
 
 const Register = ({navigation}) => {
   const dispatch = useDispatch();
@@ -27,28 +29,22 @@ const Register = ({navigation}) => {
   }, [dispatch]);
 
   const allstate = useSelector(state => state.auth.allstates?.result ?? []);
-
   const [isVisible, setIsVisible] = useState(false);
   const [title, setTitle] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [organization, setOrganization] = useState('');
-  const [state, setState] = useState('');
-  const [city, setCity] = useState('');
 
-  param = {
-    name: name,
-    email: email,
-    password: password,
-    organization: organization,
-    state: state,
-    city: city,
-  };
-
-  const openModal = () => {
-    setIsVisible(true);
-    registerUser(param);
+  const openModal = async values => {
+    try {
+      const registrationSuccess = await registerUser(values);
+      console.log('RESPONSE', registrationSuccess);
+      if (registrationSuccess) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    } catch (error) {
+      console.error('Error during registration:', error);
+      setIsVisible(false);
+    }
   };
 
   const closeModal = () => {
@@ -63,73 +59,107 @@ const Register = ({navigation}) => {
       <AuthHeader height={246} />
       <View style={styles.registerContainer}>
         <Text style={styles.registerTitle}>Become an Investor</Text>
-        <View>
-          <Text style={styles.inputHeading}>Name</Text>
-          <TextInput
-            onChangeText={text => setName(text)}
-            value={name}
-            style={styles.textInput}
-            placeholder="Enter Name"
-          />
-        </View>
-        <View>
-          <Text style={styles.inputHeading}>Email</Text>
-          <TextInput
-            onChangeText={text => setEmail(text)}
-            value={email}
-            style={styles.textInput}
-            placeholder="Enter Email"
-          />
-        </View>
-        <View>
-          <Text style={styles.inputHeading}>Password</Text>
-          <View style={styles.passwordContainer}>
-            <TextInput
-              style={{paddingLeft: horizontalScale(15), width: '80%'}}
-              placeholder="Enter Password"
-              onChangeText={text => setPassword(text)}
-              value={password}
-            />
-            <TouchableOpacity>
-              <Image style={styles.eyeLogo} source={IMAGES.eyehidden} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View>
-          <Text style={styles.inputHeading}>Organization</Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Enter Organization"
-            onChangeText={text => setOrganization(text)}
-            value={organization}
-          />
-        </View>
-        <View>
-          <Text style={styles.inputHeading}>State</Text>
-          <Dropdown
-            data={allstate}
-            labelField="state"
-            valueField="_id"
-            onChange={item => setState(item.state)}
-            placeholder="Select State"
-            style={styles.dropDown}
-            value={state}
-          />
-        </View>
-        <View>
-          <Text style={styles.inputHeading}>City</Text>
-          <TextInput
-            onChangeText={text => setCity(text)}
-            value={city}
-            style={styles.textInput}
-            placeholder="Enter City"
-            placeholderTextColor="grey"
-          />
-        </View>
-        <CustomButtom onPress={openModal} title="Register" />
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.haveAccount}>Already have an account?</Text>
-        </TouchableOpacity>
+        <Formik
+          initialValues={{
+            name: '',
+            email: '',
+            password: '',
+            organization: '',
+            state: '',
+            city: '',
+          }}
+          onSubmit={openModal}
+          validationSchema={registerSchema}>
+          {({handleChange, handleSubmit, values, errors, touched}) => (
+            <View>
+              <View>
+                <Text style={styles.inputHeading}>Name</Text>
+                <TextInput
+                  onChangeText={handleChange('name')}
+                  value={values.name}
+                  style={styles.textInput}
+                  placeholder="Enter Name"
+                />
+                {touched.name && errors.name && (
+                  <Text style={styles.errorText}>{errors.name}</Text>
+                )}
+              </View>
+              <View>
+                <Text style={styles.inputHeading}>Email</Text>
+                <TextInput
+                  onChangeText={handleChange('email')}
+                  value={values.email}
+                  style={styles.textInput}
+                  placeholder="Enter Email"
+                />
+                {touched.email && errors.email && (
+                  <Text style={styles.errorText}>{errors.email}</Text>
+                )}
+              </View>
+              <View>
+                <Text style={styles.inputHeading}>Password</Text>
+                <View style={styles.passwordContainer}>
+                  <TextInput
+                    style={{paddingLeft: horizontalScale(15), width: '80%'}}
+                    placeholder="Enter Password"
+                    onChangeText={handleChange('password')}
+                    value={values.password}
+                  />
+                  <TouchableOpacity>
+                    <Image style={styles.eyeLogo} source={IMAGES.eyehidden} />
+                  </TouchableOpacity>
+                </View>
+                {touched.password && errors.password && (
+                  <Text style={styles.errorText}>{errors.password}</Text>
+                )}
+              </View>
+              <View>
+                <Text style={styles.inputHeading}>Organization</Text>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder="Enter Organization"
+                  onChangeText={handleChange('organization')}
+                  value={values.organization}
+                />
+                {touched.organization && errors.organization && (
+                  <Text style={styles.errorText}>{errors.organization}</Text>
+                )}
+              </View>
+              <View>
+                <Text style={styles.inputHeading}>State</Text>
+                <Dropdown
+                  data={allstate}
+                  labelField="state"
+                  valueField="_id"
+                  onChange={item => handleChange('state')(item.state)}
+                  placeholder="Select State"
+                  style={styles.dropDown}
+                  value={values.state}
+                />
+                {touched.state && errors.state && (
+                  <Text style={styles.errorText}>{errors.state}</Text>
+                )}
+              </View>
+              <View>
+                <Text style={styles.inputHeading}>City</Text>
+                <TextInput
+                  onChangeText={handleChange('city')}
+                  value={values.city}
+                  style={styles.textInput}
+                  placeholder="Enter City"
+                  placeholderTextColor="grey"
+                />
+                {touched.city && errors.city && (
+                  <Text style={styles.errorText}>{errors.city}</Text>
+                )}
+              </View>
+              <CustomButtom onPress={handleSubmit} title="Register" />
+              <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.haveAccount}>Already have an account?</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </Formik>
       </View>
       <CustomPopUp
         noTitle={title}
