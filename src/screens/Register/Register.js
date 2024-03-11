@@ -31,6 +31,7 @@ const Register = ({navigation}) => {
   const allstate = useSelector(state => state.auth.allstates?.result ?? []);
   const [isVisible, setIsVisible] = useState(false);
   const [title, setTitle] = useState(false);
+  const [showPassword, setShowPassword] = useState(null);
 
   const openModal = async values => {
     try {
@@ -104,8 +105,10 @@ const Register = ({navigation}) => {
                     placeholder="Enter Password"
                     onChangeText={handleChange('password')}
                     value={values.password}
+                    secureTextEntry={showPassword}
                   />
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => setShowPassword(!showPassword)}>
                     <Image style={styles.eyeLogo} source={IMAGES.eyehidden} />
                   </TouchableOpacity>
                 </View>

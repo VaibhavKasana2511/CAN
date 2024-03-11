@@ -19,6 +19,7 @@ const Login = ({navigation}) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(null);
 
   const param = {email: email, password: password};
 
@@ -59,8 +60,9 @@ const Login = ({navigation}) => {
               placeholder="Enter Password"
               onChangeText={text => setPassword(text)}
               value={password}
+              secureTextEntry={showPassword}
             />
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
               <Image style={styles.eyeLogo} source={IMAGES.eyehidden} />
             </TouchableOpacity>
           </View>
