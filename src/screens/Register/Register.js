@@ -16,7 +16,7 @@ import {horizontalScale} from '@utils/Metrics';
 import {IMAGES} from '@assets/images';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useDispatch, useSelector} from 'react-redux';
-import {addUser, fetchStateList} from '../../utils/services/ApiCalling';
+import {registerUser, fetchStateList} from '../../utils/services/ApiCalling';
 import {State} from 'react-native-gesture-handler';
 
 const Register = ({navigation}) => {
@@ -48,7 +48,7 @@ const Register = ({navigation}) => {
 
   const openModal = () => {
     setIsVisible(true);
-    addUser(param);
+    registerUser(param);
   };
 
   const closeModal = () => {
@@ -85,7 +85,7 @@ const Register = ({navigation}) => {
           <Text style={styles.inputHeading}>Password</Text>
           <View style={styles.passwordContainer}>
             <TextInput
-              style={{paddingLeft: horizontalScale(15)}}
+              style={{paddingLeft: horizontalScale(15), width: '80%'}}
               placeholder="Enter Password"
               onChangeText={text => setPassword(text)}
               value={password}

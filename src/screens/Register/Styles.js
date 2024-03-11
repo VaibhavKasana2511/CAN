@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(5),
   },
   eyeLogo: {
-    margin: moderateScale(15),
-    marginRight: verticalScale(15),
+    marginRight: moderateScale(15),
+    marginTop: moderateScale(16),
   },
   registerText: {
     color: '#000000',
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     paddingLeft: horizontalScale(15),
     marginTop: verticalScale(5),
     paddingVertical: verticalScale(10),
+    paddingRight: horizontalScale(10),
   },
 });
 export default styles;

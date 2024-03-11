@@ -4,8 +4,12 @@ import {styles} from './Styles';
 import {Header} from '@components';
 import {IMAGES} from '@assets/images';
 import {verticalScale} from '@utils/Metrics';
+import {useSelector} from 'react-redux';
 
 const HomePage = () => {
+  const userState = useSelector(state => state.auth.user);
+  console.log('HOMEPAGEEE>>>>>>', userState);
+
   const data = [
     {
       name: 'Jerry Infotech',

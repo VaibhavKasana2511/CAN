@@ -12,14 +12,30 @@ import styles from './Styles';
 import {AuthHeader, CustomButtom} from '@components';
 import {horizontalScale, verticalScale, moderateScale} from '@utils/Metrics';
 import {IMAGES} from '@assets/images';
+import {useState} from 'react';
+import {loginUser} from '../../utils/services/ApiCalling';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Login = ({navigation}) => {
+  const dispatch = useDispatch();
+  const userState = useSelector(state => state.auth.user);
+  console.log('LOGINNNN', userState);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const param = {email: email, password: password};
+
   const handleResetPassword = () => {
     navigation.navigate('ResetPassword');
   };
 
   const handleRegister = () => {
     navigation.navigate('Register');
+  };
+
+  const handleLogin = () => {
+    loginUser(param, dispatch);
+    navigation.navigate('Home');
   };
 
   return (
@@ -29,7 +45,12 @@ const Login = ({navigation}) => {
         <Text style={styles.titleLogin}>Login</Text>
         <View>
           <Text style={styles.inputHeading}>Email</Text>
-          <TextInput style={styles.textInput} placeholder="Enter Email" />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter Email"
+            onChangeText={text => setEmail(text)}
+            value={email}
+          />
         </View>
         <View>
           <Text style={styles.inputHeading}>Password</Text>
@@ -37,6 +58,8 @@ const Login = ({navigation}) => {
             <TextInput
               style={{paddingLeft: verticalScale(10)}}
               placeholder="Enter Password"
+              onChangeText={text => setPassword(text)}
+              value={password}
             />
             <TouchableOpacity>
               <Image style={styles.eyeLogo} source={IMAGES.eyehidden} />
@@ -51,10 +74,7 @@ const Login = ({navigation}) => {
             <Text style={styles.forgotPassword}>Become an Investor</Text>
           </TouchableOpacity>
         </View>
-        <CustomButtom
-          onPress={() => navigation.navigate('Home')}
-          title="Login"
-        />
+        <CustomButtom onPress={handleLogin} title="Login" />
       </View>
     </KeyboardAvoidingView>
   );

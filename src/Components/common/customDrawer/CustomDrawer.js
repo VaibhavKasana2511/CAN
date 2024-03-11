@@ -11,6 +11,8 @@ import {DrawerContentScrollView} from '@react-navigation/drawer';
 import {IMAGES} from '@assets/images';
 import {verticalScale, horizontalScale, moderateScale} from '@utils/Metrics';
 import {CustomPopUp} from '@components';
+import {useDispatch} from 'react-redux';
+import {logoutUser} from '../../../redux/action/authAction';
 
 const drawerItems = [
   {name: 'Profile', icon: IMAGES.profile, label: 'Profile'},
@@ -24,6 +26,7 @@ const drawerItems = [
 ];
 
 const CustomDrawerContent = ({navigation}) => {
+  const dispatch = useDispatch();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [button, setbutton] = useState(true);
 
@@ -33,6 +36,7 @@ const CustomDrawerContent = ({navigation}) => {
 
   const handleLogout = () => {
     setShowLogoutModal(false);
+    dispatch(logoutUser());
     navigation.navigate('Login');
   };
 
