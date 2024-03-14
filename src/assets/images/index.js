@@ -31,4 +31,5 @@ export const IMAGES = {
   whitecalendar: require('./TabNavigator/whitecalendar.png'),
   whitechat: require('./TabNavigator/whitechat.png'),
   whiteportfolio: require('./TabNavigator/whiteportfolio.png'),
+  pdf: require('./pdf.png'),
 };

@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {verticalScale, moderateScale, horizontalScale} from '@utils/Metrics';
+import {ValidationError} from 'yup';
 
 export default styles = StyleSheet.create({
   mainContainer: {
@@ -10,6 +11,7 @@ export default styles = StyleSheet.create({
 
   subContainer: {
     padding: moderateScale(15),
+    flex: 1,
   },
 
   inputContainer: {
@@ -24,11 +26,13 @@ export default styles = StyleSheet.create({
     borderWidth: moderateScale(1),
     borderRadius: moderateScale(10),
     borderColor: 'rgba(10, 73, 117, 0.37)',
+    marginBottom: verticalScale(5),
   },
 
   sendBtn: {
     position: 'absolute',
     right: horizontalScale(15),
+    bottom: verticalScale(15),
   },
 
   myMsgContainer: {

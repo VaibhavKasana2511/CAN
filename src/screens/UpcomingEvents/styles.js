@@ -71,6 +71,7 @@ export default styles = StyleSheet.create({
     fontSize: moderateScale(14),
     color: 'rgba(0, 0, 0, 1)',
     fontFamily: 'Nunito-Medium',
+    marginRight: horizontalScale(5),
   },
 
   subContainerUrl: {
@@ -91,5 +92,10 @@ export default styles = StyleSheet.create({
     color: '#000000',
     marginBottom: verticalScale(10),
     fontFamily: 'Nunito-Medium',
+  },
+  pdfLogo: {
+    backgroundColor: 'white',
+    paddingTop: verticalScale(10),
+    marginLeft: horizontalScale(5),
   },
 });

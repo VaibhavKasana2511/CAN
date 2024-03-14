@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -11,45 +11,50 @@ import styles from './styles';
 import {Header} from '@components';
 import {IMAGES} from '@assets/images';
 import {Calendar} from 'react-native-calendars';
+import {fetchUpcomingEvents} from '../../utils/services/ApiCalling';
+import {useSelector} from 'react-redux';
 
 const UpcomingEvents = () => {
-  const [selectDate, setSelectDate] = useState(null);
+  const token = useSelector(state => state.auth.user?.Token);
+  const [selectDate, setSelectDate] = useState('2023-09-10');
+  const [events, setEvents] = useState([]);
 
-  const events = [
-    {
-      topic: 'Pitch Session 1: Jasper Infotech',
-      type: 'Pitch Session',
-      time: '4 PM',
-      location: 'Virtual',
-      agenda:
-        'Pitch Session for 3 startups: Jasper Infotech, My Home, XYZ housing',
-      Meeting: 'https://zoom.us/meeting_id/32432',
-      Document: 'PDF',
-    },
-    {
-      topic: 'Pitch Session 2: My Home',
-      type: 'Pitch Session',
-      time: '4 PM',
-      location: 'Virtual',
-      agenda:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-      Meeting: 'https://zoom.us/meeting_id/32432',
-      Document: 'PDF',
-    },
-    {
-      topic: 'Pitch Session 3: My Home',
-      type: 'Pitch Session',
-      time: '4 PM',
-      location: 'Virtual',
-      agenda: 'Pitch Session for My Home',
-      Meeting: 'https://zoom.us/meeting_id/32432',
-      Document: 'PDF',
-    },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log('Token', token);
+      try {
+        const data = await fetchUpcomingEvents(token);
+        setEvents(data);
+        console.log('Data:', data);
+      } catch (error) {
+        console.error('Error fetching upcoming events:', error);
+      }
+    };
+    fetchData();
+  }, [token]);
 
-  const handleMeetingLinkPress = url => {
-    Linking.openURL(url);
+  const isValidUrl = url => {
+    const urlPattern = /\.(com|org|net|gov|edu)$/i;
+    return urlPattern.test(url);
   };
+
+  const handleMeetingLinkPress = async url => {
+    try {
+      let fullUrl =
+        url.startsWith('http://') || url.startsWith('https://')
+          ? url
+          : 'https://' + url;
+      console.log('Attempting to open URL:', fullUrl);
+      Linking.openURL(fullUrl);
+    } catch (error) {
+      console.error('Error opening URL: ', error);
+      Alert.alert('Error', 'Unable to open URL');
+    }
+  };
+
+  const filteredEvents = events.filter(item => {
+    return selectDate && item.date.split('T')[0] === selectDate;
+  });
 
   return (
     <ScrollView>
@@ -75,26 +80,21 @@ const UpcomingEvents = () => {
 
           <View style={styles.selectDateContainer}>
             <Text style={styles.selectDateText}>
-              {selectDate ? selectDate : 'No date selected'}
+              {selectDate ? selectDate : 'Select a Date'}
             </Text>
           </View>
-
-          {events.map((item, index) => (
+          {filteredEvents.map((item, index) => (
             <View key={index} style={styles.itemsContainer}>
               <Text style={styles.topicTxt}>{item.topic}</Text>
               <View style={styles.items}>
                 <View style={{flexDirection: 'row'}}>
                   <Text style={styles.typeTxt}>Type: </Text>
                   <Text style={{fontFamily: 'Nunito-Regular', fontSize: 16}}>
-                    {item.type}
+                    {item.title}
                   </Text>
                 </View>
 
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Image source={IMAGES.clock} />
                   <Text style={styles.imgTxt}>{item.time}</Text>
                 </View>
@@ -104,7 +104,7 @@ const UpcomingEvents = () => {
                   <Text style={styles.imgTxt}>{item.location}</Text>
                 </View>
               </View>
-              <Text style={styles.subContainerAgenda}>{item.agenda}</Text>
+              <Text style={styles.subContainerAgenda}>{item.description}</Text>
 
               <View
                 style={{
@@ -113,12 +113,28 @@ const UpcomingEvents = () => {
                   marginTop: 5,
                 }}>
                 <Text style={styles.subContainerMeetingText}>Meeting URL:</Text>
-                <TouchableOpacity
-                  onPress={() => handleMeetingLinkPress(item.Meeting)}>
-                  <Text style={styles.subContainerUrl}> {item.Meeting}</Text>
-                </TouchableOpacity>
+                {isValidUrl(item.meeting_url) ? (
+                  <TouchableOpacity
+                    onPress={() => handleMeetingLinkPress(item.meeting_url)}>
+                    <Text style={styles.subContainerUrl}>
+                      {item.meeting_url}
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
+                  <Text style={styles.subContainerMeetingText}>None</Text>
+                )}
               </View>
-              <Text style={styles.pdfTxt}>Pitch Deck: {item.Document}</Text>
+              <Text style={styles.pdfTxt}>
+                Pitch Deck:
+                {item.file.map((fileUrl, i) => (
+                  <TouchableOpacity
+                    key={i}
+                    style={styles.pdfLogo}
+                    onPress={() => handleMeetingLinkPress(fileUrl)}>
+                    <Image style={{paddingTop: 10}} source={IMAGES.pdf} />
+                  </TouchableOpacity>
+                ))}
+              </Text>
             </View>
           ))}
         </View>

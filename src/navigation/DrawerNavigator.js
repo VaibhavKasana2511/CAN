@@ -1,6 +1,7 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {CustomDrawerContent} from '@components';
+// import {CustomDrawerContent} from '../components';
 import TabNavigator from './TabNavigator';
 
 import {Referral, Logout, Profile, ChangePassword} from '@screens';

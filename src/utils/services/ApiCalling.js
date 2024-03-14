@@ -1,6 +1,6 @@
 import {View, Text, Alert} from 'react-native';
 import React from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {fetchStates, loginSuccess} from '../../redux/action/authAction';
 import URL from './endpoints';
 
@@ -117,5 +117,38 @@ export const fetchStateList = async dispatch => {
     }
   } catch (error) {
     // console.error('Error fetching state data:', error);
+  }
+};
+
+export const fetchUpcomingEvents = async token => {
+  console.log('TOKEN.......', token);
+  try {
+    const response = await fetch(
+      'http://54.190.192.105:9185/angel/get_events',
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      },
+    );
+    console.log('GET request completed.');
+
+    const data = await response.json();
+
+    if (response.ok) {
+      if (data.status === false) {
+        Alert.alert('Oops something went wrong', data.message);
+        return false;
+      } else {
+        return data.result;
+      }
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error('Error fetching upcoming events:', error);
+    throw error;
   }
 };
