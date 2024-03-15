@@ -152,3 +152,36 @@ export const fetchUpcomingEvents = async token => {
     throw error;
   }
 };
+
+export const fetchForumCategory = async token => {
+  console.log('TOKEN.......', token);
+  try {
+    const response = await fetch(
+      'http://54.190.192.105:9185/angel/get_all_forum_Category',
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      },
+    );
+    console.log('GET request completed.');
+
+    const data = await response.json();
+
+    if (response.ok) {
+      if (data.status === false) {
+        Alert.alert('Oops something went wrong', data.message);
+        return false;
+      } else {
+        return data.result;
+      }
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error('Error fetching upcoming events:', error);
+    throw error;
+  }
+};

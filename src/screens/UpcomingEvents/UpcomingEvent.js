@@ -131,7 +131,7 @@ const UpcomingEvents = () => {
                     key={i}
                     style={styles.pdfLogo}
                     onPress={() => handleMeetingLinkPress(fileUrl)}>
-                    <Image style={{paddingTop: 10}} source={IMAGES.pdf} />
+                    <Image source={IMAGES.pdf} />
                   </TouchableOpacity>
                 ))}
               </Text>

@@ -1,31 +1,27 @@
 import {FlatList, Text, Touchable, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from './styles';
 import {Header} from '@components';
+import {fetchForumCategory} from '../../../utils/services/ApiCalling';
+import {useSelector} from 'react-redux';
 
 const Category = ({navigation}) => {
-  const forumData = [
-    {
-      title: 'General Guideline',
-      text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-    {
-      title: 'Pitch Session',
-      text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-    {
-      title: 'Valuations & MRR',
-      text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-    {
-      title: 'General Guideline',
-      text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-    {
-      title: 'Pitch Session',
-      text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-  ];
+  const token = useSelector(state => state.auth.user?.Token);
+  const [forumData, setForumData] = useState([]);
+
+  useEffect(() => {
+    const fetchFormData = async () => {
+      console.log('Token', token);
+      try {
+        const data = await fetchForumCategory(token);
+        setForumData(data);
+        console.log('Data:', data);
+      } catch (error) {
+        console.error('Error fetching upcoming events:', error);
+      }
+    };
+    fetchFormData();
+  }, [token]);
 
   const infoData = () => {
     navigation.navigate('Details');
@@ -34,9 +30,9 @@ const Category = ({navigation}) => {
   const renderForumData = ({item}) => (
     <View style={styles.dataContainer}>
       <TouchableOpacity onPress={infoData}>
-        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.title}>{item.category_name}</Text>
       </TouchableOpacity>
-      <Text style={styles.text}>{item.text}</Text>
+      <Text style={styles.text}>{item.description}</Text>
     </View>
   );
 
