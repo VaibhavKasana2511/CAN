@@ -106,19 +106,19 @@ export const registerUser = async param => {
   }
 };
 
-export const fetchStateList = async dispatch => {
-  try {
-    const response = await fetch(`${URL.BASE_URL}${URL.STATE_LIST}`);
-    const data = await response.json();
-    if (data && data.result && Array.isArray(data.result)) {
-      dispatch(fetchStates(data));
-    } else {
-      // console.error('Invalid state data format:', data);
-    }
-  } catch (error) {
-    // console.error('Error fetching state data:', error);
-  }
-};
+// export const fetchStateList = async dispatch => {
+//   try {
+//     const response = await fetch(`${URL.BASE_URL}${URL.STATE_LIST}`);
+//     const data = await response.json();
+//     if (data && data.result && Array.isArray(data.result)) {
+//       dispatch(fetchStates(data));
+//     } else {
+//       // console.error('Invalid state data format:', data);
+//     }
+//   } catch (error) {
+//     // console.error('Error fetching state data:', error);
+//   }
+// };
 
 export const fetchUpcomingEvents = async token => {
   console.log('TOKEN.......', token);

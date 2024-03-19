@@ -18,25 +18,51 @@ import {horizontalScale} from '@utils/Metrics';
 import {IMAGES} from '@assets/images';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useDispatch, useSelector} from 'react-redux';
-import {registerUser, fetchStateList} from '@utils/services/ApiCalling';
+// import {registerUser, fetchStateList} from '@utils/services/ApiCalling';
 import {Formik} from 'formik';
+import {
+  useLazyFetchStatesQuery,
+  useUserRegisterMutation,
+} from '../../redux/service/authService';
+import {fetchStates} from '../../redux/action/authAction';
 
 const Register = ({navigation}) => {
   const dispatch = useDispatch();
+  const [registerUserMutation] = useUserRegisterMutation();
+
+  const [data] = useLazyFetchStatesQuery();
+
+  const fetchStateList = async () => {
+    console.log('DATA====>', data);
+    try {
+      const response = await data().unwrap();
+      console.log('RESPONSE===>', response);
+      if (response && response.result && Array.isArray(response.result)) {
+        dispatch(fetchStates(response));
+      } else {
+        console.error('Invalid state data format:', response);
+      }
+    } catch (error) {
+      console.error('Error fetching state data:', error);
+    }
+  };
 
   useEffect(() => {
-    fetchStateList(dispatch);
-  }, [dispatch]);
+    fetchStateList();
+  }, []);
 
   const allstate = useSelector(state => state.auth.allstates?.result ?? []);
+  console.log('STATES===>', allstate);
+
   const [isVisible, setIsVisible] = useState(false);
   const [title, setTitle] = useState(false);
   const [showPassword, setShowPassword] = useState(null);
 
   const openModal = async values => {
+    console.log('VALUES===>', values);
     try {
-      const registrationSuccess = await registerUser(values);
-      console.log('RESPONSE', registrationSuccess);
+      const registrationSuccess = await registerUserMutation(values).unwrap();
+      console.log('RESPONSE====', registrationSuccess);
       if (registrationSuccess) {
         setIsVisible(true);
       } else {

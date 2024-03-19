@@ -6,6 +6,7 @@ import SplashScreen from 'react-native-splash-screen';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistor, store} from './src/redux/store/configureStore';
+import {useFetchStatesQuery} from './src/redux/service/authService';
 
 const App = () => {
   useEffect(() => {
@@ -14,9 +15,9 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <RootNavigator />
-      </PersistGate>
+      {/* <PersistGate persistor={persistor}> */}
+      <RootNavigator />
+      {/* </PersistGate> */}
     </Provider>
   );
 };
