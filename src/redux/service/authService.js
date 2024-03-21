@@ -23,6 +23,33 @@ export const authService = apiClient.injectEndpoints({
         method: 'GET',
       }),
     }),
+    updateProfile: builder.mutation({
+      query: body => ({
+        url: `/update`,
+        body: body,
+        method: 'PUT',
+      }),
+    }),
+    updatePassword: builder.mutation({
+      query: body => ({
+        url: `/update-password`,
+        body: body,
+        method: 'PUT',
+      }),
+    }),
+    addReferral: builder.mutation({
+      query: body => ({
+        url: `/add/referral`,
+        body: body,
+        method: 'POST',
+      }),
+    }),
+    referralList: builder.query({
+      query: id => ({
+        url: `referral/list_by_mandate?user_mandate=${id}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -32,4 +59,8 @@ export const {
   useUserRegisterMutation,
   useUserLoginMutation,
   useLazyFetchStatesQuery,
+  useUpdateProfileMutation,
+  useUpdatePasswordMutation,
+  useLazyReferralListQuery,
+  useAddReferralMutation,
 } = authService;

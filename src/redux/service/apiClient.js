@@ -9,14 +9,14 @@ export const apiClient = createApi({
     credentials: 'include',
     reducerPath: 'apiClient',
     prepareHeaders: async (headers, {getState, endpoint}) => {
-      // const userToken = getState().auth.token;
-      // console.log('TOKEN ===>', userToken);
-      // if (userToken) {
-      //   headers.set('Authorization', `Bearer ${userToken}`);
-      // headers.set('Content-Type', 'applicaion/json');
-      // } else {
-      headers.set('Content-Type', 'application/json');
-      // }
+      const userToken = getState().auth.user?.Token;
+      console.log('TOKEN ===>', userToken);
+      if (userToken) {
+        headers.set('Authorization', userToken);
+        headers.set('Content-Type', 'application/json');
+      } else {
+        headers.set('Content-Type', 'application/json');
+      }
       return headers;
     },
   }),

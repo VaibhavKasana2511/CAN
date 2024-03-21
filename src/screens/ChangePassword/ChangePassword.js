@@ -8,16 +8,43 @@ import {
 import React, {useState} from 'react';
 import {styles} from './Styles';
 import {Header, CustomButtom, CustomPopUp} from '@components';
+import {useSelector} from 'react-redux';
+import {useUpdatePasswordMutation} from '../../redux/service/authService';
 
 const ChangePassword = ({navigation}) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [currentPass, setCurrentPass] = useState();
+  const [confirmPass, setConfirmPass] = useState();
+  const [newPass, setNewPass] = useState();
+  const [updatePasswordMutation] = useUpdatePasswordMutation();
+
+  const userData = useSelector(state => state.auth.user.result);
+  console.log('DATA===>', userData);
+
+  let params = {
+    _id: userData._id,
+    current_password: currentPass,
+    new_password: newPass,
+  };
+
+  const handleUpdatePassword = async () => {
+    console.log('PARAMS', params);
+    try {
+      const data = await updatePasswordMutation(params);
+      console.log('RES', data);
+    } catch (err) {
+      console.log('ERROR', err);
+    }
+  };
 
   const openModal = () => {
     setIsVisible(true);
+    handleUpdatePassword();
   };
 
   const closeModal = () => {
     setIsVisible(false);
+    navigation.goBack();
     navigation.navigate('Login');
   };
 
@@ -31,6 +58,7 @@ const ChangePassword = ({navigation}) => {
           <TextInput
             style={styles.textInput}
             placeholder="Enter your current password"
+            onChangeText={text => setCurrentPass(text)}
           />
         </View>
         <View style={styles.allTextInput}>
@@ -45,6 +73,7 @@ const ChangePassword = ({navigation}) => {
           <TextInput
             style={styles.textInput}
             placeholder="Enter new password"
+            onChangeText={text => setNewPass(text)}
           />
         </View>
         <View style={styles.updateButton}>

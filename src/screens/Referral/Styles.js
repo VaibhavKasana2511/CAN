@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
     marginTop: verticalScale(10),
   },
   updateButton: {
-    marginTop: '7%',
+    marginVertical: '1.5%',
   },
   listSection: {
     flexDirection: 'row',

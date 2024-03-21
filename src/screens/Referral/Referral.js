@@ -1,33 +1,70 @@
 import {StyleSheet, Text, View, TextInput, Image, FlatList} from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {styles} from './Styles';
 import {Header, CustomButtom} from '@components';
 import {IMAGES} from '@assets/images';
 import {horizontalScale, moderateScale, verticalScale} from '@utils/Metrics';
-
-const data = [
-  {
-    name: 'Rajesh T',
-    email: 'rajesh@gmail.com',
-    date: '7/10/22',
-    phone: '987987456',
-  },
-  {
-    name: 'Mahesh K',
-    email: 'mahesh@gmail.com',
-    date: '12/10/22',
-    phone: '985632147',
-  },
-];
+import {
+  useAddReferralMutation,
+  useLazyReferralListQuery,
+} from '../../redux/service/authService';
+import {useSelector} from 'react-redux';
 
 const Referral = () => {
+  const userData = useSelector(state => state.auth.user.result);
+  console.log('DATA===>', userData);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [referrals, setReferrals] = useState('');
+
+  const param = {
+    user_mandate: userData._id,
+    name: name,
+    email: email,
+    phone: phone,
+  };
+
+  const [addReferralMutation] = useAddReferralMutation();
+  const [data] = useLazyReferralListQuery();
+
+  const formatDate = dateString => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  };
+
+  const fetchReferral = async () => {
+    try {
+      const res = await data(userData._id);
+      const response = res.data.result;
+      setReferrals(response);
+      console.log('DATA', response);
+    } catch (err) {
+      console.log('Error==>', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchReferral();
+  }, []);
+
+  const addReferral = async () => {
+    console.log('PARAM==>', param);
+    try {
+      const data = addReferralMutation(param);
+      console.log('RQWER', data);
+    } catch (err) {
+      console.log('Error==>', err);
+    }
+  };
+
   const renderReferrals = ({item}) => (
     <View style={styles.listContainer}>
       <View style={styles.listSection}>
         <Text style={styles.listName}>{item.name}</Text>
         <View style={{flexDirection: 'row'}}>
           <Image style={styles.Icon} source={IMAGES.dateIcon} />
-          <Text style={styles.listMail}>{item.date}</Text>
+          <Text style={styles.listMail}>{formatDate(item.updatedAt)}</Text>
         </View>
       </View>
       <View style={styles.listSection}>
@@ -52,21 +89,33 @@ const Referral = () => {
         </Text>
         <View style={styles.updateButton}>
           <Text style={styles.inputHeading}>Name</Text>
-          <TextInput style={styles.textInput} placeholder="Enter Name" />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter Name"
+            onChangeText={text => setName(text)}
+          />
         </View>
         <View style={styles.allTextInput}>
           <Text style={styles.inputHeading}>Email</Text>
-          <TextInput style={styles.textInput} placeholder="Enter Email" />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter Email"
+            onChangeText={text => setEmail(text)}
+          />
         </View>
         <View style={styles.allTextInput}>
           <Text style={styles.inputHeading}>Phone</Text>
-          <TextInput style={styles.textInput} placeholder="Enter Phone" />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter Phone"
+            onChangeText={text => setPhone(text)}
+          />
         </View>
         <View style={styles.updateButton}>
-          <CustomButtom title="Submit" />
+          <CustomButtom title="Submit" onPress={addReferral} />
         </View>
         <Text style={styles.headingText}>My Referrals</Text>
-        <FlatList renderItem={renderReferrals} data={data} />
+        <FlatList renderItem={renderReferrals} data={referrals} />
       </View>
     </View>
   );

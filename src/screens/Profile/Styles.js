@@ -70,4 +70,13 @@ export const styles = StyleSheet.create({
     margin: moderateScale(15),
     marginRight: moderateScale(15),
   },
+  dropDown: {
+    borderWidth: moderateScale(1),
+    borderColor: '#0A49755E',
+    borderRadius: moderateScale(8),
+    paddingLeft: horizontalScale(15),
+    marginTop: verticalScale(5),
+    paddingVertical: verticalScale(10),
+    paddingRight: horizontalScale(10),
+  },
 });

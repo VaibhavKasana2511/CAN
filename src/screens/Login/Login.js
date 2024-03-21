@@ -5,6 +5,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import React, {Component} from 'react';
 import styles from './Styles';
@@ -12,8 +13,9 @@ import {AuthHeader, CustomButtom} from '@components';
 import {horizontalScale, verticalScale, moderateScale} from '@utils/Metrics';
 import {IMAGES} from '@assets/images';
 import {useState} from 'react';
-import {loginUser} from '@utils/services/ApiCalling';
 import {useDispatch, useSelector} from 'react-redux';
+import {useUserLoginMutation} from '../../redux/service/authService';
+import {loginSuccess} from '../../redux/action/authAction';
 
 const Login = ({navigation}) => {
   const dispatch = useDispatch();
@@ -21,7 +23,27 @@ const Login = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(null);
 
+  const [userLoginMutation] = useUserLoginMutation();
+
   const param = {email: email, password: password};
+
+  const loginUser = async () => {
+    console.log('LOGIN PARAM', param);
+    try {
+      const response = await userLoginMutation(param).unwrap();
+      console.log('POST request completed.', response);
+      if (response.status === false) {
+        Alert.alert("Oops can't sign in", response.data.message);
+      } else {
+        console.log('Success', response.message, response);
+        dispatch(loginSuccess(response)); // Dispatch action to update Redux store
+        navigation.navigate('Home');
+      }
+    } catch (error) {
+      // Handle network errors or other exceptions
+      Alert.alert('Error during Login:', error.message || 'Unknown error');
+    }
+  };
 
   const handleResetPassword = () => {
     navigation.navigate('ResetPassword');
@@ -32,7 +54,7 @@ const Login = ({navigation}) => {
   };
 
   const handleLogin = () => {
-    loginUser(param, dispatch, navigation);
+    loginUser();
   };
 
   return (
