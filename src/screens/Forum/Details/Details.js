@@ -1,9 +1,31 @@
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from './styles';
 import {Header} from '@components';
+import {useSelector} from 'react-redux';
+import {useLazyCategoryQuestionQuery} from '../../../redux/service/authService';
 
 const Details = ({navigation}) => {
+  const userState = useSelector(state => state.root.forum.category);
+  console.log('STATE==>', userState);
+  const [data] = useLazyCategoryQuestionQuery();
+  const [detailData, setDetailData] = useState([]);
+
+  const fetchQuestion = async () => {
+    try {
+      const res = await data(userState._id);
+      const response = res.data.result;
+      setDetailData(response);
+      console.log('QUESTION===>', response);
+    } catch (err) {
+      console.log('Error===>', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchQuestion();
+  }, []);
+
   const addAnswer = () => {
     navigation.navigate('AnsQues');
   };
@@ -12,33 +34,15 @@ const Details = ({navigation}) => {
     navigation.navigate('HaveQuestions');
   };
 
-  const detailData = [
-    {
-      ques: 'Who is evaluating the initial valuations?',
-      ans: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-    {
-      ques: 'What is MRR?',
-      ans: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-    {
-      ques: 'What is round size?',
-    },
-    {
-      ques: 'What is commitment?',
-      ans: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-  ];
-
   const renderdetailData = ({item}) =>
-    item.ans ? (
+    item.answerd === 'no' ? (
       <View style={styles.dataContainer}>
-        <Text style={styles.ques}>{item.ques}</Text>
-        <Text style={styles.ans}>{item.ans}</Text>
+        <Text style={styles.ques}>{item.quetion}</Text>
+        <Text style={styles.ans}>{item.answer}</Text>
       </View>
     ) : (
       <TouchableOpacity onPress={addAnswer} style={styles.dataContainer}>
-        <Text style={styles.ques}>{item.ques}</Text>
+        <Text style={styles.ques}>{item.quetion}</Text>
         <TouchableOpacity onPress={addAnswer}>
           <Text style={styles.addAns}>Add an answer</Text>
         </TouchableOpacity>
@@ -50,7 +54,7 @@ const Details = ({navigation}) => {
       <Header back={true} drawer={false} />
       <View style={styles.subContainer}>
         <View>
-          <Text style={styles.heading}>Valuations & MRR</Text>
+          <Text style={styles.heading}>{userState.category_name}</Text>
           <TouchableOpacity></TouchableOpacity>
         </View>
         <View style={styles.forumDataList}>

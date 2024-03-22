@@ -7,7 +7,7 @@ import {verticalScale} from '@utils/Metrics';
 import {useSelector} from 'react-redux';
 
 const HomePage = () => {
-  const userState = useSelector(state => state.auth.user);
+  const userState = useSelector(state => state.root.auth.user);
   console.log('HOMEPAGEEE>>>>>>', userState);
 
   const data = [

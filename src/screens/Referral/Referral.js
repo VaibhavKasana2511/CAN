@@ -9,14 +9,15 @@ import {
   useLazyReferralListQuery,
 } from '../../redux/service/authService';
 import {useSelector} from 'react-redux';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Referral = () => {
   const userData = useSelector(state => state.auth.user.result);
-  console.log('DATA===>', userData);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [referrals, setReferrals] = useState('');
+  const [referrals, setReferrals] = useState([]);
+  const [renderReferral, setRenderReferral] = useState(false);
 
   const param = {
     user_mandate: userData._id,
@@ -37,6 +38,7 @@ const Referral = () => {
     try {
       const res = await data(userData._id);
       const response = res.data.result;
+      console.log('RESPONSE====>', response);
       setReferrals(response);
       console.log('DATA', response);
     } catch (err) {
@@ -46,44 +48,24 @@ const Referral = () => {
 
   useEffect(() => {
     fetchReferral();
-  }, []);
+  }, [renderReferral]);
 
   const addReferral = async () => {
     console.log('PARAM==>', param);
     try {
       const data = addReferralMutation(param);
       console.log('RQWER', data);
+      setRenderReferral(!renderReferral);
+      setName('');
     } catch (err) {
       console.log('Error==>', err);
     }
   };
 
-  const renderReferrals = ({item}) => (
-    <View style={styles.listContainer}>
-      <View style={styles.listSection}>
-        <Text style={styles.listName}>{item.name}</Text>
-        <View style={{flexDirection: 'row'}}>
-          <Image style={styles.Icon} source={IMAGES.dateIcon} />
-          <Text style={styles.listMail}>{formatDate(item.updatedAt)}</Text>
-        </View>
-      </View>
-      <View style={styles.listSection}>
-        <View style={{flexDirection: 'row', marginTop: verticalScale(5)}}>
-          <Image style={styles.mailIcon} source={IMAGES.mailIcon} />
-          <Text style={styles.listMail}>{item.email}</Text>
-        </View>
-        <View style={{flexDirection: 'row', marginTop: verticalScale(5)}}>
-          <Image style={styles.phoneIcon} source={IMAGES.phoneIcon} />
-          <Text style={styles.listMail}>{item.phone}</Text>
-        </View>
-      </View>
-    </View>
-  );
-
   return (
     <View style={styles.mainContainer}>
       <Header drawer={false} back={true} />
-      <View style={styles.subContainer}>
+      <ScrollView style={styles.subContainer}>
         <Text style={styles.headingText}>
           Refer someone whom you think can be part of CAN
         </Text>
@@ -115,8 +97,30 @@ const Referral = () => {
           <CustomButtom title="Submit" onPress={addReferral} />
         </View>
         <Text style={styles.headingText}>My Referrals</Text>
-        <FlatList renderItem={renderReferrals} data={referrals} />
-      </View>
+        {referrals.map((item, index) => (
+          <View key={index} style={styles.listContainer}>
+            <View style={styles.listSection}>
+              <Text style={styles.listName}>{item.name}</Text>
+              <View style={{flexDirection: 'row'}}>
+                <Image style={styles.Icon} source={IMAGES.dateIcon} />
+                <Text style={styles.listMail}>
+                  {formatDate(item.updatedAt)}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.listSection}>
+              <View style={{flexDirection: 'row', marginTop: verticalScale(5)}}>
+                <Image style={styles.mailIcon} source={IMAGES.mailIcon} />
+                <Text style={styles.listMail}>{item.email}</Text>
+              </View>
+              <View style={{flexDirection: 'row', marginTop: verticalScale(5)}}>
+                <Image style={styles.phoneIcon} source={IMAGES.phoneIcon} />
+                <Text style={styles.listMail}>{item.phone}</Text>
+              </View>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 };

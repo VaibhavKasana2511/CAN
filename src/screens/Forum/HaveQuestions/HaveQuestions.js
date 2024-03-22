@@ -1,11 +1,28 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from './styles';
 import {Text, View, TextInput} from 'react-native';
 import {Header, CustomButtom} from '@components';
 import {Dropdown} from 'react-native-element-dropdown';
+import {useLazyFormCategoriesQuery} from '../../../redux/service/authService';
 
 const HaveQuestions = ({navigation}) => {
   const [dbButton, setdbButton] = useState(true);
+  const [data] = useLazyFormCategoriesQuery();
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchFormData = async () => {
+      try {
+        const response = await data();
+        const result = response.data.result;
+        setCategories(result);
+        console.log('Data:', result);
+      } catch (error) {
+        console.error('Error fetching upcoming events:', error);
+      }
+    };
+    fetchFormData();
+  }, []);
 
   const list = [
     {

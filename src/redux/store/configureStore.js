@@ -6,6 +6,7 @@ import authReducer from '../reducer/authReducer';
 import {setupListeners} from '@reduxjs/toolkit/query';
 // import {combineReducers} from 'redux';
 import {apiClient} from '../service/apiClient';
+import forumReducer from '../slices/forumSlice';
 
 const persistConfig = {
   key: 'root',
@@ -16,16 +17,17 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  forum: forumReducer,
 
   // Add other reducers here if needed
 });
 
-const persistedReducer = persistReducer(persistConfig, authReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: {
     [apiClient.reducerPath]: apiClient.reducer,
-    auth: persistedReducer,
+    root: persistedReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

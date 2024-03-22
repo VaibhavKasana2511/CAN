@@ -16,7 +16,7 @@ import {useSelector} from 'react-redux';
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
-  const userState = useSelector(state => state.auth.user);
+  const userState = useSelector(state => state.root.auth.user);
   console.log('NAVIGATOR', userState);
   return !userState ? (
     <Stack.Navigator

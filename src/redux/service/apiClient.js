@@ -9,7 +9,7 @@ export const apiClient = createApi({
     credentials: 'include',
     reducerPath: 'apiClient',
     prepareHeaders: async (headers, {getState, endpoint}) => {
-      const userToken = getState().auth.user?.Token;
+      const userToken = getState().root.auth.user?.Token;
       console.log('TOKEN ===>', userToken);
       if (userToken) {
         headers.set('Authorization', userToken);

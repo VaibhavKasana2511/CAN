@@ -50,6 +50,18 @@ export const authService = apiClient.injectEndpoints({
         method: 'GET',
       }),
     }),
+    formCategories: builder.query({
+      query: () => ({
+        url: `/get_all_forum_Category`,
+        method: 'GET',
+      }),
+    }),
+    categoryQuestion: builder.query({
+      query: id => ({
+        url: `/quetion_data_by_category?category_id=${id}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -63,4 +75,6 @@ export const {
   useUpdatePasswordMutation,
   useLazyReferralListQuery,
   useAddReferralMutation,
+  useLazyFormCategoriesQuery,
+  useLazyCategoryQuestionQuery,
 } = authService;

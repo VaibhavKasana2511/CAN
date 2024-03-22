@@ -4,6 +4,7 @@ import {
   View,
   TextInput,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './Styles';
@@ -32,13 +33,18 @@ const ChangePassword = ({navigation}) => {
     try {
       const data = await updatePasswordMutation(params);
       console.log('RES', data);
+      if (data.data.status) {
+        setIsVisible(true);
+      } else {
+        Alert.alert(data.data.message);
+      }
     } catch (err) {
       console.log('ERROR', err);
     }
   };
 
   const openModal = () => {
-    setIsVisible(true);
+    // setIsVisible(true);
     handleUpdatePassword();
   };
 

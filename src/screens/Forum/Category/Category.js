@@ -3,33 +3,38 @@ import React, {useState, useEffect} from 'react';
 import styles from './styles';
 import {Header} from '@components';
 import {fetchForumCategory} from '../../../utils/services/ApiCalling';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {useLazyFormCategoriesQuery} from '../../../redux/service/authService';
+import {fetchCategory} from '../../../redux/slices/forumSlice';
 
 const Category = ({navigation}) => {
-  const token = useSelector(state => state.auth.user?.Token);
+  const dispatch = useDispatch();
   const [forumData, setForumData] = useState([]);
+  const [data] = useLazyFormCategoriesQuery();
 
   useEffect(() => {
     const fetchFormData = async () => {
-      console.log('Token', token);
       try {
-        const data = await fetchForumCategory(token);
-        setForumData(data);
-        console.log('Data:', data);
+        const response = await data();
+        const result = response.data.result;
+        setForumData(result);
+        console.log('Data:', result);
       } catch (error) {
         console.error('Error fetching upcoming events:', error);
       }
     };
     fetchFormData();
-  }, [token]);
+  }, []);
 
-  const infoData = () => {
+  const infoData = item => {
+    console.log('FORMDATA==>', item);
+    dispatch(fetchCategory(item));
     navigation.navigate('Details');
   };
 
   const renderForumData = ({item}) => (
     <View style={styles.dataContainer}>
-      <TouchableOpacity onPress={infoData}>
+      <TouchableOpacity onPress={() => infoData(item)}>
         <Text style={styles.title}>{item.category_name}</Text>
       </TouchableOpacity>
       <Text style={styles.text}>{item.description}</Text>
