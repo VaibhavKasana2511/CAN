@@ -38,6 +38,7 @@ export default styles = StyleSheet.create({
     borderRadius: moderateScale(8),
     paddingLeft: moderateScale(10),
     borderColor: '#000000A8',
+    paddingRight: moderateScale(10),
   },
 
   txtInput: {

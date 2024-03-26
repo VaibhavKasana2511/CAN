@@ -51,8 +51,9 @@ const Register = ({navigation}) => {
     fetchStateList();
   }, []);
 
-  const allstate = useSelector(state => state.auth.allstates?.result ?? []);
-  console.log('STATES===>', allstate);
+  const allstate = useSelector(
+    state => state.root.auth.allstates?.result ?? [],
+  );
 
   const [isVisible, setIsVisible] = useState(false);
   const [title, setTitle] = useState(false);

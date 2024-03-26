@@ -17,6 +17,13 @@ export const authService = apiClient.injectEndpoints({
         method: 'POST',
       }),
     }),
+    resetPassword: builder.mutation({
+      query: body => ({
+        url: `/resetlink`,
+        body: body,
+        method: 'POST',
+      }),
+    }),
     fetchStates: builder.query({
       query: () => ({
         url: `/get_all_state`,
@@ -62,14 +69,27 @@ export const authService = apiClient.injectEndpoints({
         method: 'GET',
       }),
     }),
+    addQuestion: builder.mutation({
+      query: body => ({
+        url: `/add_quetion`,
+        method: 'POST',
+        body: body,
+      }),
+    }),
+    addAnswer: builder.mutation({
+      query: body => ({
+        url: `/update_question_data`,
+        method: 'PUT',
+        body: body,
+      }),
+    }),
   }),
 });
-
-// export const {useUserRegisterMutation} = authService;
 
 export const {
   useUserRegisterMutation,
   useUserLoginMutation,
+  useResetPasswordMutation,
   useLazyFetchStatesQuery,
   useUpdateProfileMutation,
   useUpdatePasswordMutation,
@@ -77,4 +97,6 @@ export const {
   useAddReferralMutation,
   useLazyFormCategoriesQuery,
   useLazyCategoryQuestionQuery,
+  useAddQuestionMutation,
+  useAddAnswerMutation,
 } = authService;

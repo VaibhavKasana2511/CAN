@@ -26,7 +26,7 @@ const Profile = ({navigation}) => {
     setDate(currentDate);
   };
 
-  const userData = useSelector(state => state.auth.user.result);
+  const userData = useSelector(state => state.root.auth.user.result);
   console.log('DATA===>', userData);
 
   const [updateProfileMutation] = useUpdateProfileMutation();
@@ -37,7 +37,9 @@ const Profile = ({navigation}) => {
   const [state, setState] = useState(userData.state);
   const [city, setCity] = useState(userData.city);
 
-  const allstate = useSelector(state => state.auth.allstates?.result ?? []);
+  const allstate = useSelector(
+    state => state.root.auth.allstates?.result ?? [],
+  );
   console.log('STATES===>', allstate);
 
   const params = {

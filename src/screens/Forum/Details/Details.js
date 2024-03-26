@@ -2,10 +2,12 @@ import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import styles from './styles';
 import {Header} from '@components';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useLazyCategoryQuestionQuery} from '../../../redux/service/authService';
+import {fetchQuestionData} from '../../../redux/slices/forumSlice';
 
 const Details = ({navigation}) => {
+  const dispatch = useDispatch();
   const userState = useSelector(state => state.root.forum.category);
   console.log('STATE==>', userState);
   const [data] = useLazyCategoryQuestionQuery();
@@ -24,9 +26,11 @@ const Details = ({navigation}) => {
 
   useEffect(() => {
     fetchQuestion();
-  }, []);
+  }, [userState]);
 
-  const addAnswer = () => {
+  const addAnswer = item => {
+    console.log('ITEM@#$%==>', item);
+    dispatch(fetchQuestionData(item));
     navigation.navigate('AnsQues');
   };
 
@@ -35,15 +39,17 @@ const Details = ({navigation}) => {
   };
 
   const renderdetailData = ({item}) =>
-    item.answerd === 'no' ? (
+    item.answerd === 'yes' ? (
       <View style={styles.dataContainer}>
         <Text style={styles.ques}>{item.quetion}</Text>
         <Text style={styles.ans}>{item.answer}</Text>
       </View>
     ) : (
-      <TouchableOpacity onPress={addAnswer} style={styles.dataContainer}>
+      <TouchableOpacity
+        onPress={() => addAnswer(item)}
+        style={styles.dataContainer}>
         <Text style={styles.ques}>{item.quetion}</Text>
-        <TouchableOpacity onPress={addAnswer}>
+        <TouchableOpacity onPress={() => addAnswer(item)}>
           <Text style={styles.addAns}>Add an answer</Text>
         </TouchableOpacity>
       </TouchableOpacity>

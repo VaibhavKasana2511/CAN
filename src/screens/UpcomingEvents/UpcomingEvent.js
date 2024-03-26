@@ -15,7 +15,7 @@ import {fetchUpcomingEvents} from '../../utils/services/ApiCalling';
 import {useSelector} from 'react-redux';
 
 const UpcomingEvents = () => {
-  const token = useSelector(state => state.auth.user?.Token);
+  const token = useSelector(state => state.root.auth.user?.Token);
   const [selectDate, setSelectDate] = useState('2023-09-10');
   const [events, setEvents] = useState([]);
 

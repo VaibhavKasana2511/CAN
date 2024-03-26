@@ -19,7 +19,7 @@ const ChangePassword = ({navigation}) => {
   const [newPass, setNewPass] = useState();
   const [updatePasswordMutation] = useUpdatePasswordMutation();
 
-  const userData = useSelector(state => state.auth.user.result);
+  const userData = useSelector(state => state.root.auth.user.result);
   console.log('DATA===>', userData);
 
   let params = {

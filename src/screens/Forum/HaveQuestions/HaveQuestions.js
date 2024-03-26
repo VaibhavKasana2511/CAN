@@ -3,41 +3,41 @@ import styles from './styles';
 import {Text, View, TextInput} from 'react-native';
 import {Header, CustomButtom} from '@components';
 import {Dropdown} from 'react-native-element-dropdown';
-import {useLazyFormCategoriesQuery} from '../../../redux/service/authService';
+import {useAddQuestionMutation} from '../../../redux/service/authService';
+import {useSelector} from 'react-redux';
 
 const HaveQuestions = ({navigation}) => {
   const [dbButton, setdbButton] = useState(true);
-  const [data] = useLazyFormCategoriesQuery();
-  const [categories, setCategories] = useState([]);
+  const [question, setQuestion] = useState('');
+  const allCategories = useSelector(state => state.root?.forum.forumCategories);
+  const categoryData = useSelector(state => state.root?.forum.category);
+  const userData = useSelector(state => state.root?.auth.user.result);
+  const [addQuestionMutation] = useAddQuestionMutation();
+  const [selectedCategory, setSelectedCategory] = useState(
+    categoryData.category_name,
+  );
 
-  useEffect(() => {
-    const fetchFormData = async () => {
-      try {
-        const response = await data();
-        const result = response.data.result;
-        setCategories(result);
-        console.log('Data:', result);
-      } catch (error) {
-        console.error('Error fetching upcoming events:', error);
+  let params = {
+    category_id: categoryData._id,
+    select_category: selectedCategory,
+    quetion: question,
+    status: 'active',
+    answerd: 'no',
+    answerd_by: userData.name,
+  };
+
+  const handlePost = async () => {
+    console.log('PARAMS==>', params);
+    try {
+      const response = await addQuestionMutation(params);
+      console.log('Response', response);
+      if (response.data.status) {
+        navigation.navigate('Details');
       }
-    };
-    fetchFormData();
-  }, []);
-
-  const list = [
-    {
-      label: 'General Guideline',
-      value: 'General Guideline',
-    },
-    {
-      label: 'Pitch Session',
-      value: 'Pitch Session',
-    },
-    {
-      label: 'Valuations & MRR',
-      value: 'Valuations & MRR',
-    },
-  ];
+    } catch (err) {
+      console.log('ERROR==>', err);
+    }
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -49,11 +49,13 @@ const HaveQuestions = ({navigation}) => {
           <View style={styles.txtInputContainer}>
             <Text style={styles.inputTxt}>Category</Text>
             <Dropdown
-              data={list}
-              labelField="label"
-              valueField="value"
+              data={allCategories}
+              labelField="category_name"
+              valueField="_id"
               onChange={item => setSelectedCategory(item)}
+              placeholder={categoryData.category_name}
               style={styles.dropDown}
+              value={categoryData.category_name}
             />
           </View>
           <View style={styles.txtInputContainer}>
@@ -61,6 +63,7 @@ const HaveQuestions = ({navigation}) => {
             <TextInput
               placeholder="Type your questions"
               style={styles.txtInput}
+              onChangeText={text => setQuestion(text)}
             />
           </View>
           <Text style={styles.helpTxt}>
@@ -72,7 +75,7 @@ const HaveQuestions = ({navigation}) => {
           onPressCancel={() => navigation.goBack()}
           title="Post"
           twoButton={dbButton}
-          onPress={() => navigation.navigate('Details')}
+          onPress={handlePost}
         />
       </View>
     </View>

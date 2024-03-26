@@ -12,7 +12,7 @@ import {useSelector} from 'react-redux';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const Referral = () => {
-  const userData = useSelector(state => state.auth.user.result);
+  const userData = useSelector(state => state.root.auth.user.result);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');

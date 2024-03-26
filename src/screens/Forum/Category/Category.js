@@ -2,10 +2,12 @@ import {FlatList, Text, Touchable, TouchableOpacity, View} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import styles from './styles';
 import {Header} from '@components';
-import {fetchForumCategory} from '../../../utils/services/ApiCalling';
 import {useDispatch, useSelector} from 'react-redux';
 import {useLazyFormCategoriesQuery} from '../../../redux/service/authService';
-import {fetchCategory} from '../../../redux/slices/forumSlice';
+import {
+  fetchCategory,
+  fetchForumCategories,
+} from '../../../redux/slices/forumSlice';
 
 const Category = ({navigation}) => {
   const dispatch = useDispatch();
@@ -26,10 +28,19 @@ const Category = ({navigation}) => {
     fetchFormData();
   }, []);
 
+  function mapIdAndCategory(data) {
+    return data.map(item => ({
+      id: item._id,
+      category_name: item.category_name,
+    }));
+  }
+
   const infoData = item => {
     console.log('FORMDATA==>', item);
     dispatch(fetchCategory(item));
     navigation.navigate('Details');
+    const categoryNames = mapIdAndCategory(forumData);
+    dispatch(fetchForumCategories(categoryNames));
   };
 
   const renderForumData = ({item}) => (

@@ -3,15 +3,39 @@ import React, {useState} from 'react';
 import styles from './styles';
 import {CustomButtom, Header, CustomPopUp} from '@components';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {useAddAnswerMutation} from '../../../redux/service/authService';
 
 const AnsQues = ({navigation}) => {
   const nav = useNavigation();
   const [dbButton, setdbButton] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
   const [title, setTitle] = useState(false);
+  const [response, setResponse] = useState('');
+  const quesData = useSelector(state => state.root?.forum.questionData);
+  const userData = useSelector(state => state.root?.auth.user.result);
+  const [addAnswerMutation] = useAddAnswerMutation();
 
-  const openModal = () => {
-    setIsVisible(true);
+  let params = {
+    _id: quesData._id,
+    select_category: quesData.select_category,
+    quetion: quesData.quetion,
+    status: 'active',
+    answerd: 'yes',
+    answerd_by: userData.name,
+    answer: response,
+  };
+
+  const openModal = async () => {
+    try {
+      const response = await addAnswerMutation(params);
+      console.log('Response', response);
+      if (response.data.status) {
+        setIsVisible(true);
+      }
+    } catch (err) {
+      console.log('ERROR==>', err);
+    }
   };
 
   const closeModal = () => {
@@ -20,19 +44,17 @@ const AnsQues = ({navigation}) => {
   };
 
   const handleCancel = () => {
-    console.log('first');
     navigation.goBack();
   };
 
   return (
     <View style={styles.mainContainer}>
       <Header drawer={false} back={true} />
-
       <View style={styles.subContainer}>
-        <Text style={styles.headingText}>Category: Valuations & MRR</Text>
-
-        <Text style={styles.subHeadingText}>What exactly is MRR?</Text>
-
+        <Text style={styles.headingText}>
+          Category: {quesData.select_category}
+        </Text>
+        <Text style={styles.subHeadingText}>{quesData.quetion}</Text>
         <View style={styles.inputContainer}>
           <View style={styles.txtInputContainer}>
             <Text style={styles.inputTxt}>Response</Text>
@@ -41,9 +63,9 @@ const AnsQues = ({navigation}) => {
               placeholderTextColor="#00000045"
               multiline={true}
               style={styles.txtInput}
+              onChangeText={text => setResponse(text)}
             />
           </View>
-
           <Text style={styles.helpTxt}>
             Please be polite while answering the question. Refer to community
             guidelines for more info.
