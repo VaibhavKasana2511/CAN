@@ -45,6 +45,9 @@ const ChangePassword = ({navigation}) => {
 
   const openModal = () => {
     // setIsVisible(true);
+    setCurrentPass('');
+    setNewPass('');
+    setConfirmPass('');
     handleUpdatePassword();
   };
 
@@ -62,6 +65,7 @@ const ChangePassword = ({navigation}) => {
         <View style={styles.updateButton}>
           <Text style={styles.inputHeading}>Current Password</Text>
           <TextInput
+            value={currentPass}
             style={styles.textInput}
             placeholder="Enter your current password"
             onChangeText={text => setCurrentPass(text)}
@@ -72,6 +76,7 @@ const ChangePassword = ({navigation}) => {
           <TextInput
             style={styles.textInput}
             placeholder="Enter current password again"
+            value={confirmPass}
           />
         </View>
         <View style={styles.allTextInput}>
@@ -80,6 +85,7 @@ const ChangePassword = ({navigation}) => {
             style={styles.textInput}
             placeholder="Enter new password"
             onChangeText={text => setNewPass(text)}
+            value={newPass}
           />
         </View>
         <View style={styles.updateButton}>

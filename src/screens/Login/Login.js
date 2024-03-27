@@ -33,7 +33,7 @@ const Login = ({navigation}) => {
       const response = await userLoginMutation(param).unwrap();
       console.log('POST request completed.', response);
       if (response.status === false) {
-        Alert.alert("Oops can't sign in", response.data.message);
+        Alert.alert("Oops can't sign in", response.message);
       } else {
         console.log('Success', response.message, response);
         dispatch(loginSuccess(response)); // Dispatch action to update Redux store
@@ -41,7 +41,8 @@ const Login = ({navigation}) => {
       }
     } catch (error) {
       // Handle network errors or other exceptions
-      Alert.alert('Error during Login:', error.message || 'Unknown error');
+      console.log('Error==>', err);
+      // Alert.alert('Error during Login:', error || 'Unknown error');
     }
   };
 

@@ -4,22 +4,22 @@ import URL from '../../utils/services/endpoints';
 export const authService = apiClient.injectEndpoints({
   endpoints: builder => ({
     userRegister: builder.mutation({
-      query: body => ({
-        url: `/register`,
-        body: body,
+      query: formData => ({
+        url: `/add_Investor`,
+        body: formData,
         method: 'POST',
       }),
     }),
     userLogin: builder.mutation({
       query: body => ({
-        url: `/login`,
+        url: `/investor_login`,
         body: body,
         method: 'POST',
       }),
     }),
     resetPassword: builder.mutation({
       query: body => ({
-        url: `/resetlink`,
+        url: `/resetlink_investor`,
         body: body,
         method: 'POST',
       }),
@@ -32,14 +32,14 @@ export const authService = apiClient.injectEndpoints({
     }),
     updateProfile: builder.mutation({
       query: body => ({
-        url: `/update`,
+        url: `/update_Investor`,
         body: body,
         method: 'PUT',
       }),
     }),
     updatePassword: builder.mutation({
       query: body => ({
-        url: `/update-password`,
+        url: `/update-password/investor`,
         body: body,
         method: 'PUT',
       }),
@@ -83,6 +83,12 @@ export const authService = apiClient.injectEndpoints({
         body: body,
       }),
     }),
+    userPortfolio: builder.query({
+      query: id => ({
+        url: `/portfolio/list_by_mandate?user_registered_id=${id}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -99,4 +105,5 @@ export const {
   useLazyCategoryQuestionQuery,
   useAddQuestionMutation,
   useAddAnswerMutation,
+  useLazyUserPortfolioQuery,
 } = authService;

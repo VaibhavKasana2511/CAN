@@ -20,17 +20,19 @@ import {useSelector} from 'react-redux';
 const Profile = ({navigation}) => {
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShowDatePicker(Platform.OS === 'ios');
-    setDate(currentDate);
+    setDob(currentDate.toString());
   };
 
-  const userData = useSelector(state => state.root.auth.user.result);
+  const userData = useSelector(state => state.root?.auth.user.result);
   console.log('DATA===>', userData);
 
   const [updateProfileMutation] = useUpdateProfileMutation();
   const [name, setName] = useState(userData.name);
+  const [dob, setDob] = useState(userData.dob);
   const [email, setEmail] = useState(userData.email);
   const [phone, setPhone] = useState('');
   const [organization, setOrganization] = useState(userData.organization);
@@ -53,12 +55,10 @@ const Profile = ({navigation}) => {
 
   const handleUpdateProfile = async () => {
     console.log('PARAMS===>', params);
-    navigation.goBack();
     try {
       const response = await updateProfileMutation(params);
       console.log('RESPONSE===>', response);
       Alert.alert('Updation Successful..', 'Please LogIn Again');
-      navigation.navigate('Login');
     } catch (err) {
       console.log('ERROR==>', err);
     }
@@ -70,9 +70,17 @@ const Profile = ({navigation}) => {
       <ScrollView>
         <View style={styles.subContainer}>
           <Text style={styles.headingText}>My Profile</Text>
-          <View style={styles.accountImage}>
-            <Image source={IMAGES.cameraIcon} />
-          </View>
+
+          {userData.profile_photo === '' ? (
+            <View style={styles.accountImage}>
+              <Image source={IMAGES.cameraIcon} />
+            </View>
+          ) : (
+            <View style={styles.accountImage}>
+              <Image source={IMAGES.cameraIcon} />
+            </View>
+          )}
+
           <View style={styles.allTextInput}>
             <Text style={styles.inputHeading}>Name</Text>
             <TextInput
@@ -97,7 +105,7 @@ const Profile = ({navigation}) => {
               <View style={styles.dateContainer}>
                 <TextInput
                   style={styles.inputDate}
-                  value={date.toLocaleDateString()}
+                  value={dob}
                   editable={false}
                   placeholder="Enter Date"
                 />

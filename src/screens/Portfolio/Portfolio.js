@@ -1,40 +1,31 @@
 import {View, Text, FlatList, Image} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './Styles';
 import {Header} from '@components';
 import {IMAGES} from '@assets/images';
 import {verticalScale, horizontalScale, moderateScale} from '@utils/Metrics';
+import {useLazyUserPortfolioQuery} from '../../redux/service/authService';
+import {useSelector} from 'react-redux';
 
 export default function Portfolio() {
-  const data = [
-    {
-      name: 'Jerry Infotech',
-      text: 'On demand food delivery startup',
-      amount: 'INR 3.50 lakhs',
-      shares: 1.345,
-      valuation: 'INR 3.5 Cr',
-      roundSize: 'INR 50 lakhs',
-      investment: '12/10/22',
-    },
-    {
-      name: 'XYC Inc',
-      text: 'Authentic Indian Tea',
-      amount: 'INR 3.50 lakhs',
-      shares: 1.279,
-      valuation: 'INR 3.5 Cr',
-      roundSize: 'INR 20 lakhs',
-      investment: '12/10/22',
-    },
-    {
-      name: 'ABC Inc',
-      text: 'Robotics, drones',
-      amount: 'INR 4.50 lakhs',
-      shares: 435,
-      valuation: 'INR 5 Cr',
-      roundSize: 'INR 50 lakhs',
-      investment: '12/10/22',
-    },
-  ];
+  const userData = useSelector(state => state.root?.auth.user.result);
+  console.log('usd', userData);
+  const [data] = useLazyUserPortfolioQuery();
+  const [dummyData, setDummyData] = useState([]);
+
+  useEffect(() => {
+    const fetchPortfolio = async () => {
+      try {
+        const response = await data(userData._id);
+        const result = response.data.result;
+        console.log('R==>', result);
+        // setDummyData(result);
+      } catch (err) {
+        console.log('ERROR', err);
+      }
+    };
+    fetchPortfolio();
+  }, []);
 
   const renderItem = ({item}) => (
     <View style={styles.itemData}>
@@ -76,7 +67,7 @@ export default function Portfolio() {
       <View style={styles.subContainer}>
         <Text style={styles.heading}>My Portfolio</Text>
         <FlatList
-          data={data}
+          data={dummyData}
           renderItem={renderItem}
           keyExtractor={(item, index) => index.toString()}
         />

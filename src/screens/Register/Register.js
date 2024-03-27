@@ -5,6 +5,7 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import styles from './Styles';
@@ -36,7 +37,6 @@ const Register = ({navigation}) => {
     console.log('DATA====>', data);
     try {
       const response = await data().unwrap();
-      console.log('RESPONSE===>', response);
       if (response && response.result && Array.isArray(response.result)) {
         dispatch(fetchStates(response));
       } else {
@@ -60,17 +60,23 @@ const Register = ({navigation}) => {
   const [showPassword, setShowPassword] = useState(null);
 
   const openModal = async values => {
-    console.log('VALUES===>', values);
+    const formData = new FormData();
+    Object.keys(values).forEach(key => {
+      formData.append(key, values[key]);
+    });
+    console.log('FORMDATA==>', formData);
     try {
-      const registrationSuccess = await registerUserMutation(values).unwrap();
+      console.log('first');
+      const registrationSuccess = await registerUserMutation(formData).unwrap();
       console.log('RESPONSE====', registrationSuccess);
-      if (registrationSuccess) {
+      if (registrationSuccess.status) {
         setIsVisible(true);
       } else {
+        Alert.alert('Email not Available');
         setIsVisible(false);
       }
     } catch (error) {
-      // console.error('Error during registration:', error);
+      console.log('Error during registration:', error);
       setIsVisible(false);
     }
   };
@@ -95,6 +101,9 @@ const Register = ({navigation}) => {
             organization: '',
             state: '',
             city: '',
+            phone: '',
+            dob: '',
+            profile_photo: '',
           }}
           onSubmit={openModal}
           validationSchema={registerSchema}>
@@ -141,6 +150,18 @@ const Register = ({navigation}) => {
                 </View>
                 {touched.password && errors.password && (
                   <Text style={styles.errorText}>{errors.password}</Text>
+                )}
+              </View>
+              <View>
+                <Text style={styles.inputHeading}>Phone</Text>
+                <TextInput
+                  onChangeText={handleChange('phone')}
+                  value={values.phone}
+                  style={styles.textInput}
+                  placeholder="Enter Phone"
+                />
+                {touched.city && errors.city && (
+                  <Text style={styles.errorText}>{errors.city}</Text>
                 )}
               </View>
               <View>
