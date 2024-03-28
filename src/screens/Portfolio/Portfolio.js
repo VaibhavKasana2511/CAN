@@ -19,7 +19,7 @@ export default function Portfolio() {
         const response = await data(userData._id);
         const result = response.data.result;
         console.log('R==>', result);
-        // setDummyData(result);
+        setDummyData(result);
       } catch (err) {
         console.log('ERROR', err);
       }
@@ -30,36 +30,74 @@ export default function Portfolio() {
   const renderItem = ({item}) => (
     <View style={styles.itemData}>
       <View style={{flexDirection: 'row'}}>
-        <Image source={IMAGES.contentImage} />
+        <Image style={styles.Image} source={{uri: item.logo}} />
         <View>
-          <Text style={styles.name}>{item.name}</Text>
-          <Text style={styles.text}>{item.text}</Text>
+          <Text style={styles.name}>{item.company_name}</Text>
+          <Text style={styles.text}>{item.description}</Text>
         </View>
       </View>
       <View style={styles.amountSection}>
         <Text style={styles.details}>
-          <Text style={styles.txt}>Amount: </Text> {item.amount}
+          <Text style={styles.txt}>Amount: </Text> {item.amount.total_amount}{' '}
+          {item.amount.total_amount_in}
         </Text>
         <Text style={styles.details}>
-          <Text style={styles.txt}># of shares: </Text> {item.shares}
+          <Text style={styles.txt}># of shares: </Text> {item.number_of_share}
         </Text>
       </View>
       <View style={styles.valuationSection}>
         <Text style={styles.details}>
-          <Text style={styles.txt}>At Valuation: </Text> {item.valuation}
+          <Text style={styles.txt}>At Valuation: </Text>{' '}
+          {item.valuation.valuation_amount} {item.valuation.valuation_amount_in}
         </Text>
         <Text style={styles.details}>
-          <Text style={styles.txt}>Round Size: </Text> {item.roundSize}
+          <Text style={styles.txt}>Round Size: </Text>{' '}
+          {item.round_size.round_size_amount}{' '}
+          {item.round_size.round_size_amount_in}
         </Text>
       </View>
       <View style={{marginTop: verticalScale(2)}}>
         <Text style={styles.details}>
           <Text style={styles.txt}>Date of Investment: </Text>
-          {item.investment}
+          {item.date}
         </Text>
       </View>
     </View>
   );
+
+  // const renderItem = ({item}) => (
+  //   <View style={styles.itemData}>
+  //     <View style={{flexDirection: 'row'}}>
+  //       <Image source={IMAGES.contentImage} />
+  //       <View>
+  //         <Text style={styles.name}>{item.name}</Text>
+  //         <Text style={styles.text}>{item.text}</Text>
+  //       </View>
+  //     </View>
+  //     <View style={styles.amountSection}>
+  //       <Text style={styles.details}>
+  //         <Text style={styles.txt}>Amount: </Text> {item.amount}
+  //       </Text>
+  //       <Text style={styles.details}>
+  //         <Text style={styles.txt}># of shares: </Text> {item.shares}
+  //       </Text>
+  //     </View>
+  //     <View style={styles.valuationSection}>
+  //       <Text style={styles.details}>
+  //         <Text style={styles.txt}>At Valuation: </Text> {item.valuation}
+  //       </Text>
+  //       <Text style={styles.details}>
+  //         <Text style={styles.txt}>Round Size: </Text> {item.roundSize}
+  //       </Text>
+  //     </View>
+  //     <View style={{marginTop: verticalScale(2)}}>
+  //       <Text style={styles.details}>
+  //         <Text style={styles.txt}>Date of Investment: </Text>
+  //         {item.investment}
+  //       </Text>
+  //     </View>
+  //   </View>
+  // );
 
   return (
     <View style={styles.mainContainer}>

@@ -18,6 +18,12 @@ export default styles = StyleSheet.create({
     fontFamily: 'Nunito-SemiBold',
   },
 
+  Image: {
+    height: verticalScale(75),
+    width: horizontalScale(85),
+    borderRadius: moderateScale(5),
+  },
+
   valuationSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -13,6 +13,7 @@ import {verticalScale, horizontalScale, moderateScale} from '@utils/Metrics';
 import {CustomPopUp} from '@components';
 import {useDispatch} from 'react-redux';
 import {logoutUser} from '../../../redux/action/authAction';
+import {socketDisconnect} from '../../../utils/Socket';
 
 const drawerItems = [
   {name: 'Profile', icon: IMAGES.profile, label: 'Profile'},
@@ -37,6 +38,7 @@ const CustomDrawerContent = ({navigation}) => {
   const handleLogout = () => {
     setShowLogoutModal(false);
     dispatch(logoutUser());
+    socketDisconnect();
     navigation.navigate('Login');
   };
 

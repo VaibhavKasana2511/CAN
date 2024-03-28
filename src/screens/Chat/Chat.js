@@ -36,23 +36,6 @@ const Chat = () => {
     ]);
   }, []);
 
-  `  // const handleSendMessage = () => {
-  //   if (newMessage.trim() === '') return; // Don't send empty messages
-  //   const newId = messages.length + 1;
-  //   const timestamp = new Date().toLocaleTimeString([], {
-  //     hour: '2-digit',
-  //     minute: '2-digit',
-  //   });
-  //   const newMessageObj = {
-  //     id: newId,
-  //     sender: 'Me',
-  //     message: newMessage,
-  //     timestamp,
-  //   };
-  //   setMessages([...messages, newMessageObj]);
-  //   setNewMessage('');
-  // };
-`;
   const onSend = useCallback((messages = []) => {
     setMessages(previousMessages =>
       GiftedChat.append(previousMessages, messages),

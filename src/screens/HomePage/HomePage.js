@@ -1,14 +1,19 @@
 import {View, Text, Image, ScrollView} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {styles} from './Styles';
 import {Header} from '@components';
 import {IMAGES} from '@assets/images';
 import {verticalScale} from '@utils/Metrics';
 import {useSelector} from 'react-redux';
+import {socketInit} from '../../utils/Socket';
 
 const HomePage = () => {
-  const userState = useSelector(state => state.root.auth.user);
-  console.log('HOMEPAGEEE>>>>>>', userState);
+  const userData = useSelector(state => state.root.auth?.user?.result);
+  console.log('HOMEPAGEEE>>>>>>', userData);
+
+  useEffect(() => {
+    socketInit(userData._id);
+  }, []);
 
   const data = [
     {
