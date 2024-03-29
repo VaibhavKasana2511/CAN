@@ -4,18 +4,46 @@ import {styles} from './Styles';
 import {Header} from '@components';
 import {IMAGES} from '@assets/images';
 import {verticalScale} from '@utils/Metrics';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {socketInit} from '../../utils/Socket';
+import SOCKET from '../../constants/socket';
+import {useRoomIDMutation} from '../../redux/service/chatService';
+import {fetchRoomId} from '../../redux/slices/chatSlice';
 
 const HomePage = () => {
+  const dispatch = useDispatch();
   const userData = useSelector(state => state.root.auth?.user?.result);
+  const token = useSelector(state => state.root.auth?.user?.Token);
+  const room_id = useSelector(state => state.root?.chat);
   console.log('HOMEPAGEEE>>>>>>', userData);
+  console.log('ROOM--ID===>', room_id);
+
+  const [roomIDMutation] = useRoomIDMutation();
+
+  const getRoomID = async data => {
+    try {
+      const roomID = await roomIDMutation(data);
+      const response = roomID.data?.result;
+      const status = roomID.data?.message;
+      if (status) {
+        dispatch(fetchRoomId(response._id));
+      }
+    } catch (err) {
+      console.log('Error==>', err);
+    }
+  };
 
   useEffect(() => {
     socketInit(userData._id);
+    let data = {
+      senderId: SOCKET.RECEIVER_ID,
+      recieverId: userData._id,
+    };
+
+    getRoomID(data);
   }, []);
 
-  const data = [
+  const staticData = [
     {
       name: 'Jerry Infotech',
       Text: 'On demand food delivery startup',
@@ -141,7 +169,7 @@ const HomePage = () => {
         showsVerticalScrollIndicator={false}
         style={styles.contentContainer}>
         <Text style={styles.headingText}>Active Mandate</Text>
-        {data.map((item, index) =>
+        {staticData.map((item, index) =>
           item.type === 'items' ? renderItem({item, index}) : null,
         )}
         <Text style={styles.headingText}>Calendar</Text>

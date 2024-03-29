@@ -7,6 +7,7 @@ import {setupListeners} from '@reduxjs/toolkit/query';
 // import {combineReducers} from 'redux';
 import {apiClient} from '../service/apiClient';
 import forumReducer from '../slices/forumSlice';
+import chatReducer from '../slices/chatSlice';
 
 const persistConfig = {
   key: 'root',
@@ -18,6 +19,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   forum: forumReducer,
+  chat: chatReducer,
 
   // Add other reducers here if needed
 });
