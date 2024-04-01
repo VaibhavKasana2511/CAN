@@ -117,7 +117,7 @@ const joinRoom = roomData => {
   socket.emit(SOCKET.JOIN, roomData);
 };
 
-const onSend = messageData => {
+const eventSend = messageData => {
   console.log('messageData', messageData);
   socket.emit(SOCKET.NEW_MESSAGE, messageData);
 };
@@ -128,4 +128,4 @@ const socketDisconnect = () => {
   isConnected = false;
 };
 
-export {socketInit, joinRoom, onSend, socketDisconnect};
+export {socketInit, joinRoom, eventSend, socketDisconnect};

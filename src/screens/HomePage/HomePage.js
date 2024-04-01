@@ -1,5 +1,5 @@
 import {View, Text, Image, ScrollView} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styles} from './Styles';
 import {Header} from '@components';
 import {IMAGES} from '@assets/images';
@@ -9,6 +9,10 @@ import {socketInit} from '../../utils/Socket';
 import SOCKET from '../../constants/socket';
 import {useRoomIDMutation} from '../../redux/service/chatService';
 import {fetchRoomId} from '../../redux/slices/chatSlice';
+import {
+  useGetCalendarEventsMutation,
+  useMandateListMutation,
+} from '../../redux/service/mandateService';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -18,7 +22,52 @@ const HomePage = () => {
   console.log('HOMEPAGEEE>>>>>>', userData);
   console.log('ROOM--ID===>', room_id);
 
+  let eventStartDate = new Date().toLocaleDateString();
+  let startDate = new Date();
+  let endDate = new Date(startDate);
+  endDate.setDate(startDate.getDate() + 6);
+
+  let eventEndDate = `${
+    endDate.getMonth() + 1
+  }/${endDate.getDate()}/${endDate.getFullYear()}`;
+
+  const [mandateData, setMandateData] = useState([]);
+  const [calendarEvents, setCalendarEvents] = useState([]);
+
+  const [mandateListMutation] = useMandateListMutation();
+  const [getCalendarEventsMutation] = useGetCalendarEventsMutation();
   const [roomIDMutation] = useRoomIDMutation();
+
+  const fetchMandateList = async () => {
+    try {
+      const response = await mandateListMutation();
+      console.log('respnse', response.data.result);
+      if (response.data.status) {
+        setMandateData(response.data.result);
+      }
+    } catch (err) {
+      console.log('err', err);
+    }
+  };
+
+  const fetchCalendarEvents = async () => {
+    try {
+      const res = await getCalendarEventsMutation({
+        start_date: eventStartDate,
+        end_date: eventEndDate,
+      });
+      const result = res.data.result;
+      console.log('d==>', result);
+      setCalendarEvents(result);
+    } catch (err) {
+      console.log('error', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchCalendarEvents();
+    fetchMandateList();
+  }, []);
 
   const getRoomID = async data => {
     try {
@@ -43,124 +92,100 @@ const HomePage = () => {
     getRoomID(data);
   }, []);
 
-  const staticData = [
-    {
-      name: 'Jerry Infotech',
-      Text: 'On demand food delivery startup',
-      MRR: 'INR 1.50 Lakhs',
-      Round_Size: 'INR 50 Lakhs',
-      Valuation: 'INR 3.6 cr',
-      Commitment: 'INR 20 Lakhs',
-      type: 'items',
-    },
-    {
-      name: 'Chaiwala',
-      Text: 'Authentic Indian Tea',
-      MRR: 'INR 1.50 Lakhs',
-      Round_Size: 'INR 50 Lakhs',
-      Valuation: 'INR 3.6 cr',
-      Commitment: 'INR 20 Lakhs',
-      type: 'items',
-    },
-    {
-      name: 'Chaiwala',
-      Text: 'Authentic Indian Tea',
-      MRR: 'INR 1.50 Lakhs',
-      Round_Size: 'INR 50 Lakhs',
-      Valuation: 'INR 3.6 cr',
-      Commitment: 'INR 20 Lakhs',
-      type: 'items',
-    },
-  ];
-
-  const date = [
-    {
-      date: '02',
-      month: 'NOV',
-      Meeting: 'Startup World Cup 2022',
-      agenda: 'Lorem Ipsum is simply dummy',
-      time: '4 PM',
-      location: 'Office',
-      type: 'events',
-    },
-    {
-      date: '12',
-      month: 'NOV',
-      Meeting: 'Web Summit Pitch 2022',
-      agenda: 'Lorem Ipsum is simply dummy',
-      time: '6 PM',
-      location: 'Virtual',
-      type: 'events',
-    },
-    {
-      date: '12',
-      month: 'NOV',
-      Meeting: 'Web Summit Pitch 2022',
-      agenda: 'Lorem Ipsum is simply dummy',
-      time: '6 PM',
-      location: 'Virtual',
-      type: 'events',
-    },
-  ];
-
   const renderItem = ({item, index}) => (
     <View key={index} style={styles.listContainer}>
       <View style={styles.section1}>
-        <Image source={IMAGES.contentImage} />
-        <View style={{marginLeft: verticalScale(10)}}>
-          <Text style={styles.listName}>{item.name}</Text>
-          <Text style={styles.listText}>{item.Text}</Text>
+        <Image source={{uri: item.logo}} style={styles.logo} />
+        <View style={styles.textContainer}>
+          <Text style={styles.listName}>{item.company_name}</Text>
+          <Text style={styles.listText}>{item.description}</Text>
         </View>
       </View>
       <View style={styles.section2}>
         <Text style={styles.section2Heading}>
-          MRR: <Text style={styles.section2Text}>{item.MRR}</Text>
+          MRR:{' '}
+          <Text style={styles.section2Text}>
+            {item.mrr.mrr_amount} {item.mrr.mrr_amount_in}
+          </Text>
         </Text>
         <Text style={styles.section2Heading}>
-          Round Size: <Text style={styles.section2Text}>{item.Round_Size}</Text>
+          Round Size:{' '}
+          <Text style={styles.section2Text}>
+            {item.round_size.round_size_amount}{' '}
+            {item.round_size.round_size_amount_in}
+          </Text>
         </Text>
       </View>
       <View style={styles.section2}>
         <Text style={styles.section2Heading}>
-          Valuation: <Text style={styles.section2Text}>{item.Valuation}</Text>
+          Valuation:{' '}
+          <Text style={styles.section2Text}>
+            {item.valuation.valuation_amount}{' '}
+            {item.valuation.valuation_amount_in}
+          </Text>
         </Text>
         <Text style={styles.section2Heading}>
-          Commitment: <Text style={styles.section2Text}>{item.Commitment}</Text>
+          Commitment:{''}
+          <Text style={styles.section2Text}>
+            {item.commitment.commitment_amount}{' '}
+            {item.commitment.commitment_amount_in}
+          </Text>
         </Text>
       </View>
     </View>
   );
 
-  const renderEvents = ({item, index}) => (
-    <View key={index} style={styles.calendarMain}>
-      <View style={styles.calendarContainer}>
-        <Text style={styles.calendarDate}>{item.date}</Text>
-        <Text style={styles.calendarMonth}>{item.month}</Text>
-      </View>
-      <View style={styles.calendarContent}>
-        <Text style={styles.eventHeading}>{item.Meeting}</Text>
-        <Text style={styles.agendaText}>{item.agenda}</Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: verticalScale(5),
-          }}>
-          <View style={{flexDirection: 'row'}}>
-            <Image style={{marginTop: 2}} source={IMAGES.clock} />
-            <Text style={{marginBottom: 2, marginLeft: 5}}>{item.time}</Text>
-          </View>
+  const renderEvents = ({item, index}) => {
+    const eventDate = new Date(item.date);
+    const formattedDate = eventDate.getDate(); // Extracts the date part
+    const monthNames = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+    const formattedMonth = monthNames[eventDate.getMonth()]; // Extracts the month name
+
+    return (
+      <View key={index} style={styles.calendarMain}>
+        <View style={styles.calendarContainer}>
+          <Text style={styles.calendarDate}>{formattedDate}</Text>
+          {/* Displaying the formatted month */}
+          <Text style={styles.calendarMonth}>{formattedMonth}</Text>
+        </View>
+        <View style={styles.calendarContent}>
+          <Text style={styles.eventHeading}>{item.title}</Text>
+          <Text style={styles.agendaText}>{item.description}</Text>
           <View
-            style={{flexDirection: 'row', flex: 1, justifyContent: 'center'}}>
-            <Image style={{marginTop: 2}} source={IMAGES.landmarkIcon} />
-            <Text style={{marginBottom: 2, marginLeft: 5}}>
-              {item.location}
-            </Text>
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginTop: verticalScale(5),
+            }}>
+            <View style={{flexDirection: 'row'}}>
+              <Image style={{marginTop: 2}} source={IMAGES.clock} />
+              <Text style={{marginBottom: 2, marginLeft: 5}}>{item.time}</Text>
+            </View>
+            <View
+              style={{flexDirection: 'row', flex: 1, justifyContent: 'center'}}>
+              <Image style={{marginTop: 2}} source={IMAGES.landmarkIcon} />
+              <Text style={{marginBottom: 2, marginLeft: 5}}>
+                {item.location}
+              </Text>
+            </View>
           </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -169,13 +194,9 @@ const HomePage = () => {
         showsVerticalScrollIndicator={false}
         style={styles.contentContainer}>
         <Text style={styles.headingText}>Active Mandate</Text>
-        {staticData.map((item, index) =>
-          item.type === 'items' ? renderItem({item, index}) : null,
-        )}
+        {mandateData.map((item, index) => renderItem({item, index}))}
         <Text style={styles.headingText}>Calendar</Text>
-        {date.map((item, index) =>
-          item.type === 'events' ? renderEvents({item, index}) : null,
-        )}
+        {calendarEvents.map((item, index) => renderEvents({item, index}))}
       </ScrollView>
     </View>
   );

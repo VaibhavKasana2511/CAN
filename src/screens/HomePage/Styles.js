@@ -6,6 +6,11 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
+  logo: {
+    height: verticalScale(75),
+    width: horizontalScale(85),
+    borderRadius: moderateScale(5),
+  },
   headingText: {
     fontFamily: 'Nunito-SemiBold',
     color: '#000000',
@@ -39,6 +44,7 @@ export const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     fontSize: moderateScale(16),
     color: '#000000A8',
+    maxWidth: '90%',
   },
 
   section2: {

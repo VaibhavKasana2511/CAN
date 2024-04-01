@@ -13,19 +13,20 @@ import {IMAGES} from '@assets/images';
 import {Calendar} from 'react-native-calendars';
 import {fetchUpcomingEvents} from '../../utils/services/ApiCalling';
 import {useSelector} from 'react-redux';
+import {useLazyFetchUpcomingEventsQuery} from '../../redux/service/mandateService';
 
 const UpcomingEvents = () => {
   const token = useSelector(state => state.root.auth.user?.Token);
   const [selectDate, setSelectDate] = useState('2023-09-10');
   const [events, setEvents] = useState([]);
+  const [data] = useLazyFetchUpcomingEventsQuery();
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log('Token', token);
       try {
-        const data = await fetchUpcomingEvents(token);
-        setEvents(data);
-        console.log('Data:', data);
+        const res = await data();
+        setEvents(res);
+        console.log('Data:', res);
       } catch (error) {
         console.error('Error fetching upcoming events:', error);
       }

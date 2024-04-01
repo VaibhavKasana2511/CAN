@@ -29,6 +29,21 @@ export default styles = StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.25)',
   },
 
+  // dataContainer: {
+  //   padding: moderateScale(15),
+  //   marginBottom: verticalScale(10),
+  //   borderWidth: moderateScale(0.4),
+  //   backgroundColor: '#FFFFFF',
+  //   borderColor: 'rgba(0, 0, 0, 0.25)',
+  //   // Shadow properties for Android
+  //   elevation: moderateScale(5), // Adjust the elevation as needed
+  //   shadowColor: '#000000',
+  //   shadowOffset: {
+  //     width: 0,
+  //     height: 0,
+  //   },
+  //   shadowOpacity: 0.25, // Adjust the opacity as needed
+  // },
   title: {
     fontSize: moderateScale(20),
     color: '#0A4975',

@@ -9,7 +9,14 @@ export const chatService = apiClient.injectEndpoints({
         method: 'POST',
       }),
     }),
+    fetchChatList: builder.query({
+      query: id => ({
+        // url: `/get_chat_byroom_id?roomId=${id}`,
+        url: `/get_chat_byroom_id/admin?roomId=64b11985c17464d7248b9d0d`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const {useRoomIDMutation} = chatService;
+export const {useRoomIDMutation, useLazyFetchChatListQuery} = chatService;

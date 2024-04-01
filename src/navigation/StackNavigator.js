@@ -21,7 +21,12 @@ const StackNavigator = () => {
   return !userState ? (
     <Stack.Navigator
       initialRouteName="IntroSlider"
-      screenOptions={{headerShown: false}}>
+      screenOptions={{
+        headerShown: false,
+        // presentation: 'modal',
+        animationTypeForReplace: 'push',
+        animation: 'slide_from_right',
+      }}>
       <Stack.Screen name="IntroSlider" component={IntroSlider} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />

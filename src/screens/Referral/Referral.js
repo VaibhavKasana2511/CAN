@@ -7,7 +7,7 @@ import {horizontalScale, moderateScale, verticalScale} from '@utils/Metrics';
 import {
   useAddReferralMutation,
   useLazyReferralListQuery,
-} from '../../redux/service/authService';
+} from '../../redux/service/referralService';
 import {useSelector} from 'react-redux';
 import {ScrollView} from 'react-native-gesture-handler';
 

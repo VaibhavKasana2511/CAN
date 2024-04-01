@@ -37,24 +37,17 @@ export const authService = apiClient.injectEndpoints({
         method: 'PUT',
       }),
     }),
+    fetchMyProfile: builder.query({
+      query: id => ({
+        url: `/loggedin_user_dataByid?_id=${id}`,
+        method: 'GET',
+      }),
+    }),
     updatePassword: builder.mutation({
       query: body => ({
         url: `/update-password/investor`,
         body: body,
         method: 'PUT',
-      }),
-    }),
-    addReferral: builder.mutation({
-      query: body => ({
-        url: `/add/referral`,
-        body: body,
-        method: 'POST',
-      }),
-    }),
-    referralList: builder.query({
-      query: id => ({
-        url: `referral/list_by_mandate?user_mandate=${id}`,
-        method: 'GET',
       }),
     }),
     formCategories: builder.query({
@@ -98,9 +91,8 @@ export const {
   useResetPasswordMutation,
   useLazyFetchStatesQuery,
   useUpdateProfileMutation,
+  useLazyFetchMyProfileQuery,
   useUpdatePasswordMutation,
-  useLazyReferralListQuery,
-  useAddReferralMutation,
   useLazyFormCategoriesQuery,
   useLazyCategoryQuestionQuery,
   useAddQuestionMutation,

@@ -24,7 +24,16 @@ const Profile = ({navigation}) => {
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShowDatePicker(Platform.OS === 'ios');
-    setDob(currentDate.toString());
+    setDate(currentDate);
+    setDob(formatDate(currentDate));
+  };
+
+  const formatDate = date => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    setDob(`${month}/${day}/${year}`);
+    return `${month}/${day}/${year}`;
   };
 
   const userData = useSelector(state => state.root?.auth.user.result);
@@ -34,7 +43,7 @@ const Profile = ({navigation}) => {
   const [name, setName] = useState(userData.name);
   const [dob, setDob] = useState(userData.dob);
   const [email, setEmail] = useState(userData.email);
-  const [phone, setPhone] = useState('');
+  const [phone, setPhone] = useState(String(userData?.phone));
   const [organization, setOrganization] = useState(userData.organization);
   const [state, setState] = useState(userData.state);
   const [city, setCity] = useState(userData.city);
@@ -45,20 +54,24 @@ const Profile = ({navigation}) => {
   console.log('STATES===>', allstate);
 
   const params = {
-    _id: userData._id,
     name: name,
+    email: userData.email,
+    dob: dob,
+    phone: phone,
     organization: organization,
     state: state,
     city: city,
-    phone: phone,
   };
 
   const handleUpdateProfile = async () => {
-    console.log('PARAMS===>', params);
+    const formData = new FormData();
+    Object.keys(params).forEach(key => {
+      formData.append(key, params[key]);
+    });
+    console.log('PARAMS===>', formData);
     try {
       const response = await updateProfileMutation(params);
       console.log('RESPONSE===>', response);
-      Alert.alert('Updation Successful..', 'Please LogIn Again');
     } catch (err) {
       console.log('ERROR==>', err);
     }
@@ -127,6 +140,7 @@ const Profile = ({navigation}) => {
               style={styles.textInput}
               placeholder="Enter Phone"
               onChangeText={text => setPhone(text)}
+              value={phone}
             />
           </View>
           <View style={styles.allTextInput}>
