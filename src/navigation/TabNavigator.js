@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Image, View, StyleSheet} from 'react-native';
+import {Image, View, StyleSheet, Easing} from 'react-native';
 import {UpcomingEvents, Category, HomePage, Chat, Portfolio} from '@screens';
 import {IMAGES} from '@assets/images';
 import {NavigationContainer} from '@react-navigation/native';
@@ -16,6 +16,12 @@ const TabNavigator = () => {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
+        tabBarStyle: {
+          display: 'flex', // You can add additional styles here if needed
+          // Add borderRadius if you want rounded corners
+          borderTopLeftRadius: moderateScale(20),
+          borderTopRightRadius: moderateScale(20),
+        },
       }}>
       <Tab.Screen
         name="UpcomingEvents"

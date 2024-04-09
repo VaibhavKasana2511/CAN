@@ -16,7 +16,7 @@ export const mandateService = apiClient.injectEndpoints({
         method: 'POST',
       }),
     }),
-    fetchUpcomingEvents: builder.mutation({
+    fetchUpcomingEvents: builder.query({
       query: body => ({
         url: `/get_events`,
         method: 'GET',

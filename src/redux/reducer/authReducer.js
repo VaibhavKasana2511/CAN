@@ -1,10 +1,16 @@
 // authReducer.js
 
-import {LOGIN_SUCCESS, LOGOUT_USER, FETCH_STATES} from '../action/authAction';
+import {
+  LOGIN_SUCCESS,
+  LOGOUT_USER,
+  FETCH_STATES,
+  MY_PROFILE,
+} from '../action/authAction';
 
 const initialState = {
   user: null,
   allstates: null,
+  myProfile: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -13,6 +19,11 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+    case MY_PROFILE:
+      return {
+        ...state,
+        myProfile: action.payload,
       };
     case FETCH_STATES:
       return {

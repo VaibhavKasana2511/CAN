@@ -3,17 +3,21 @@ import React, {useState} from 'react';
 import styles from './styles';
 import {CustomButtom, Header, CustomPopUp} from '@components';
 import {useNavigation} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
-import {useAddAnswerMutation} from '../../../redux/service/authService';
+import {useDispatch, useSelector} from 'react-redux';
+import {changeGlobalState} from '../../../redux/slices/forumSlice';
+import {useAddAnswerMutation} from '../../../redux/service/forumService';
 
 const AnsQues = ({navigation}) => {
+  const dispatch = useDispatch();
   const nav = useNavigation();
   const [dbButton, setdbButton] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
   const [title, setTitle] = useState(false);
   const [response, setResponse] = useState('');
-  const quesData = useSelector(state => state.root?.forum.questionData);
-  const userData = useSelector(state => state.root?.auth.user.result);
+  const quesData = useSelector(state => state.root?.forum?.questionData);
+  const userData = useSelector(state => state.root?.auth?.user.result);
+  const globalState = useSelector(state => state.root?.forum?.globalState);
+
   const [addAnswerMutation] = useAddAnswerMutation();
 
   let params = {
@@ -31,6 +35,7 @@ const AnsQues = ({navigation}) => {
       const response = await addAnswerMutation(params);
       console.log('Response', response);
       if (response.data.status) {
+        dispatch(changeGlobalState(!globalState));
         setIsVisible(true);
       }
     } catch (err) {

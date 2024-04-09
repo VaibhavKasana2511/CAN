@@ -1,4 +1,13 @@
-import {StyleSheet, Text, View, TextInput, Image, FlatList} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Image,
+  FlatList,
+  Modal,
+  ScrollView,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {styles} from './Styles';
 import {Header, CustomButtom} from '@components';
@@ -9,10 +18,10 @@ import {
   useLazyReferralListQuery,
 } from '../../redux/service/referralService';
 import {useSelector} from 'react-redux';
-import {ScrollView} from 'react-native-gesture-handler';
+import LoadingScreen from '../../components/common/loader/LoadingScreen';
 
 const Referral = () => {
-  const userData = useSelector(state => state.root.auth.user.result);
+  const userData = useSelector(state => state.root?.auth?.user?.result);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -26,8 +35,8 @@ const Referral = () => {
     phone: phone,
   };
 
-  const [addReferralMutation] = useAddReferralMutation();
-  const [data] = useLazyReferralListQuery();
+  const [addReferralMutation, isLoaded] = useAddReferralMutation();
+  const [data, isLoading] = useLazyReferralListQuery();
 
   const formatDate = dateString => {
     const date = new Date(dateString);
@@ -121,6 +130,12 @@ const Referral = () => {
           </View>
         ))}
       </ScrollView>
+      <Modal
+        transparent={true}
+        animationType="fade"
+        visible={isLoading.isLoading || isLoaded.isLoading}>
+        <LoadingScreen />
+      </Modal>
     </View>
   );
 };

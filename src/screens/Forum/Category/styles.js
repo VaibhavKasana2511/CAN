@@ -22,11 +22,15 @@ export default styles = StyleSheet.create({
     padding: moderateScale(15),
     elevation: moderateScale(5),
     borderRadius: moderateScale(10),
-    marginBottom: verticalScale(10),
+    marginTop: verticalScale(2),
+    marginBottom: verticalScale(12),
     borderWidth: moderateScale(0.4),
     shadowColor: '#000000',
+    // shadowRadius: moderateScale(10),
     backgroundColor: '#FFFFFF',
     borderColor: 'rgba(0, 0, 0, 0.25)',
+    alignSelf: 'center',
+    width: '99.3%',
   },
 
   // dataContainer: {

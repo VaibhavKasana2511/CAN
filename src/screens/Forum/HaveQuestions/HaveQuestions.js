@@ -3,15 +3,19 @@ import styles from './styles';
 import {Text, View, TextInput} from 'react-native';
 import {Header, CustomButtom} from '@components';
 import {Dropdown} from 'react-native-element-dropdown';
-import {useAddQuestionMutation} from '../../../redux/service/authService';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {changeGlobalState} from '../../../redux/slices/forumSlice';
+import {useAddQuestionMutation} from '../../../redux/service/forumService';
 
 const HaveQuestions = ({navigation}) => {
+  const dispatch = useDispatch();
   const [dbButton, setdbButton] = useState(true);
   const [question, setQuestion] = useState('');
   const allCategories = useSelector(state => state.root?.forum.forumCategories);
   const categoryData = useSelector(state => state.root?.forum.category);
   const userData = useSelector(state => state.root?.auth.user.result);
+  const globalState = useSelector(state => state.root?.forum?.globalState);
+  console.log('globalState==>', globalState);
   const [addQuestionMutation] = useAddQuestionMutation();
   const [selectedCategory, setSelectedCategory] = useState(
     categoryData.category_name,
@@ -32,6 +36,7 @@ const HaveQuestions = ({navigation}) => {
       const response = await addQuestionMutation(params);
       console.log('Response', response);
       if (response.data.status) {
+        dispatch(changeGlobalState(!globalState));
         navigation.navigate('Details');
       }
     } catch (err) {

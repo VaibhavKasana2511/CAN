@@ -45,6 +45,8 @@ export default styles = StyleSheet.create({
     shadowColor: '#000000',
     backgroundColor: '#FFFFFF',
     borderColor: 'rgba(0, 0, 0, 0.25)',
+    alignSelf: 'center',
+    width: '99%',
   },
 
   name: {

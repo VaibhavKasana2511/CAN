@@ -27,6 +27,8 @@ export default styles = StyleSheet.create({
     shadowColor: '#000000',
     backgroundColor: '#FFFFFF',
     borderColor: 'rgba(0, 0, 0, 0.25)',
+    alignSelf: 'center',
+    width: '99%',
   },
 
   ques: {
@@ -51,7 +53,7 @@ export default styles = StyleSheet.create({
   },
 
   queryContainer: {
-    marginTop: verticalScale(30),
+    marginVertical: verticalScale(20),
   },
 
   query: {

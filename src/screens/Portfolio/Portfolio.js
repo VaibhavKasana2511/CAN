@@ -1,4 +1,4 @@
-import {View, Text, FlatList, Image} from 'react-native';
+import {View, Text, FlatList, Image, Modal} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import styles from './Styles';
 import {Header} from '@components';
@@ -6,11 +6,12 @@ import {IMAGES} from '@assets/images';
 import {verticalScale, horizontalScale, moderateScale} from '@utils/Metrics';
 import {useLazyUserPortfolioQuery} from '../../redux/service/authService';
 import {useSelector} from 'react-redux';
+import LoadingScreen from '../../components/common/loader/LoadingScreen';
 
 export default function Portfolio() {
   const userData = useSelector(state => state.root?.auth.user?.result);
   console.log('usd', userData);
-  const [data] = useLazyUserPortfolioQuery();
+  const [data, isLoading] = useLazyUserPortfolioQuery();
   const [dummyData, setDummyData] = useState([]);
 
   useEffect(() => {
@@ -76,6 +77,12 @@ export default function Portfolio() {
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
+      <Modal
+        transparent={true}
+        animationType="fade"
+        visible={isLoading.isLoading}>
+        <LoadingScreen />
+      </Modal>
     </View>
   );
 }

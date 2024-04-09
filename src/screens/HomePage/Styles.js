@@ -9,28 +9,40 @@ export const styles = StyleSheet.create({
   logo: {
     height: verticalScale(75),
     width: horizontalScale(85),
-    borderRadius: moderateScale(5),
+    borderRadius: moderateScale(10),
+    // resizeMode: 'center',
+    // resizeMode: 'contain',
+    // resizeMode: 'cover',
+    // resizeMode: 'repeat',
+    resizeMode: 'stretch',
+    // backgroundColor: 'grey',
   },
   headingText: {
     fontFamily: 'Nunito-SemiBold',
     color: '#000000',
     fontSize: moderateScale(22),
-    marginBottom: verticalScale(10),
+    marginVertical: verticalScale(10),
   },
   contentContainer: {
-    padding: moderateScale(20),
+    paddingHorizontal: horizontalScale(20),
   },
   listContainer: {
+    alignSelf: 'center',
     backgroundColor: '#FFFFFF',
     marginVertical: verticalScale(10),
     // shadowColor: '#00000040',
     elevation: moderateScale(5),
-    width: '98%',
-    height: verticalScale(156),
+    width: '99%',
     borderRadius: moderateScale(10),
     justifyContent: 'space-around',
     padding: moderateScale(15),
   },
+
+  textContainer: {
+    // marginLeft: horizontalScale(10),
+    marginHorizontal: moderateScale(14),
+  },
+
   section1: {
     flexDirection: 'row',
   },
@@ -44,11 +56,17 @@ export const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     fontSize: moderateScale(16),
     color: '#000000A8',
-    maxWidth: '90%',
+    maxWidth: '89%',
   },
 
   section2: {
-    marginTop: verticalScale(10),
+    marginTop: verticalScale(13),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
+  section3: {
+    marginTop: verticalScale(5),
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -57,7 +75,6 @@ export const styles = StyleSheet.create({
     fontSize: moderateScale(14),
     fontFamily: 'Nunito-SemiBold',
     color: '#000000',
-    marginTop: verticalScale(5),
   },
   section2Text: {
     fontSize: moderateScale(14),
@@ -67,12 +84,13 @@ export const styles = StyleSheet.create({
   calendarMain: {
     backgroundColor: '#FFFFFF',
     flexDirection: 'row',
-    padding: moderateScale(10),
+    // padding: moderateScale(10),
+    paddingVertical: verticalScale(10),
     borderBottomWidth: moderateScale(1),
     borderColor: '#00000021',
   },
   calendarContainer: {
-    height: moderateScale(69),
+    // height: moderateScale(69),
     width: moderateScale(69),
     borderColor: '#0A4975',
     borderWidth: moderateScale(1),

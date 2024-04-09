@@ -1,3 +1,5 @@
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   Text,
   View,
@@ -5,21 +7,62 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Alert,
+  Modal,
 } from 'react-native';
-import React from 'react';
 import {styles} from './Styles';
 import {Header, CustomButtom} from '@components';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
 import {IMAGES} from '@assets/images';
-import {useState} from 'react';
-import {useUpdateProfileMutation} from '../../redux/service/authService';
-import {useSelector} from 'react-redux';
+import {
+  useLazyFetchMyProfileQuery,
+  useUpdateProfileMutation,
+} from '../../redux/service/authService';
+import LoadingScreen from '../../components/common/loader/LoadingScreen';
+import {fetchMyProfile} from '../../redux/action/authAction';
 
-const Profile = ({navigation}) => {
+const Profile = () => {
+  const dispatch = useDispatch();
+  const userData = useSelector(state => state.root?.auth?.user?.result);
+  console.log('userDTA', userData);
+  const allstate = useSelector(
+    state => state.root.auth.allstates?.result ?? [],
+  );
+  const profileData = useSelector(state => state.root?.auth?.myProfile);
+  console.log('profileDataRedux', profileData);
+
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [name, setName] = useState(profileData?.name || userData?.name);
+  const [dob, setDob] = useState(profileData?.dob || userData?.dob);
+  const [email, setEmail] = useState(profileData?.email || userData?.email);
+  const [phone, setPhone] = useState(
+    String(profileData?.phone || userData?.phone),
+  );
+  const [organization, setOrganization] = useState(
+    profileData?.organization || userData?.organization,
+  );
+  const [state, setState] = useState(profileData?.state || userData?.state);
+  const [city, setCity] = useState(profileData?.city || userData?.city);
+  const [reFetch, setReFetch] = useState(true);
+
+  const [updateProfileMutation, isloaded] = useUpdateProfileMutation();
+  const [data, isLoading] = useLazyFetchMyProfileQuery();
+
+  useEffect(() => {
+    fetchProfile();
+  }, [reFetch]);
+  const fetchProfile = async () => {
+    try {
+      const res = await data(userData._id);
+      const result = res.data.result.data;
+      const rxData = result[0];
+      console.log('result', rxData);
+      dispatch(fetchMyProfile(rxData));
+    } catch (err) {
+      console.log('Error', err);
+    }
+  };
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -36,34 +79,17 @@ const Profile = ({navigation}) => {
     return `${month}/${day}/${year}`;
   };
 
-  const userData = useSelector(state => state.root?.auth.user.result);
-  console.log('DATA===>', userData);
-
-  const [updateProfileMutation] = useUpdateProfileMutation();
-  const [name, setName] = useState(userData.name);
-  const [dob, setDob] = useState(userData.dob);
-  const [email, setEmail] = useState(userData.email);
-  const [phone, setPhone] = useState(String(userData?.phone));
-  const [organization, setOrganization] = useState(userData.organization);
-  const [state, setState] = useState(userData.state);
-  const [city, setCity] = useState(userData.city);
-
-  const allstate = useSelector(
-    state => state.root.auth.allstates?.result ?? [],
-  );
-  console.log('STATES===>', allstate);
-
-  const params = {
-    name: name,
-    email: userData.email,
-    dob: dob,
-    phone: phone,
-    organization: organization,
-    state: state,
-    city: city,
-  };
-
   const handleUpdateProfile = async () => {
+    const params = {
+      name: name,
+      email: userData.email,
+      dob: dob,
+      phone: phone,
+      organization: organization,
+      state: state,
+      city: city,
+    };
+
     const formData = new FormData();
     Object.keys(params).forEach(key => {
       formData.append(key, params[key]);
@@ -72,6 +98,7 @@ const Profile = ({navigation}) => {
     try {
       const response = await updateProfileMutation(params);
       console.log('RESPONSE===>', response);
+      setReFetch(!reFetch);
     } catch (err) {
       console.log('ERROR==>', err);
     }
@@ -84,7 +111,7 @@ const Profile = ({navigation}) => {
         <View style={styles.subContainer}>
           <Text style={styles.headingText}>My Profile</Text>
 
-          {userData.profile_photo === '' ? (
+          {userData?.profile_photo === '' ? (
             <View style={styles.accountImage}>
               <Image source={IMAGES.cameraIcon} />
             </View>
@@ -93,7 +120,6 @@ const Profile = ({navigation}) => {
               <Image source={IMAGES.cameraIcon} />
             </View>
           )}
-
           <View style={styles.allTextInput}>
             <Text style={styles.inputHeading}>Name</Text>
             <TextInput
@@ -178,6 +204,12 @@ const Profile = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
+      <Modal
+        visible={isLoading.isLoading || isloaded.isLoading}
+        transparent={true}
+        animationType="fade">
+        <LoadingScreen />
+      </Modal>
     </View>
   );
 };

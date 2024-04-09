@@ -1,4 +1,4 @@
-import {View, Text, Image, ScrollView} from 'react-native';
+import {View, Text, Image, ScrollView, Modal} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {styles} from './Styles';
 import {Header} from '@components';
@@ -13,6 +13,7 @@ import {
   useGetCalendarEventsMutation,
   useMandateListMutation,
 } from '../../redux/service/mandateService';
+import LoadingScreen from '../../components/common/loader/LoadingScreen';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -33,9 +34,11 @@ const HomePage = () => {
 
   const [mandateData, setMandateData] = useState([]);
   const [calendarEvents, setCalendarEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [mandateListMutation] = useMandateListMutation();
-  const [getCalendarEventsMutation] = useGetCalendarEventsMutation();
+  const [getCalendarEventsMutation, data] = useGetCalendarEventsMutation();
+  console.log('isLoading', data.isLoading);
   const [roomIDMutation] = useRoomIDMutation();
 
   const fetchMandateList = async () => {
@@ -51,6 +54,8 @@ const HomePage = () => {
   };
 
   const fetchCalendarEvents = async () => {
+    console.log('Start Date', eventStartDate);
+    console.log('End Date', eventEndDate);
     try {
       const res = await getCalendarEventsMutation({
         start_date: eventStartDate,
@@ -116,7 +121,7 @@ const HomePage = () => {
           </Text>
         </Text>
       </View>
-      <View style={styles.section2}>
+      <View style={styles.section3}>
         <Text style={styles.section2Heading}>
           Valuation:{' '}
           <Text style={styles.section2Text}>
@@ -176,7 +181,10 @@ const HomePage = () => {
             </View>
             <View
               style={{flexDirection: 'row', flex: 1, justifyContent: 'center'}}>
-              <Image style={{marginTop: 2}} source={IMAGES.landmarkIcon} />
+              <Image
+                style={{marginTop: 2, marginLeft: '12%'}}
+                source={IMAGES.landmarkIcon}
+              />
               <Text style={{marginBottom: 2, marginLeft: 5}}>
                 {item.location}
               </Text>
@@ -198,6 +206,9 @@ const HomePage = () => {
         <Text style={styles.headingText}>Calendar</Text>
         {calendarEvents.map((item, index) => renderEvents({item, index}))}
       </ScrollView>
+      <Modal transparent={true} animationType="fade" visible={data.isLoading}>
+        <LoadingScreen />
+      </Modal>
     </View>
   );
 };

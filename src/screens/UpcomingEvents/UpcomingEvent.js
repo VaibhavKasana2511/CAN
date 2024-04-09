@@ -6,31 +6,34 @@ import {
   TouchableOpacity,
   Linking,
   ScrollView,
+  Modal,
 } from 'react-native';
 import styles from './styles';
 import {Header} from '@components';
 import {IMAGES} from '@assets/images';
 import {Calendar} from 'react-native-calendars';
-import {fetchUpcomingEvents} from '../../utils/services/ApiCalling';
 import {useSelector} from 'react-redux';
 import {useLazyFetchUpcomingEventsQuery} from '../../redux/service/mandateService';
+import LoadingScreen from '../../components/common/loader/LoadingScreen';
 
 const UpcomingEvents = () => {
   const token = useSelector(state => state.root.auth.user?.Token);
   const [selectDate, setSelectDate] = useState('2023-09-10');
   const [events, setEvents] = useState([]);
-  const [data] = useLazyFetchUpcomingEventsQuery();
+
+  const [data, isLoading] = useLazyFetchUpcomingEventsQuery();
+  const fetchData = async () => {
+    try {
+      const res = await data();
+      const result = res.data.result;
+      console.log('Data:', result);
+      setEvents(result);
+    } catch (error) {
+      console.error('Error fetching upcoming events:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await data();
-        setEvents(res);
-        console.log('Data:', res);
-      } catch (error) {
-        console.error('Error fetching upcoming events:', error);
-      }
-    };
     fetchData();
   }, [token]);
 
@@ -61,7 +64,6 @@ const UpcomingEvents = () => {
     <ScrollView>
       <View style={styles.mainContainer}>
         <Header />
-
         <View style={styles.subContainer}>
           <Text style={styles.heading}>Calendar</Text>
           <Calendar
@@ -78,7 +80,6 @@ const UpcomingEvents = () => {
             }}
             hideExtraDays={true}
           />
-
           <View style={styles.selectDateContainer}>
             <Text style={styles.selectDateText}>
               {selectDate ? selectDate : 'Select a Date'}
@@ -125,8 +126,8 @@ const UpcomingEvents = () => {
                   <Text style={styles.subContainerMeetingText}>None</Text>
                 )}
               </View>
-              <Text style={styles.pdfTxt}>
-                Pitch Deck:
+              <View style={{flexDirection: 'row', marginTop: 5}}>
+                <Text style={styles.pdfTxt}>Pitch Deck:</Text>
                 {item.file.map((fileUrl, i) => (
                   <TouchableOpacity
                     key={i}
@@ -135,10 +136,16 @@ const UpcomingEvents = () => {
                     <Image source={IMAGES.pdf} />
                   </TouchableOpacity>
                 ))}
-              </Text>
+              </View>
             </View>
           ))}
         </View>
+        <Modal
+          transparent={true}
+          animationType="fade"
+          visible={isLoading.isLoading}>
+          <LoadingScreen />
+        </Modal>
       </View>
     </ScrollView>
   );

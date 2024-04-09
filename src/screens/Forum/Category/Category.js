@@ -1,18 +1,19 @@
-import {FlatList, Text, Touchable, TouchableOpacity, View} from 'react-native';
+import {FlatList, Text, TouchableOpacity, View, Modal} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import styles from './styles';
 import {Header} from '@components';
 import {useDispatch, useSelector} from 'react-redux';
-import {useLazyFormCategoriesQuery} from '../../../redux/service/authService';
 import {
   fetchCategory,
   fetchForumCategories,
 } from '../../../redux/slices/forumSlice';
+import LoadingScreen from '../../../components/common/loader/LoadingScreen';
+import {useLazyFormCategoriesQuery} from '../../../redux/service/forumService';
 
 const Category = ({navigation}) => {
   const dispatch = useDispatch();
   const [forumData, setForumData] = useState([]);
-  const [data] = useLazyFormCategoriesQuery();
+  const [data, isLoading] = useLazyFormCategoriesQuery();
 
   useEffect(() => {
     const fetchFormData = async () => {
@@ -65,6 +66,12 @@ const Category = ({navigation}) => {
           />
         </View>
       </View>
+      <Modal
+        transparent={true}
+        animationType="fade"
+        visible={isLoading.isLoading}>
+        <LoadingScreen />
+      </Modal>
     </View>
   );
 };

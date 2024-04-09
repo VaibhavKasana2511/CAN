@@ -11,8 +11,8 @@ export const chatService = apiClient.injectEndpoints({
     }),
     fetchChatList: builder.query({
       query: id => ({
-        // url: `/get_chat_byroom_id?roomId=${id}`,
-        url: `/get_chat_byroom_id/admin?roomId=64b11985c17464d7248b9d0d`,
+        url: `/get_chat_byroom_id?roomId=66147289f34e06d190b5cc03`,
+        // url: `/get_chat_byroom_id/admin?roomId=66147289f34e06d190b5cc03`,
         method: 'GET',
       }),
     }),

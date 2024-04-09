@@ -3,6 +3,7 @@ export const IMAGES = {
   cameraIcon: require('./cameraIcon.png'),
   canLogo: require('./can-logo.png'),
   clock: require('./clock.png'),
+  logo: require('./logo.png'),
   contentImage: require('./contentImage.png'),
   dateIcon: require('./dateIcon.png'),
   drawerIcon: require('./drawericon.png'),

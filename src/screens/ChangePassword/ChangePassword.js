@@ -5,19 +5,21 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Alert,
+  Modal,
 } from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './Styles';
 import {Header, CustomButtom, CustomPopUp} from '@components';
 import {useSelector} from 'react-redux';
 import {useUpdatePasswordMutation} from '../../redux/service/authService';
+import LoadingScreen from '../../components/common/loader/LoadingScreen';
 
 const ChangePassword = ({navigation}) => {
   const [isVisible, setIsVisible] = useState(false);
   const [currentPass, setCurrentPass] = useState();
   const [confirmPass, setConfirmPass] = useState();
   const [newPass, setNewPass] = useState();
-  const [updatePasswordMutation] = useUpdatePasswordMutation();
+  const [updatePasswordMutation, isLoading] = useUpdatePasswordMutation();
 
   const userData = useSelector(state => state.root.auth.user.result);
   console.log('DATA===>', userData);
@@ -77,6 +79,7 @@ const ChangePassword = ({navigation}) => {
             style={styles.textInput}
             placeholder="Enter current password again"
             value={confirmPass}
+            onChangeText={text => setConfirmPass(text)}
           />
         </View>
         <View style={styles.allTextInput}>
@@ -98,6 +101,12 @@ const ChangePassword = ({navigation}) => {
         buttonText="Continue"
         text="Your password has been updated. You will now be redirected to the login screen"
       />
+      <Modal
+        transparent={true}
+        animationType="fade"
+        visible={isLoading.isLoading}>
+        <LoadingScreen />
+      </Modal>
     </KeyboardAvoidingView>
   );
 };

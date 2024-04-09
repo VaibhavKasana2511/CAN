@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   Alert,
+  Modal,
 } from 'react-native';
 import React, {Component} from 'react';
 import styles from './Styles';
@@ -16,6 +17,7 @@ import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useUserLoginMutation} from '../../redux/service/authService';
 import {loginSuccess} from '../../redux/action/authAction';
+import LoadingScreen from '../../components/common/loader/LoadingScreen';
 
 const Login = ({navigation}) => {
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ const Login = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(null);
 
-  const [userLoginMutation] = useUserLoginMutation();
+  const [userLoginMutation, isLoading] = useUserLoginMutation();
 
   const param = {email: email, password: password};
 
@@ -99,6 +101,12 @@ const Login = ({navigation}) => {
           </TouchableOpacity>
         </View>
         <CustomButtom onPress={handleLogin} title="Login" />
+        <Modal
+          transparent={true}
+          animationType="fade"
+          visible={isLoading.isLoading}>
+          <LoadingScreen />
+        </Modal>
       </View>
     </KeyboardAvoidingView>
   );

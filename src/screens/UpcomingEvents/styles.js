@@ -94,8 +94,7 @@ export default styles = StyleSheet.create({
     fontFamily: 'Nunito-Medium',
   },
   pdfLogo: {
-    backgroundColor: 'white',
-    paddingTop: verticalScale(10),
+    // padding: verticalScale(10),
     marginLeft: horizontalScale(5),
   },
 });
